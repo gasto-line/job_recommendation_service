@@ -97,8 +97,6 @@ Current model: **Logistic Regression (one‑vs‑rest)** on TF‑IDF + engineer
 ## Contributing
 PRs are welcome 🎉  For major changes, please open an issue first to discuss what you would like to change. Be sure to update tests as appropriate.
 
-## License
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
