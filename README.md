@@ -77,9 +77,9 @@ Conventional job-alert platforms rely on static search filters and sparse metada
 
 | Table | Purpose | Key Fields |
 |:-----|:--------|:----------|
-| `jobs_raw` | Untouched API responses | `id`, `title`, `description`, `url` |
-| `jobs_ranked` | Jobs with GPT-matching scores | `job_id`, `match_percentage` |
-| `feedback` | User scores and comments | `job_id`, `score`, `comment`, `timestamp` |
+| `raw_df` | Normalized extracted data | `title`, `company`, `description`, `url` |
+| `top_jobs` | Best N GPT-matching scores | `job_hash`, `AI_score`, `AI_justification`|
+| `feedback` | User scores and comments | `user_score`, `user_justification`, `applied`|
 
 ## Roadmap
 - **Dynamic Prompt Tuning** – Use user comments to adjust matching prompts.
