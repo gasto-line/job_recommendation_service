@@ -1,0 +1,1553 @@
+{
+  "__CLASS__": "Adzuna::API::Response::JobSearchResults",
+  "mean": 52166.67,
+  "results": [
+    {
+      "id": "5216354617",
+      "description": "About the job We are a global biopharmaceutical company focused on human health. Our purpose is to find treatment to fight pain and ease suffering. We combine breakthrough science and advanced technology to develop life-changing medicines and vaccines. Digital & Data is at the heart of Sanofi: our ambition is to be the leading digital healthcare platform to develop & deliver medicine faster, enable healthcare professionals to improve treatments and help patients improve their health. Our scale,\u2026",
+      "title": "Accelerator Data Engineer (Paris)",
+      "created": "2025-05-26T07:23:41Z",
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "contract_type": "permanent",
+      "salary_is_predicted": "0",
+      "company": {
+        "display_name": "Sanofi EU",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjE2MzU0NjE3In0.wjrdHXeqCM-Osu5P0KZpnPdfjphN45Ln6RZ8NweSpYM",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5216354617?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=E86FFF67429D9B30C2C61AE504D514BA0EA2FC55",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "display_name": "Paris, Ile-de-France",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      }
+    },
+    {
+      "longitude": 2.351634,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France"
+        ],
+        "display_name": "Ile-de-France, France",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213733403?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=FB40254629204FCEAFF498A3AE6BF11E0C1B1F38",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzczMzQwMyIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.0bLVsCuZzoNgcrOIsG2uta1I37UtFCjEqapxB7fuiEE",
+      "latitude": 48.811332,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "LINCOLN"
+      },
+      "salary_is_predicted": "0",
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "id": "5213733403",
+      "title": "Ing\u00e9nieur Machine Learning / MLOps \u2013 GCP (F/H)",
+      "created": "2025-05-24T06:55:04Z",
+      "description": "Chez Lincoln , nous formons une communaut\u00e9 d'innovateurs passionn\u00e9s qui red\u00e9finissent l'analyse de donn\u00e9es depuis plus de 30 ans . En tant que Pure Player Data , notre expertise est reconnue dans les domaines de la Modern BI, du Big Data et de la Science des donn\u00e9es . Notre mission ? Transformer les donn\u00e9es en solutions concr\u00e8tes pour nos clients grands comptes dans divers secteurs tels que la banque, le retail, les t\u00e9l\u00e9coms, l'industrie, la sant\u00e9, etc. Nous recherchons un Ing\u00e9nieur Machine Lea\u2026"
+    },
+    {
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Neuilly-sur-Seine, Nanterre"
+      },
+      "longitude": 2.27251,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjE1MzM3OTQ3In0.Lf3-frMVm6RNADvExkss-qoTZQHgH3s8KIGvTBOJkJU",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215337947?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=3C6A37A77B021C4714B954B1B23A6561D6BF5F9F",
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "salary_is_predicted": "0",
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "WHIZE"
+      },
+      "latitude": 48.88357,
+      "description": "Offre d\u2019emploi pour un CDI : Consultant Data Engineer WHIZE est sp\u00e9cialis\u00e9e dans le d\u00e9veloppement de solutions sur mesure en architecture Serverless (Azure, Amazon WS, Google CP) et de solutions bas\u00e9es sur l'\u00e9cosyst\u00e8me Microsoft 365 (SharePoint, Teams, Power Platform). Vos missions : Concevoir des solutions de traitement de volume tr\u00e8s important de donn\u00e9es. D\u00e9veloppement de flux de donn\u00e9es et pr\u00e9paration de leur analyse. Pr\u00e9paration des donn\u00e9es pour l'analyse des donn\u00e9es collect\u00e9es. Profil rech\u2026",
+      "title": "Consultant Data Engineer",
+      "created": "2025-05-25T07:03:54Z",
+      "id": "5215337947"
+    },
+    {
+      "id": "5213733075",
+      "title": "Ing\u00e9nieur DevOps/Ing\u00e9nieure DevOps",
+      "description": "Infogene est une ESN experte dans la gestion des donn\u00e9es critiques. Nous avons plus de 130 clients actifs avec un chiffre d\u2019affaires de plus de 83M\u20ac en 2024. Nous intervenons principalement dans le secteur de la sant\u00e9 mais aussi dans l\u2019\u00e9nergie, le retail, la banque, les assurances. Nous sommes pr\u00e9sents en IDF, \u00e0 Lille, Lyon, Bordeaux, Evreux, Bruxelles et Lausanne . 10 p\u00f4les d\u2019expertise : Digital, Data Management, Gestion de projets, S\u00e9curit\u00e9 de l\u2019information, SAP Supply Chain, Qualit\u00e9 & Valida\u2026",
+      "created": "2025-05-24T06:54:59Z",
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "latitude": 48.811332,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "INFOGENE"
+      },
+      "salary_is_predicted": "0",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzczMzA3NSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.NH5biOsmmin0aLc9ZMvLV2N9QV7ko_EbJv7AJRhVk54",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213733075?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=1B3A6E89CBBC3E726F4E60E509692DB9329F8AC2",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France"
+        ],
+        "display_name": "Ile-de-France, France",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "longitude": 2.351634
+    },
+    {
+      "title": "Data Engineer",
+      "created": "2025-05-24T06:52:51Z",
+      "description": "SI TU ADORES CONSTRUIRE DES PIPELINES SOLIDES COMME LE ROC, CETTE ANNONCE EST POUR TOI CE QUE TU RECHERCHES : \u00c9voluer au sein d\u2019une \u00e9quipe dynamique Participer \u00e0 des projets innovants d\u2019envergure Relever des d\u00e9fis li\u00e9s \u00e0 l\u2019ing\u00e9nierie des donn\u00e9es, aux flux et aux performances Donner un nouveau souffle \u00e0 ta carri\u00e8re Alors nous avons la mission id\u00e9ale pour toi! Au sein d\u2019un acteur majeur du secteur Assurantiel tu participeras, dans le cadre de projets li\u00e9s \u00e0 la protection des donn\u00e9es personnelles \u2026",
+      "id": "5213727437",
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "company": {
+        "display_name": "GROUPE ALLIANCE",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.863839,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzI3NDM3In0.fh6X1dGb3S8-d4T3AUK8DW0b4GZn3zl7BJqIP2byxj0",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213727437?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=696005727F4F6947396F0938CB865AA44895005B",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "location": {
+        "display_name": "Paris, Ile-de-France",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      },
+      "longitude": 2.344631
+    },
+    {
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France"
+      },
+      "longitude": 2.344631,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzM5Mzc3In0.GrdxBYhTxmoBWYlueQfy3TeqZhMAW2LcDuMjkerd-ms",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213739377?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=0AE3ABA39C36A6F98189D215EF45BD93D097327C",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown",
+        "label": "Unknown"
+      },
+      "salary_is_predicted": "0",
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "KatchMe"
+      },
+      "latitude": 48.863839,
+      "title": "ML Engineer / Data scientist - IA g\u00e9n\u00e9rative - Paris",
+      "created": "2025-05-24T06:57:36Z",
+      "description": "L\u2019ENTREPRISE , est une Start-up qui est n\u00e9e d'une collaboration avec l\u2019un des plus grands groupe retail en France, qui contient de grandes marques de distributeurs connues de tous. Leur objectif est de r\u00e9volutionner et faciliter le travail des \u00e9quipes m\u00e9tiers et terrain gr\u00e2ce \u00e0 un e IA g\u00e9n\u00e9rative qui puisse convertir les donn\u00e9es en outils op\u00e9rationnels pour acc\u00e9l\u00e9rer la prise de d\u00e9cision, optimiser l\u2019efficacit\u00e9 des \u00e9quipes et offrir une meilleure exp\u00e9rience clients. LE POSTE : Au sein d\u2019une \u00e9qu\u2026",
+      "id": "5213739377"
+    },
+    {
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "latitude": 48.863839,
+      "company": {
+        "display_name": "Lenstra",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "id": "5215339342",
+      "title": "Head of Cloud (Insurance Sector)",
+      "created": "2025-05-25T07:09:01Z",
+      "description": "About Lenstra Lenstra was created by the passion of engineers specialised in Computer Science with a proven history in delivering top quality solutions to its customers. Bringing together work excellence and vision we managed to serve top tier clients from a variety of industry domains like Banking/Insurance, Luxury and Tech. We help our clients to solve their most difficult problems around Cloud Computing & DevOps, Data Platform, IT Security by having a holistic approach of their environment a\u2026",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France"
+      },
+      "longitude": 2.344631,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjE1MzM5MzQyIn0.qUUMdiplXYMqorv-raloSbldR1dd7KuXNZWYD3tDzeM",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215339342?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=ED6916AA4AA4B417A44015DB4E8BA0B61F52F751",
+      "__CLASS__": "Adzuna::API::Response::Job"
+    },
+    {
+      "company": {
+        "display_name": "Visian",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.89683,
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "title": "Ing\u00e9nieur de donn\u00e9es/Ing\u00e9nieure de donn\u00e9es",
+      "description": "-OFFRE EN CDI- Visian, Soci\u00e9t\u00e9 de conseil sp\u00e9cialis\u00e9e en innovation , design produit , gestion de projet IT et d\u00e9veloppement Data. Recherche un Data Engineer.  Missions En tant que Data Engineer , vous jouerez un r\u00f4le cl\u00e9 dans la conception, la mise en place et la gestion des solutions Cloud pour la collecte, le traitement et le stockage des donn\u00e9es. Vous serez responsable de : Concevoir et maintenir des infrastructures Cloud sur AWS , Azure , ou GCP pour r\u00e9pondre aux besoins des projets data. \u2026",
+      "created": "2025-05-24T06:54:33Z",
+      "id": "5213731963",
+      "longitude": 2.25651,
+      "location": {
+        "display_name": "Courbevoie, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Courbevoie"
+        ]
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213731963?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=7B34EC668CEDC80CB96A9DD1D3BA5157B257BC85",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzczMTk2MyIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.lfgSCTSvVbveSMaoPMTM0paVZ9gxC2X6Lf__Dji4haU"
+    },
+    {
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213727173?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=154D3036AFFADDEC6C4B67DDF72331F427A0DC06",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzcyNzE3MyIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.Afd6sdhzSVn90khTIecOkfs_MJYj51DK-qsgqJGjVUc",
+      "longitude": 2.344631,
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      },
+      "id": "5213727173",
+      "created": "2025-05-24T06:52:48Z",
+      "title": "Data Engineer",
+      "description": "eXalt Value est un cabinet de conseil IT Pure player Data & IA bas\u00e9 \u00e0 Paris (1er arrondissement). Notre offre s\u2019articule autour de 4 piliers r\u00e9unis au sein d\u2019une m\u00eame communaut\u00e9 pour un accompagnement \u00e0 360\u00b0 alliant une expertise technique et m\u00e9thodologique \u00e0 une approche conseil m\u00e9tier: Data Gouvernance & Project Data Engineering & Big Data Data Performance & Analytics Data Science & IA Filiale du groupe eXalt cr\u00e9\u00e9 en 2018, regroupant plus de 1200 collaborateurs en France (Paris, Lyon, Bordeau\u2026",
+      "latitude": 48.863839,
+      "salary_is_predicted": "0",
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "eXalt Value"
+      },
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      }
+    },
+    {
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzNzc2OSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.qffWKJ9Yk6keUterAtcijqdRTVHGObUn1Gy_OmDMzn8",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215337769?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=4B20775EC8C060455D9D38EDF1DAAE54EE699E9D",
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      },
+      "longitude": 2.344631,
+      "id": "5215337769",
+      "created": "2025-05-25T07:03:46Z",
+      "title": "Ing\u00e9nieur DevOps (H/F)",
+      "description": "Et si vous \u00e9tiez notre futur Ing\u00e9nieur DevOps (H/F) talentueux et motiv\u00e9 ?  Vous croyez que l'\u00e9volution et la curiosit\u00e9 sont les cl\u00e9s du succ\u00e8s, et que chaque d\u00e9fi est une opportunit\u00e9 d'apprendre et de grandir ? Alors nous partageons la m\u00eame vision ! Pourquoi ne pas en discuter ensemble ?  Pour commencer, qui sommes-nous ? Cr\u00e9\u00e9e en 2012, Synapsys est une soci\u00e9t\u00e9 de conseil et d\u2019expertise sp\u00e9cialis\u00e9e dans la transformation des infrastructures IT. Notre mission ? Accompagner les plus grandes entr\u2026",
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown",
+        "label": "Unknown"
+      },
+      "latitude": 48.863839,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "Synapsys"
+      },
+      "salary_is_predicted": "0"
+    },
+    {
+      "longitude": 2.344631,
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213729502?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=7211A97654AE0D35F911B7712BDC8F94B5DEE026",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzcyOTUwMiIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.YQktJwBcwdU7m-8f3Nzu5C7DCiCCRnBNq4vZ4JAwzqk",
+      "company": {
+        "display_name": "QOLIBRIS",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.863839,
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown",
+        "label": "Unknown"
+      },
+      "description": "Profil: Data Engineer Contrat: CDI D\u00e9but: ASAP Bac  5 minimum Contexte: Qolibris est un cabinet de conseil sp\u00e9cialis\u00e9 en Data avec une approche durable. Notre offre s\u2019articule en : \u200d4 practices piliers : D\u00e9cisionnelle, Analyse, Intelligence et Architecture  2 practices transverses : Fonctionnelle et Gouvernance Pour chacune de nos missions, selon les environnements et leur maturit\u00e9, nous appliquons une m\u00e9thodologie qui nous est propre : optimisation des taches, bilan carbone et proposition d\u2019ac\u2026",
+      "title": "Data Engineer",
+      "created": "2025-05-24T06:53:34Z",
+      "id": "5213729502"
+    },
+    {
+      "id": "5213726741",
+      "description": "Acteur de r\u00e9f\u00e9rence des syst\u00e8mes d\u2019information augment\u00e9s par l\u2019int\u00e9gration strat\u00e9gique de la data, Consort Group accompagne depuis plus de 30 ans les entreprises pour leur permettre de valoriser leurs patrimoines donn\u00e9es et informatiques \u00e0 leur plein potentiel. Le groupe met ses savoir-faire au service des acteurs majeurs fran\u00e7ais, belges, luxembourgeois, suisses, portugais et marocains, conjuguant les comp\u00e9tences de ses experts. Consortis , leader des services manag\u00e9s aux infrastructures et Co\u2026",
+      "title": "Ing\u00e9nieur Cloud (Microsoft Azure)",
+      "created": "2025-05-24T06:52:44Z",
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "latitude": 48.811332,
+      "company": {
+        "display_name": "Consort Group",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzI2NzQxIn0.m5X5P1tTPQhH_Z-cmyzX9gaLag0OmFff83Jn0WtIhsg",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213726741?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=525246DD14F132A834AA88757C870959CD845FED",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Ile-de-France, France",
+        "area": [
+          "France",
+          "Ile-de-France"
+        ]
+      },
+      "longitude": 2.351634
+    },
+    {
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Neuilly-sur-Seine, Nanterre"
+      },
+      "longitude": 2.27251,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzNzg2MSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.DRiu49H8EEZvWJCZ2F9B-Kc3LM4HlKKgaxMCuabeiDA",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215337861?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=35FCC27D8CAFA7D797216A583DFD66F084B8B602",
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown",
+        "label": "Unknown"
+      },
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "WHIZE"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.88357,
+      "title": "Consultant Power Platform Dataverse",
+      "description": "Welcome To The World Of Whizdom ! Offre d'emploi pour un CDI : Consultant technique Power Platform Whize est une filiale du groupe Neurones (7000 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless. Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise sur toute la chaine d\u00e9cisionnelle (Power BI, Tableau, AZURE Data Factory) Data Engineering : Manipulation et pr\u00e9paration de la Data en\u2026",
+      "created": "2025-05-25T07:03:51Z",
+      "id": "5215337861"
+    },
+    {
+      "created": "2025-05-24T06:59:07Z",
+      "title": "Data Engineer \u2013 Secteur M\u00e9dical",
+      "description": "Vous souhaitez rejoindre un acteur innovant du secteur m\u00e9dical et contribuer \u00e0 l\u2019optimisation des donn\u00e9es au service de la sant\u00e9 et de la recherche ? Un groupe de r\u00e9f\u00e9rence dans la sant\u00e9 connect\u00e9e recherche un(e ) Data Engineer pour structurer et industrialiser ses flux de donn\u00e9es strat\u00e9giques. Votre mission : En tant que Data Engineer , vous serez garant de l\u2019industrialisation des pipelines, de la gouvernance des donn\u00e9es et du d\u00e9veloppement de produits data performants et s\u00e9curis\u00e9s. Vos respon\u2026",
+      "id": "5213749808",
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "salary_is_predicted": "0",
+      "company": {
+        "display_name": "Sander",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "latitude": 48.863839,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzc0OTgwOCIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.2vcekhljvw0gByZsW9z9sAC5gQID2BhCNqmxDqn2HEA",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213749808?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=2FC029076DF2CD39AE7C3F67871AE531E3DBA620",
+      "location": {
+        "display_name": "Paris, Ile-de-France",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      },
+      "longitude": 2.344631
+    },
+    {
+      "latitude": 48.88357,
+      "salary_is_predicted": "0",
+      "company": {
+        "display_name": "WHIZE",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "id": "5215339215",
+      "title": "Consultant Devops Docker/Kubernetes",
+      "created": "2025-05-25T07:08:58Z",
+      "description": "Offre d\u2019emploi pour un CDI : Consultant Devops Docker/Kubernetes Whize est une filiale du groupe Neurones (7000 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless. Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise sur toute la chaine d\u00e9cisionnelle (Power BI, Tableau, AZURE Data Factory) Data Engineering : Manipulation et pr\u00e9paration de la Data en utilisation Python et SQL avanc\u00e9.\u2026",
+      "longitude": 2.27251,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ],
+        "display_name": "Neuilly-sur-Seine, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215339215?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=21413C0BA69D80FC4A47A4EC53F51E28388B1F8C",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzOTIxNSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.hpBpqKTMq8215Ps_zIN3xBk5JV_x7YXhl5e4bf4g9Pk"
+    },
+    {
+      "created": "2025-05-24T06:57:40Z",
+      "title": "Full Stack Engineer - Bio Pharma",
+      "description": "Full Stack Engineer - BioPharma - 12 months contract - Paris (Hybrid) We are seeking a Full-Stack Engineer to help develop and maintain scalable software products that power AI-based solutions for the biopharmaceutical industry . This role involves close collaboration with data scientists, biomedical experts, and product teams to build applications that integrate machine learning with real-world clinical and biomedical data. Full-Stack Engineer \u2013 AI-Driven Biopharma Solutions Location: Paris (3\u2026",
+      "id": "5213739932",
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "RED Global"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.863839,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzM5OTMyIn0.tQw9ozd5VNIe4-yDzQYzONFmjmRqahOUP6KFXWEZT78",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213739932?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=09624236032115A652E991E7C662CD529900FD68",
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      },
+      "longitude": 2.344631
+    },
+    {
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzM5NTgzIn0.Af10Oj-IBZIcjNKOwBXOxeXKm7xU-Z3ELYsCegiBO4k",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213739583?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=CC0EA5E6A88FE3499E252FBEA81110C908B8D850",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France"
+      },
+      "longitude": 2.344631,
+      "title": "Tech Lead Data Engineer H/F",
+      "created": "2025-05-24T06:57:37Z",
+      "description": "A propos de nous Nous sommes le seul industriel de la donn\u00e9e en Europe . Notre m\u00e9tier est de cr\u00e9er, manager et exploiter le patrimoine data de nos clients. Nous avons la conviction que chaque entreprise peut adopter une d\u00e9marche innovante de gestion de la donn\u00e9e et cr\u00e9er des cas d\u2019usage disruptifs en r\u00e9duisant l'impact \u00e9cologique et en diminuant la dette technique. Nous comptons plus de 900 collaborateurs en mission chez nos clients grands comptes dans tout secteur d\u2019activit\u00e9 : banque, assuranc\u2026",
+      "id": "5213739583",
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "company": {
+        "display_name": "JEMS",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.863839
+    },
+    {
+      "title": "Cloud Consultant",
+      "created": "2025-05-25T07:03:55Z",
+      "description": "Contexte Dans le cadre de la transformation digitale d\u2019envergure d\u2019un acteur majeur des services informatiques, un programme strat\u00e9gique est lanc\u00e9 pour moderniser l\u2019infrastructure r\u00e9seau , consolider les Data Centers \u00e0 l\u2019\u00e9chelle europ\u00e9enne et migrer progressivement vers une architecture Cloud Hybride . Ce programme int\u00e8gre des enjeux de performance, d\u2019agilit\u00e9 et de r\u00e9silience , avec un focus fort sur les technologies SDDC et les mod\u00e8les op\u00e9rationnels cloud-native . L\u2019entreprise recherche un Con\u2026",
+      "id": "5215338014",
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "maltem Paris"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.811332,
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215338014?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=3DAD072471F541824FD1FAF56DA3EDBBA377BA67",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjE1MzM4MDE0In0.4GmVR9rLu-IrhGQqoq4cAkljWJA8bCTBFVWwGghnu3I",
+      "longitude": 2.351634,
+      "location": {
+        "display_name": "Ile-de-France, France",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France"
+        ]
+      }
+    },
+    {
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzc1MDE1MyIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.rdUn4r44hUDeHE4_Wu5VJKxP1t6nk5pxowptemlh_JQ",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213750153?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=7CEFA3755A3063BC2872008C036270A104DD3EBB",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Yvelines",
+          "Versailles",
+          "V\u00e9lizy-Villacoublay"
+        ],
+        "display_name": "V\u00e9lizy-Villacoublay, Versailles",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "longitude": 2.19001,
+      "created": "2025-05-24T06:59:10Z",
+      "title": "Cloud Builder Finance H/F",
+      "description": "Construisons ensemble un avenir de confiance Thales est un leader mondial des hautes technologies sp\u00e9cialis\u00e9 dans trois secteurs d\u2019activit\u00e9 : D\u00e9fense & S\u00e9curit\u00e9, A\u00e9ronautique & Spatial, et Cyber & Digital. Il d\u00e9veloppe des produits et solutions qui contribuent \u00e0 un monde plus s\u00fbr, plus respectueux de l\u2019environnement et plus inclusif. Le Groupe investit pr\u00e8s de 4 milliards d\u2019euros par an en Recherche & D\u00e9veloppement, notamment dans des domaines cl\u00e9s de l\u2019innovation tels que l\u2019IA, la cybers\u00e9curit\u2026",
+      "id": "5213750153",
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "salary_is_predicted": "0",
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "Thales"
+      },
+      "latitude": 48.78283
+    },
+    {
+      "description": "Fullstack Web Developer  Paris (4 days onsite) We're looking for a skilled and motivated Fullstack Web Developer to join a fast-growing Paris-based tech company building cutting-edge solutions at the intersection of healthcare, robotics, and AI. You'll play a key role in developing tools used by medical professionals worldwide. What You\u2019ll Do Build and maintain our main web application used by doctors. Create new features and improve user experience, including a 2D map-style viewer. Develop sec\u2026",
+      "title": "Full Stack Engineer",
+      "created": "2025-05-24T06:59:17Z",
+      "id": "5213751050",
+      "company": {
+        "display_name": "European Tech Recruit",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.863839,
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213751050?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=354F02568F78656730601FD37E4067F9A8CA7C58",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzc1MTA1MCIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.sLd-5lxRQdLc21R9QXjxQmSqMPIDPzq_nGT_1eyZoD0",
+      "longitude": 2.344631,
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      }
+    },
+    {
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "Visian"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.89683,
+      "created": "2025-05-24T13:08:50Z",
+      "title": "Ing\u00e9nieur de donn\u00e9es/Ing\u00e9nieure de donn\u00e9es",
+      "description": "-OFFRE EN CDI- Visian, Soci\u00e9t\u00e9 de conseil sp\u00e9cialis\u00e9e en innovation, design produit, gestion de projet IT et d\u00e9veloppement Data. Recherche un Data Engineer.  Missions En tant que Data Engineer, vous jouerez un r\u00f4le cl\u00e9 dans la conception, la mise en place et la gestion des solutions Cloud pour la collecte, le traitement et le stockage des donn\u00e9es. Vous serez responsable de : * Concevoir et maintenir des infrastructures Cloud sur AWS, Azure, ou GCP pour r\u00e9pondre aux besoins des projets data. * I\u2026",
+      "id": "5214225636",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Courbevoie",
+          "La D\u00e9fense"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "La D\u00e9fense, Courbevoie"
+      },
+      "longitude": 2.25651,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNDIyNTYzNiIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.PJYMDbFCkSBA2WfmCUF6vH3ssBVcv9HVlksNMF4TUXk",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5214225636?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=ADB86EA283A10F4FFA2EAE9EB5AD616CE38195CB",
+      "__CLASS__": "Adzuna::API::Response::Job"
+    },
+    {
+      "category": {
+        "label": "Emplois Informatique",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "it-jobs"
+      },
+      "latitude": 48.84777,
+      "company": {
+        "display_name": "Lutessa",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "description": "Nous recherchons un expert SysOps / DEVOPS / Data Engineering pour accompagner l'\u00e9quipe en charge de la plateforme d'infrastructure de monitoring Dynatrace. La mission est orient\u00e9e run, automatisation et industrialisation, avec une forte exigence de haute disponibilit\u00e9 et de compliance. Vos missions : Maintien en conditions op\u00e9rationnelles de l'infrastructure Dynatrace (clusters, ActiveGates, OneAgents) Pr\u00e9paration et ex\u00e9cution des upgrades Dynatrace et OS sous-jacents Industrialisation via out\u2026",
+      "salary_max": 60000,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Seine-Saint-Denis",
+          "Le Raincy",
+          "Noisy-le-Grand"
+        ],
+        "display_name": "Noisy-le-Grand, Le Raincy",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "longitude": 2.55281,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzY5NzQ5NyIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.2l796Y2RPtieo6zZOA9SgFcTYCjBZJ3Lcxqrd5WY4Ck",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213697497?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=6B33338F49529EF76026338EB6C34E7B8F9273A0",
+      "salary_is_predicted": "0",
+      "id": "5213697497",
+      "title": "Data Engineering - DevOps-Sysops H/F",
+      "created": "2025-05-24T06:27:58Z",
+      "contract_time": "full_time",
+      "salary_min": 55000,
+      "__CLASS__": "Adzuna::API::Response::Job"
+    },
+    {
+      "description": "Welcome To The World Of Whizdom ! Offre d'emploi pour un CDI : Consultant Java Cloud Native Whize est une filiale du groupe Neurones (7000 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless. Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise sur toute la chaine d\u00e9cisionnelle (Power BI, Tableau, AZURE Data Factory) Data Engineering : Manipulation et pr\u00e9paration de la Data en utilis\u2026",
+      "title": "Consultant Java Cloud Native",
+      "created": "2025-05-25T07:07:59Z",
+      "id": "5215338942",
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "WHIZE"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.88357,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzODk0MiIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.BfmC46zswgkMcmiypW13Mq2TPwW8rZTJGDTb5xUGk7o",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215338942?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=D84402A6679FBD8C7DE03683466849E6711BCE34",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Neuilly-sur-Seine, Nanterre"
+      },
+      "longitude": 2.27251
+    },
+    {
+      "description": "Offre d\u2019emploi pour un CDI : Consultant Devops Whize est une filiale du groupe Neurones (7000 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless. Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise sur toute la chaine d\u00e9cisionnelle (Power BI, Tableau, AZURE Data Factory) Data Engineering : Manipulation et pr\u00e9paration de la Data en utilisation Python et SQL avanc\u00e9. D\u00e9veloppement en \u2026",
+      "title": "Consultant Technique DevOps (CI/CD)",
+      "created": "2025-05-25T07:05:37Z",
+      "id": "5215338615",
+      "company": {
+        "display_name": "WHIZE",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.88357,
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215338615?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=319A41F925A00D7FF7666E9D61AE84AB6B94CBA6",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzODYxNSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.P-wQGkjPnELZW7xIUxXxVrw8b5JqIqRTOpEdEOB1_Eo",
+      "longitude": 2.27251,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ],
+        "display_name": "Neuilly-sur-Seine, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      }
+    },
+    {
+      "id": "5213733471",
+      "description": "Consultant Data & Analytics Engineer \u00c0 propos de l'entreprise - Esmoz est un challenger pure player Data & IA en France, acteur de la transformation des mod\u00e8les ESN. Depuis 2019, nous avons constitu\u00e9 une communaut\u00e9 de talents hyper-sp\u00e9cialis\u00e9s pour accompagner nos clients sur des projets \u00e0 forte valeur ajout\u00e9e. Aujourd\u2019hui, nous entamons une nouvelle phase de croissance ambitieuse et recherchons nos futurs Esmoziens, Data & Analytics Engineers pour accompagner nos clients sur des projets Data &\u2026",
+      "title": "Consultant Data & Analytics Engineer (H/F)",
+      "created": "2025-05-24T06:55:05Z",
+      "latitude": 48.89434,
+      "salary_is_predicted": "0",
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "Esmoz"
+      },
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213733471?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=9958D6F8F66461A1F3AA8051DC7FA1226E28D7CB",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzMzNDcxIn0.TthuS6Ru7_D8_IdyLyNL8e6WmABZR3o06tUU1YIS3V8",
+      "longitude": 2.28834,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Levallois-Perret"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Levallois-Perret, Nanterre"
+      }
+    },
+    {
+      "longitude": 2.351634,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Ile-de-France, France"
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215339214?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=C504CBCB0C11F0A1668727C4C8C6A42E1957FC78",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzOTIxNCIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.FgSz5N-riogNqI0DsTDMzwvai2xDktDJRYt0NE2gWLg",
+      "latitude": 48.811332,
+      "company": {
+        "display_name": "maltem Paris",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "id": "5215339214",
+      "description": "Contexte Dans le cadre de sa transformation num\u00e9rique globale , une entreprise internationale des services informatiques renforce sa ligne de produit Data Center & Cloud Network . Cette entit\u00e9 a en charge l\u2019ensemble des infrastructures r\u00e9seaux critiques : interconnexion de Data Centers, connectivit\u00e9 Cloud, backbone r\u00e9seau, s\u00e9curit\u00e9, performance et r\u00e9silience. L\u2019objectif du programme est d\u2019 harmoniser les infrastructures r\u00e9seau \u00e0 l\u2019\u00e9chelle mondiale , en int\u00e9grant les standards de s\u00e9curit\u00e9, de go\u2026",
+      "title": "Data Network Consultant",
+      "created": "2025-05-25T07:08:58Z"
+    },
+    {
+      "longitude": 2.24344,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Boulogne-Billancourt"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Boulogne-Billancourt, Hauts-de-Seine"
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213726794?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=D27BF720230C428046681B367CBAA9890882F8EC",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzcyNjc5NCIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.4ZpAxH2cS8AgEmkUrfT6mc7zseYjqR3bB888eQmaDrU",
+      "latitude": 48.83381,
+      "salary_is_predicted": "0",
+      "company": {
+        "display_name": "DELANE SI",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "id": "5213726794",
+      "title": "Data Engineer Spark/Scala Confirm\u00e9 H/F",
+      "description": "QUI SOMMES-NOUS ? Depuis 20 ans, Delane SI se distingue par son expertise et son engagement aux c\u00f4t\u00e9s des Grands Comptes du secteur Banque, Finance et Assurance. Plus qu\u2019un prestataire , nous sommes un v\u00e9ritable partenaire de confiance dans la r\u00e9ussite de projets IT les plus strat\u00e9giques. Notre vocation : Accompagner nos Clients \u00e0 chaque \u00e9tape de leurs r\u00e9alisations. De l\u2019\u00e9tude initiale \u00e0 l\u2019int\u00e9gration des solutions techniques avanc\u00e9es, nous assurons un suivi rigoureux jusqu\u2019au d\u00e9ploiement et au\u2026",
+      "created": "2025-05-24T06:52:44Z"
+    },
+    {
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzczNzMxOSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.VQYR9a7Tda1vfg38sRR4ZbPoJCe8dL5NccfHBJTD4cs",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213737319?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=C61377EE0CC1AC40E7F1A626F76B9193EF8E08F2",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "display_name": "Paris, Ile-de-France",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "longitude": 2.344631,
+      "created": "2025-05-24T06:57:13Z",
+      "title": "Asset Manager, Data Center",
+      "description": "Alibaba Cloud Data Center is a global cloud computing infrastructure offering high-performance, available, and secure cloud services across 30 cloud regions and 89 availability zones through advanced technology and global deployment. Leveraging years of experience, Alibaba Cloud has innovated various technologies such as its in-house efficient Panama power supply and highly elastic cooling technology enabling nearby cooling, precise temperature control, and secure operations. The data center al\u2026",
+      "id": "5213737319",
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "company": {
+        "display_name": "Alibaba Cloud",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.863839
+    },
+    {
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "latitude": 48.88357,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "WHIZE"
+      },
+      "salary_is_predicted": "0",
+      "id": "5215532413",
+      "description": "Welcome To The World Of Whizdom ! Offre d'emploi pour un CDI : D\u00e9veloppeur Machine learning (ML) WHIZE est sp\u00e9cialis\u00e9e dans le d\u00e9veloppement de solutions sur mesure en architecture Serverless (Azure, AWS) et de solutions bas\u00e9es sur l'\u00e9cosyst\u00e8me Microsoft 365 (SharePoint, Teams, Power Platform). Vos missions : D\u00e9veloppement d\u2019application en lien avec l\u2019exploitation de mod\u00e8les de types machine learning : pr\u00e9dictions de consommation, maintenance pr\u00e9dictive de nos infrastructures (canalisations, co\u2026",
+      "title": "Machine Learning Engineer",
+      "created": "2025-05-25T12:20:24Z",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ],
+        "display_name": "Neuilly-sur-Seine, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "longitude": 2.27251,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTUzMjQxMyIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.2YOSKedPBDZvuf8LeKiQYJ25OVS6T1OZ7rmF76KChdE",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215532413?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=EECBB577CB8FBE661B781A8E9852F7EA448CC500",
+      "__CLASS__": "Adzuna::API::Response::Job"
+    },
+    {
+      "salary_is_predicted": "0",
+      "company": {
+        "display_name": "Hunter Bond",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "latitude": 48.863839,
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "title": "Software Engineer (Data) - Up to \u20ac130k EUR  Industry Leading Bonus - Elite FinTech Firm",
+      "created": "2025-05-24T06:52:57Z",
+      "description": "Job title: Software Engineer (Data) Client: Elite FinTech Firm Salary: Up to \u20ac130k EUR  Industry Leading Bonus Location: Paris (Hybrid Working) Sells: Cutting-edge tech, ownership of multiple greenfield projects, no red tape, gold medal Olympiads, exceptional technologists, option to research and develop your own models, a friendly/collaborative environment, beautiful offices. An Elite FinTech Firm is looking for a highly talented Software Engineer with extensive experience working with high vo\u2026",
+      "id": "5213727880",
+      "longitude": 2.344631,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "display_name": "Paris, Ile-de-France",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213727880?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=55A8A5A7C28BCF122F51F824D49388756C6EFCF9",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzcyNzg4MCIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.k9QZi2cHvBI4MOfooNnjbLetiLalwoxF_HjiOqfPbMU"
+    },
+    {
+      "created": "2025-05-25T07:03:54Z",
+      "title": "Junior Product Owner Modern Apps (.Net / Java)",
+      "description": "A propos de Whize : filiale du groupe Neurones (7200 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless (Azure, AWS,GCP ). Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise dans toute la chaine d\u00e9cisionnelle pour la cr\u00e9ation de tableaux de bord interactifs, l'extraction et transformation (ETL) des donn\u00e9es de diff\u00e9rentes sources en utilisant des outils de Business Intelligence (BI\u2026",
+      "id": "5215337928",
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "WHIZE"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.88357,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzNzkyOCIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.WrXKxNiyzcDVjdQ5iIOHKAb-lqpq-R0v3Cj8_GNUxZk",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215337928?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=08EFFA174779FA63BFD1225E4D0E891D13D3464A",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Neuilly-sur-Seine, Nanterre"
+      },
+      "longitude": 2.27251
+    },
+    {
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzM3MTQyIn0.oUrbAS9A3G871wlDMN7v2B34u5GnRpxFUemPJBAcKjk",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213737142?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=7957718CE1D477D12876532839165BF5BC9E737F",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France"
+      },
+      "longitude": 2.344631,
+      "created": "2025-05-24T06:57:12Z",
+      "title": "Data engineer H/F - Assurtech",
+      "description": "Cette Assurtech de l'industrie en forte croissance cherche un.e Data Engineer / DataOps pour structurer et industrialiser son environnement data. L\u2019objectif : centraliser, transformer et rendre actionnables les donn\u00e9es produit & m\u00e9tier dans une stack moderne sur GCP.  Vos missions : Concevoir des pipelines ELT entre nos diff\u00e9rents produits (interfaces experts, backoffice, etc.) Centraliser et transformer les donn\u00e9es dans BigQuery Automatiser les workflows avec Airflow Orchestrer les transformat\u2026",
+      "id": "5213737142",
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown",
+        "label": "Unknown"
+      },
+      "salary_is_predicted": "0",
+      "company": {
+        "display_name": "LITY",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "latitude": 48.863839
+    },
+    {
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjE1MzM4NjM2In0.JRtH_bzuynZ4xntrK5_cOhDrLqYWWznBxkQz90IKB3Y",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215338636?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=4DA957D5463980838841BFC610F171BF9A7686F7",
+      "location": {
+        "display_name": "Neuilly-sur-Seine, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ]
+      },
+      "longitude": 2.27251,
+      "id": "5215338636",
+      "created": "2025-05-25T07:05:41Z",
+      "title": "Data Product Owner",
+      "description": "A propos de Whize : filiale du groupe Neurones (7200 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless (Azure, AWS,GCP ). Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise dans toute la chaine d\u00e9cisionnelle pour la cr\u00e9ation de tableaux de bord interactifs, l'extraction et transformation (ETL) des donn\u00e9es de diff\u00e9rentes sources en utilisant des outils de Business Intelligence (BI\u2026",
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "latitude": 48.88357,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "WHIZE"
+      },
+      "salary_is_predicted": "0"
+    },
+    {
+      "title": "Research Engineer",
+      "created": "2025-05-24T06:57:36Z",
+      "description": "\u200d LLM Engineer w/ particular focus on VLMs and multimodality  Hybrid in Paris  Competitive base The Mission To ttackle the fundamental challenges of world modeling and establish a new paradigm for next-generation machine reasoning . They are looking for passionate individuals who share our vision and are eager to push the boundaries of AI together. Key Responsibilities: Data Infrastructure & Pipelines Design, implement, and maintain scalable video data pipelines to support large-scale training.\u2026",
+      "id": "5213739354",
+      "salary_is_predicted": "0",
+      "company": {
+        "display_name": "Storm3",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "latitude": 48.863839,
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown",
+        "label": "Unknown"
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213739354?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=33056C14F72D600D9D441985E2C3774C4194D09B",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzczOTM1NCIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.OJ_JyNJ0ojs-iv-ZgufzogdS0Et5NveFfcRmc1ZL0sw",
+      "longitude": 2.344631,
+      "location": {
+        "display_name": "Paris, Ile-de-France",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      }
+    },
+    {
+      "longitude": 2.28574,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Antony",
+          "Ch\u00e2tillon"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Ch\u00e2tillon, Antony"
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215339340?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=EACF166AA13F1FAE3B3C554032BB1FDE1BAFE67A",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjE1MzM5MzQwIn0.Eii3qOo4a3QV0FFaCbrbw36pvzCNourus4Mq_oRtI5A",
+      "company": {
+        "display_name": "N\u00e9osoft",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.79986,
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "title": "Data Modeler",
+      "created": "2025-05-25T07:09:01Z",
+      "description": "Tous nos postes sont ouverts au t\u00e9l\u00e9travail Groupe ind\u00e9pendant de conseil en transformation digitale de pr\u00e8s de 1800 collaborateurs, N\u00e9osoft s\u2019est construit, depuis 2005, sur un mod\u00e8le qui place l\u2019excellence, le d\u00e9passement de soi et la RSE au c\u0153ur de sa strat\u00e9gie. En nous rejoignant, vous int\u00e9grez des communaut\u00e9s d\u2019experts et de talents qui vous permettent de d\u00e9velopper vos comp\u00e9tences et d\u2019offrir \u00e0 nos clients le meilleur accompagnement possible. Notre savoir-faire s\u2019articule autour de nos 6 \u2026",
+      "id": "5215339340"
+    },
+    {
+      "id": "5213749489",
+      "description": "Nous recherchons un Ing\u00e9nieur de Production confirm\u00e9 pour notre client du secteur bancaire. Vous interviendrez dans un environnement DATA et Production applicative infog\u00e9r\u00e9 , votre r\u00f4le sera cl\u00e9 pour : Assurer le bon fonctionnement des plateformes techniques li\u00e9es aux donn\u00e9es (DATA). G\u00e9rer l\u2019exploitation , l\u2019\u00e9volution, la s\u00e9curit\u00e9 et la conformit\u00e9 de ces plateformes. Coordonner les actions entre les \u00e9quipes internes, les \u00e9diteurs de logiciels et les prestataires techniques. Piloter des projets \u2026",
+      "title": "Ing\u00e9nieur de production / Int\u00e9grateur technique polyvalent (H/F)",
+      "created": "2025-05-24T06:59:05Z",
+      "latitude": 48.863839,
+      "salary_is_predicted": "0",
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "DCS Easyware"
+      },
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown",
+        "label": "Unknown"
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213749489?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=773E7591D565528258B6A10556E7C6A78E788F4A",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzQ5NDg5In0.huCjV37OvyI03aHqhC3UDFx2tEIDFBrRNoPUvRbxxPA",
+      "longitude": 2.344631,
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      }
+    },
+    {
+      "latitude": 48.863839,
+      "company": {
+        "display_name": "Meritis | B Corp\u2122",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown",
+        "label": "Unknown"
+      },
+      "id": "5213729274",
+      "title": "Data Engineer Finance - CDI (H/F)",
+      "description": "Meritis est un cabinet de conseil sp\u00e9cialis\u00e9 en IT pour la finance, reconnu comme un acteur cl\u00e9 du secteur. A titre d'exemple, 1 er partenaire et principal fournisseur d\u2019Amundi, 2 nd fournisseur de BNPP CIB et partenaire majeur de Natixis, nous accompagnons l\u2019ensemble des banques d\u2019investissement, interm\u00e9diaires de march\u00e9s, hedge funds, asset managers de la place parisienne. Notre expertise couvre toute la cha\u00eene Front-to-Back, en intervenant sur des projets strat\u00e9giques et \u00e0 forte valeur ajout\u2026",
+      "created": "2025-05-24T06:53:30Z",
+      "longitude": 2.344631,
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213729274?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=236941223517EE0E534B9F2FDC5CF20FF4130260",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzI5Mjc0In0.LXrcLgKbpCNnj6djGuMTx8WEy1jKcaJXpIJOSAoXyYY"
+    },
+    {
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213733352?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=75E798B6B5B6A61A37367DF0E5BD54B145E35AC7",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzMzMzUyIn0.w2Z3FVBqztWkvvRwOzg7s1W7nOKgWE-RSWivP9GXSrQ",
+      "longitude": 2.344631,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "display_name": "Paris, Ile-de-France",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "id": "5213733352",
+      "title": "Full Stack Engineer",
+      "created": "2025-05-24T06:55:03Z",
+      "description": "Fullstack Software Engineer - Paris based start-up We are working with a highly interesting Paris based start-up who have created an innovative robotic device from scratch, enabling the world's first high-resolution, full-body skin scan to be completed automatically in minutes - aiding the oncology and medical realm diagnosing skin cancer. The company are looking to further grow their engineering outfit, hear you will contribute to the large-scale deployment of this pioneering tech and help phy\u2026",
+      "latitude": 48.863839,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "European Tech Recruit"
+      },
+      "salary_is_predicted": "0",
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "it-jobs",
+        "label": "Emplois Informatique"
+      }
+    },
+    {
+      "id": "5215338778",
+      "created": "2025-05-25T07:06:04Z",
+      "title": "Consultant Node.js Cloud Native",
+      "description": "Welcome To The World Of Whizdom! Offre d\u2019emploi pour un CDI : Consultant Node.js Cloud Native Pourquoi les d\u00e9veloppeurs Javascript ne comprennent jamais les blagues \u2753 WHIZE a la r\u00e9ponse : https://lnkd.in/evgMAQKP Whize est une filiale du groupe Neurones (7000 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless. Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise sur toute la chaine \u2026",
+      "latitude": 48.88357,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "WHIZE"
+      },
+      "salary_is_predicted": "0",
+      "category": {
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown",
+        "label": "Unknown"
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215338778?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=88A4EEF1D35DB4DEC44DA8C6547164107560BBEB",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzODc3OCIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.hyjm9SYOCoxdugiqDvjF9mj2GWuFV5WojtGkQsEVd54",
+      "longitude": 2.27251,
+      "location": {
+        "display_name": "Neuilly-sur-Seine, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ]
+      }
+    },
+    {
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5213750065?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=FB96F22D05BF53C5617178619006C4CB9223BDB1",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzc1MDA2NSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.N8tJ-edxkTKy4xcdH6WpJ8g1hOswzglhW-AlYEo1jPs",
+      "longitude": 2.344631,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France"
+      },
+      "title": "Dev Python TypeScript IAGen plateforme m\u00e9dia",
+      "description": "Prestation de dev fullstack Python TypeScript, plateforme IA g\u00e9n\u00e9rative Data avec exp souhait\u00e9e secteur m\u00e9dia. Python FastAPI, DTO, Langchain TypeScript, React, Node.js Google Cloud Platform (Cloud Run, Cloud Functions, Vertex AI) DevOps GitLab CI/CD APIs REST et GraphQL BDD relationnelles BigQuery, PostgreSQL, NoSQL Docker, Kubernetes, IaaC Terraform, Cloud Build RAG et orchestration LLM Agile/Scrum et collaboration avec les \u00e9quipes produit et DevOps Dev de nouvelles interfaces et am\u00e9lioration\u2026",
+      "created": "2025-05-24T06:59:09Z",
+      "id": "5213750065",
+      "salary_is_predicted": "0",
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "ALXDR Software Engineering"
+      },
+      "latitude": 48.863839,
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      }
+    },
+    {
+      "longitude": 2.28834,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Levallois-Perret"
+        ],
+        "display_name": "Levallois-Perret, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5214307672?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=AAB69483FD7DCC39BF0569BAB5F83FE8FE20A8DC",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjE0MzA3NjcyIn0.DY2aV8SDYAekHpYKnkMe8TqdEpRlER-dgsUU0BDdZpc",
+      "latitude": 48.89434,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "Esmoz"
+      },
+      "salary_is_predicted": "0",
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "id": "5214307672",
+      "title": "Consultant Ing\u00e9nieur Data (H/F) (remote)",
+      "description": "Consultant Data & Analytics Engineer \u00c0 propos de l'entreprise - Esmoz est un challenger pure player Data & IA en France, acteur de la transformation des mod\u00e8les ESN. Depuis 2019, nous avons constitu\u00e9 une communaut\u00e9 de talents hyper-sp\u00e9cialis\u00e9s pour accompagner nos clients sur des projets \u00e0 forte valeur ajout\u00e9e. Aujourd\u2019hui, nous entamons une nouvelle phase de croissance ambitieuse et recherchons nos futurs Esmoziens, Data & Analytics Engineers pour accompagner nos clients sur des projets Data &\u2026",
+      "created": "2025-05-24T13:59:57Z"
+    },
+    {
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Levallois-Perret"
+        ],
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Levallois-Perret, Nanterre"
+      },
+      "longitude": 2.28834,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNDIyNTYxNCIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.L9_7Ljtehq1_CyODrK9ORC2X9rN3P1ZsZwEhpf7-eGg",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5214225614?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=8B47E99D1D655FBE29D152619C07AD070D651BED",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "latitude": 48.89434,
+      "salary_is_predicted": "0",
+      "company": {
+        "display_name": "Esmoz",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "id": "5214225614",
+      "description": "Consultant Data & Analytics Engineer \u00c0 propos de l'entreprise - Esmoz est un challenger pure player Data & IA en France, acteur de la transformation des mod\u00e8les ESN. Depuis 2019, nous avons constitu\u00e9 une communaut\u00e9 de talents hyper-sp\u00e9cialis\u00e9s pour accompagner nos clients sur des projets \u00e0 forte valeur ajout\u00e9e. Aujourd\u2019hui, nous entamons une nouvelle phase de croissance ambitieuse et recherchons nos futurs Esmoziens, Data & Analytics Engineers pour accompagner nos clients sur des projets Data &\u2026",
+      "title": "Ing\u00e9nieur Analyst Data H/F (CDI)",
+      "created": "2025-05-24T13:08:49Z"
+    },
+    {
+      "longitude": 2.34016,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris",
+          "2\u00e8me Arrondissement"
+        ],
+        "display_name": "2\u00e8me Arrondissement, Paris",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "redirect_url": "https://www.adzuna.fr/details/5213627826?utm_medium=api&utm_source=ef4a1e8d",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzYyNzgyNiIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.ywEN8WdIFOQCVeqdatAqQoTuVGp9dxGBmPRwQMlLjgA",
+      "company": {
+        "display_name": "Ageras",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.86654,
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "description": "At Ageras, we are redefining how entrepreneurs\u2014freelancers, self-employed professionals, and SMEs\u2014manage their banking and administrative tasks. Through seamless tools and innovative banking solutions, we help them focus on what matters most: growing their businesses. Our vision is to become the best friend of every small entrepreneur across Europe.  Over the years, Ageras has grown through the merging of top European FinTechs like Shine (), Kontist (), Tellow (), and more. Today, we\u2019re a team \u2026",
+      "title": "Data Software Engineer - Banking Operations",
+      "created": "2025-05-24T05:07:12Z",
+      "id": "5213627826"
+    },
+    {
+      "redirect_url": "https://www.adzuna.fr/details/5213700328?utm_medium=api&utm_source=ef4a1e8d",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjEzNzAwMzI4In0.64pcPXGSgVyTWMlGqd_9q_5S4zC5QJHt9LZWw7FAiE0",
+      "longitude": 2.344631,
+      "location": {
+        "display_name": "Paris, Ile-de-France",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      },
+      "contract_time": "full_time",
+      "id": "5213700328",
+      "created": "2025-05-24T06:32:20Z",
+      "title": "Alternant Data Engineer - DevOps H/F",
+      "description": "Le candidat rejoindra une \u00e9quipe pluridisciplinaire travaillant en m\u00e9thode Scrum Agile sur des plateformes Data. Il sera amen\u00e9 \u00e0 r\u00e9aliser des activit\u00e9s aussi bien de d\u00e9veloppement des outils internes \u00e0 la plateforme que de support \u00e0 nos cas d'usages, selon la roadmap technique et applicative, et les correctifs urgents. D'un point de vue environnement technique la RATP a fait le choix de Databricks sur AWS pour porter le coeur de sa plateforme data. 1. D\u00e9veloppement et Int\u00e9gration des plateforme\u2026",
+      "latitude": 48.863839,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "RATP"
+      },
+      "salary_is_predicted": "0",
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      }
+    },
+    {
+      "longitude": 2.28834,
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Levallois-Perret, Nanterre",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Levallois-Perret"
+        ]
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5214307348?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=99B0283099182FE3F5F48E842FE2AC4F024692CE",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiQUZmQ0VTczY4QkdLUEJGOEFMYUNldyIsImkiOiI1MjE0MzA3MzQ4In0.Sjb5v-oz-HdLYHUVsnmUgDT6Y75rb-77oRe8PzoEm9w",
+      "company": {
+        "display_name": "Esmoz",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.89434,
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "title": "Data Analyst - Engineer - CDI H/F",
+      "created": "2025-05-24T13:59:49Z",
+      "description": "Consultant Data & Analytics Engineer \u00c0 propos de l'entreprise - Esmoz est un challenger pure player Data & IA en France, acteur de la transformation des mod\u00e8les ESN. Depuis 2019, nous avons constitu\u00e9 une communaut\u00e9 de talents hyper-sp\u00e9cialis\u00e9s pour accompagner nos clients sur des projets \u00e0 forte valeur ajout\u00e9e. Aujourd\u2019hui, nous entamons une nouvelle phase de croissance ambitieuse et recherchons nos futurs Esmoziens, Data & Analytics Engineers pour accompagner nos clients sur des projets Data &\u2026",
+      "id": "5214307348"
+    },
+    {
+      "description": "Votre principal r\u00f4le sera de : Concevoir, r\u00e9aliser, superviser, optimiser et maintenir les pipelines d'ingestions des donn\u00e9es n\u00e9cessaires aux applications data et IA m\u00e9tier dans la Plateforme Data Groupe. L'ensemble des pipelines de donn\u00e9es sont ex\u00e9cut\u00e9es dans Databricks. Assurer la performance des fonctionnalit\u00e9s et outillages d\u00e9velopp\u00e9s dans la plateforme, aux c\u00f4t\u00e9s des DevOps du socle : mettre en place ou am\u00e9liorer la supervision, contr\u00f4ler leur qualit\u00e9, r\u00e9aliser des correctifs et des \u00e9volut\u2026",
+      "category": {
+        "label": "Emplois RH et Recrutement",
+        "tag": "hr-jobs",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "latitude": 48.863839,
+      "company": {
+        "display_name": "RATP",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxMzg5MTI1OSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.0quOL72ZLysguf-lqaPgbskEx3Z5NApViC0VQSysyYU",
+      "redirect_url": "https://www.adzuna.fr/details/5213891259?utm_medium=api&utm_source=ef4a1e8d",
+      "salary_max": 35000,
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ],
+        "display_name": "Paris, Ile-de-France",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "longitude": 2.344631,
+      "id": "5213891259",
+      "title": "Data Engineer - F/H",
+      "created": "2025-05-24T08:07:43Z",
+      "contract_type": "permanent",
+      "salary_is_predicted": "0",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "salary_min": 35000
+    },
+    {
+      "latitude": 48.88357,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "WHIZE"
+      },
+      "salary_is_predicted": "0",
+      "category": {
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "label": "Unknown"
+      },
+      "id": "5215339116",
+      "title": "Business Analyst Salesforce Commerce Cloud (SFCC)",
+      "description": "Welcome To The World Of Whizdom Whize est une filiale du groupe Neurones (7000 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless. Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise sur toute la chaine d\u00e9cisionnelle (Power BI, Tableau, AZURE Data Factory) Data Engineering : Manipulation et pr\u00e9paration de la Data en utilisation Python et SQL avanc\u00e9. D\u00e9veloppement en Cloud Native: :\u2026",
+      "created": "2025-05-25T07:08:16Z",
+      "longitude": 2.27251,
+      "location": {
+        "display_name": "Neuilly-sur-Seine, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ]
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215339116?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=D5182534787107EEA43E2BB4E49A41AB9EB923DF",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzOTExNiIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.hD1fAJmif-JxwuVmO21mEfK1otvpuVGDL-dgskflhQU"
+    },
+    {
+      "longitude": 2.27251,
+      "location": {
+        "display_name": "Neuilly-sur-Seine, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ]
+      },
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215339249?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=D32D43F91ACC4DD27ED6BC28735D81482A87E9A8",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzOTI0OSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.NeQ88g29xixckuINX_gn1Q9aBku_Wjv36WK9GWGlj7A",
+      "company": {
+        "display_name": "WHIZE",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "latitude": 48.88357,
+      "category": {
+        "label": "Unknown",
+        "tag": "unknown",
+        "__CLASS__": "Adzuna::API::Response::Category"
+      },
+      "created": "2025-05-25T07:09:00Z",
+      "title": "Chef de Projet Salesforce Commerce Cloud (SFCC)",
+      "description": "Welcome To The World Of Whizdom Whize est une filiale du groupe Neurones (7000 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless. Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise sur toute la chaine d\u00e9cisionnelle (Power BI, Tableau, AZURE Data Factory) Data Engineering : Manipulation et pr\u00e9paration de la Data en utilisation Python et SQL avanc\u00e9. D\u00e9veloppement en Cloud Native: :\u2026",
+      "id": "5215339249"
+    },
+    {
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "latitude": 48.88357,
+      "company": {
+        "__CLASS__": "Adzuna::API::Response::Company",
+        "display_name": "WHIZE"
+      },
+      "salary_is_predicted": "0",
+      "id": "5215339721",
+      "title": "Consultant Data Steward",
+      "description": "Welcome To The World Of Whizdom ! Offre d\u2019emploi pour un CDI : Data Steward Whize est une filiale du groupe Neurones (7000 collaborateurs en France), sp\u00e9cialis\u00e9e dans le domaine de la Data Intelligence et du d\u00e9veloppement de solutions sur mesure en architecture Serverless. Notre positionnement se d\u00e9cline en 3 offres : Modern BI : expertise sur toute la chaine d\u00e9cisionnelle (Power BI, Tableau, AZURE Data Factory) Data Engineering : Manipulation et pr\u00e9paration de la Data en utilisation Python et \u2026",
+      "created": "2025-05-25T07:09:12Z",
+      "location": {
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Hauts-de-Seine",
+          "Nanterre",
+          "Neuilly-sur-Seine"
+        ],
+        "display_name": "Neuilly-sur-Seine, Nanterre",
+        "__CLASS__": "Adzuna::API::Response::Location"
+      },
+      "longitude": 2.27251,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzOTcyMSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.iZni-iZY3sKL-Fc5U3-f-GneP_9nzCSnETYTZJT4qLU",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215339721?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=80CA2B24C9EA2CA332D99FAF54555332559DA2E0"
+    },
+    {
+      "location": {
+        "__CLASS__": "Adzuna::API::Response::Location",
+        "display_name": "Paris, Ile-de-France",
+        "area": [
+          "France",
+          "Ile-de-France",
+          "Paris"
+        ]
+      },
+      "longitude": 2.344631,
+      "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTIxNTMzOTQ4OSIsInMiOiJBRmZDRVNzNjhCR0tQQkY4QUxhQ2V3In0.peK1Z1xKVoRK9-wNX__ahNMYuukzZIKGps8EZ7I1_5s",
+      "redirect_url": "https://www.adzuna.fr/land/ad/5215339489?se=AFfCESs68BGKPBF8ALaCew&utm_medium=api&utm_source=ef4a1e8d&v=7A6B0B1EAFBF3E9DB7E786C372EB0702D11E6A5E",
+      "__CLASS__": "Adzuna::API::Response::Job",
+      "category": {
+        "label": "Unknown",
+        "__CLASS__": "Adzuna::API::Response::Category",
+        "tag": "unknown"
+      },
+      "latitude": 48.863839,
+      "company": {
+        "display_name": "GROUPE ALLIANCE",
+        "__CLASS__": "Adzuna::API::Response::Company"
+      },
+      "salary_is_predicted": "0",
+      "id": "5215339489",
+      "description": "Ce que tu recherches : Evoluer au sein d\u2019une \u00e9quipe dynamique Participer \u00e0 des projets innovants d\u2019envergure Relever des d\u00e9fis Donner un nouveau souffle \u00e0 ta carri\u00e8re Alors nous avons la mission id\u00e9ale pour toi ! Au sein d\u2019un acteur majeur du secteur de l'assurance, tu participeras \u00e0 des projets d\u2019envergure, de refonte, de migration et / ou \u00e0 des \u00e9volutions majeures \u00e0 mettre en \u0153uvre dans le SI du client : Analyse des besoins, tu feras Sp\u00e9cifications techniques, tu r\u00e9digeras L\u2019architecture et/o\u2026",
+      "title": "Ing\u00e9nieur D\u00e9veloppement C# & Angular (H/F)",
+      "created": "2025-05-25T07:09:08Z"
+    }
+  ],
+  "count": 301
+}

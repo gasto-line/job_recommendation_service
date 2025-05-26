@@ -21,8 +21,8 @@ params = {
     "app_key": APP_KEY,
     "results_per_page": 50,
     "what": "data",
-    "what_or": "cloud devops MLops",
-    "what_exclude": "internship apprenticeship stage alternance apprentissage marketing senior",
+    "what_or": "cloud devops MLops junior platform engineer ingénieur reconversion infrastructure",
+    "what_exclude": "commercial internship apprenticeship stage alternance apprentissage marketing senior architect POM",
     "where": "Paris",
     "distance": 20,
     "max_days_old": 2,
@@ -33,5 +33,5 @@ params = {
 response = requests.get(base_url, params=params)
 
 # Save response locally
-with open("adzuna_response.json", "w") as f:
+with open("data/adzuna_response.json", "w") as f:
     json.dump(response.json(), f, indent=2)

@@ -1,0 +1,18 @@
+job_titles:
+  - Data Scientist
+  - ML Engineer
+  - DevOps
+  - MLOps
+  - Data engineer
+  - Cloud Engineer
+  - Productin engineer
+ideal_job_description: >
+  I'm looking for a junior technical role in the field of data. Ideally, I would like to work with AWS services. I'm very enthousiastic at the idea of working in the energy or environement sector or anything in the public sector. 
+technical_skills:
+  - Python
+  - SQL
+  - AWS
+  - Scikit-learn
+  - Git
+education_level: Master's degree in Data Science
+experience: Beginner (less than 3 years)
