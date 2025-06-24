@@ -63,8 +63,8 @@ def main():
         st.dataframe(jobs_df[["title", "company", "user_score", "applied"]])
 
         # Optional: save to CSV or Pickle
-        jobs_df.to_csv("output/scored_jobs.csv", index=False)
-        jobs_df.to_pickle("output/scored_jobs.pkl")
+        jobs_df.to_csv("outputs/scored_jobs.csv", index=False)
+        jobs_df.to_pickle("outputs/scored_jobs.pkl")
 
         # Insert the new scored jobs into our permanent SQlite DataBase
         try:
