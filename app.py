@@ -5,7 +5,7 @@ import pandas as pd
 import sqlite3
 from pathlib import Path
 
-job_list_path='top_jobs.pkl'
+job_list_path='data/top_jobs.pkl'
 db_path=Path("data/jobs_ref.db")
 
 # Load the job data from a .pkl file
@@ -63,8 +63,8 @@ def main():
         st.dataframe(jobs_df[["title", "company", "user_score", "applied"]])
 
         # Optional: save to CSV or Pickle
-        jobs_df.to_csv("scored_jobs.csv", index=False)
-        jobs_df.to_pickle("scored_jobs.pkl")
+        jobs_df.to_csv("output/scored_jobs.csv", index=False)
+        jobs_df.to_pickle("output/scored_jobs.pkl")
 
         # Insert the new scored jobs into our permanent SQlite DataBase
         try:
@@ -104,3 +104,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def get_job_list_path():
+    return job_list_path
+
+def create_empty_number_list():
+    """
+    Creates an empty list intended to be filled with numbers from 1 to 1000.
+    """
+    return []
