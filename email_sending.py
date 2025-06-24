@@ -7,7 +7,7 @@ import os
 to_email = "gaston.aveline@gmail.com"
 from_email = "alerts@silkworm.cloud"
 #Link for streamlit
-streamlit_url = "http://localhost:8501"
+streamlit_url = "https://jobrecommendationservice-4stmmtham4zdobmxptb6f3.streamlit.app/"
 
 # SendGrid SMTP credentials
 smtp_server = 'smtp.sendgrid.net'
