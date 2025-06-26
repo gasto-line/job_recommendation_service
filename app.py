@@ -42,17 +42,22 @@ def main():
             st.write(f"**Location**: {row.get('location', 'N/A')}")
             st.write(f"**Description**: {row.get('description', 'No description available.')[:500]}...")
 
-            # Score input
-            score = st.slider(f"Score this job", 0, 10, 5, key=f"score_{idx}")
-            scores[idx] = score
+            # Enable rating this job
+            wants_to_rate = st.checkbox("Rate this job?", key=f"rate_{idx}")
 
-            # Justification input
-            justification = st.text_area("Optional justification", key=f"justif_{idx}")
-            justifications[idx] = justification
+            if wants_to_rate:
 
-            # Application checkbox
-            applied = st.checkbox("Tick if you applied", key=f"applied_{idx}")
-            applications[idx] = applied
+                # Score input
+                score = st.slider(f"Score this job", 1, 10, 5, key=f"score_{idx}")
+                scores[idx] = score
+
+                # Justification input
+                justification = st.text_area("Optional justification", key=f"justif_{idx}")
+                justifications[idx] = justification
+
+                # Application checkbox
+                applied = st.checkbox("Tick if you applied", key=f"applied_{idx}")
+                applications[idx] = applied
 
     if st.button("Submit Scores"):
         jobs_df["user_score"] = jobs_df.index.map(scores.get)
