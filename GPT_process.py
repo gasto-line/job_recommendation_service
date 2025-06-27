@@ -75,13 +75,13 @@ def compute_gpt_match_score(df, model="gpt-3.5-turbo", delay=2):
     for _, row in df.iterrows():
         prompt = build_prompt(row)
         response = call_openai(prompt, model=model)
-        AI_score = extract_score(response) if response else None
+        ai_score = extract_score(response) if response else None
         scores.append({
             "job_hash": row["job_hash"],
-            "AI_score": AI_score,
+            "ai_score": ai_score,
             "model_version": model,
             "prompt_version": "v1",
-            "AI_justification": response
+            "ai_justification": response
         })
         sleep(delay)  # Respect rate limits
 

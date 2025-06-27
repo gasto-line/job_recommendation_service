@@ -46,8 +46,8 @@ def insert_jobs(jobs_df: pd.DataFrame) -> None:
                     posted_date, retrieved_date,
                     raw_payload,
                     prompt_version,
-                    AI_score, user_score,
-                    AI_justification, user_justification,
+                    ai_score, user_score,
+                    ai_justification, user_justification,
                     applied
                 FROM tmp_jobs
                 ON CONFLICT (job_hash) DO NOTHING;
