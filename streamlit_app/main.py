@@ -1,0 +1,87 @@
+# app.py
+
+import streamlit as st
+import pandas as pd
+import sqlite3
+from pathlib import Path
+from DB_insert import insert_jobs
+
+# Storing secrets isn't possible using the free plan of streamlit
+# We use the anon API key hardcoded here 
+# RLS were set up to restrict access to insert statements on jobs table
+SUPABASE_ANON_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0"
+SUPABASE_DB_URL = (
+    "postgresql://postgres.YOURPROJECTREF:"+SUPABASE_ANON_API_KEY+"@aws-0-REGION.pooler.supabase.com:5432/postgres"
+)
+job_list_path='data/top_jobs.pkl'
+db_path=Path("data/jobs_ref.db")
+
+# Load the job data from a .pkl file
+@st.cache_data(ttl=300)
+#It might be better to refresh the cache whenever the .pkl file is updated
+def load_jobs():
+    try:
+        return pd.read_pickle(job_list_path)
+    except Exception as e:
+        st.error(f"Failed to load data: {e}")
+        return pd.DataFrame()
+
+# Main app
+def main():
+    st.title("Job Scoring Dashboard")
+    jobs_df = load_jobs()
+
+    if jobs_df.empty:
+        st.warning("No job data found.")
+        return
+
+    st.subheader("Rate the Jobs")
+    scores = {}
+    justifications = {}
+    applications = {}
+
+    for idx, row in jobs_df.iterrows():
+        job_title = row.get("title", "Unknown Title")
+        company = row.get("company", "Unknown Company")
+        job_url = row.get("redirect_url", "#")
+
+        with st.expander(f"{job_title} at {company}"):
+            st.write(f"[{job_url}]({job_url})")
+            st.write(f"**Location**: {row.get('location', 'N/A')}")
+            st.write(f"**Description**: {row.get('description', 'No description available.')[:500]}...")
+
+            # Enable rating this job
+            wants_to_rate = st.checkbox("Rate this job?", key=f"rate_{idx}")
+
+            if wants_to_rate:
+
+                # Score input
+                score = st.slider(f"Score this job", 1, 10, 5, key=f"score_{idx}")
+                scores[idx] = score
+
+                # Justification input
+                justification = st.text_area("Optional justification", key=f"justif_{idx}")
+                justifications[idx] = justification
+
+                # Application checkbox
+                applied = st.checkbox("Tick if you applied", key=f"applied_{idx}")
+                applications[idx] = applied
+
+    if st.button("Submit Scores"):
+        jobs_df["user_score"] = jobs_df.index.map(scores.get)
+        jobs_df["user_justification"] = jobs_df.index.map(justifications.get)
+        jobs_df["applied"] = jobs_df.index.map(applications.get)
+
+        st.success("Scores submitted!")
+        st.dataframe(jobs_df[["title", "company", "user_score", "applied"]])
+
+        # Optional: save to CSV or Pickle
+        jobs_df.to_csv("outputs/scored_jobs.csv", index=False)
+        jobs_df.to_pickle("outputs/scored_jobs.pkl")
+
+        # Insert the new scored jobs into our permanent SQlite DataBase
+        insert_jobs(jobs_df)
+
+if __name__ == "__main__":
+    main()
+
