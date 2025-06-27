@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, text
 # ❶ Define your connection string directly (this is safe with anon key and correct RLS policy)
 SUPABASE_ANON_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0"
 SUPABASE_DB_URL = (
-    "postgresql://postgres.YOURPROJECTREF:"+SUPABASE_ANON_API_KEY+"@aws-0-REGION.pooler.supabase.com:5432/postgres"
+    "postgresql://postgres.irutkdcynqycaveefmpe:"+SUPABASE_ANON_API_KEY+"@@aws-0-eu-west-3.pooler.supabase.com:5432/postgres"
 )
 
 # ❷ Create the engine once (Streamlit may cache this if needed)

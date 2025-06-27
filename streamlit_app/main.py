@@ -2,19 +2,9 @@
 
 import streamlit as st
 import pandas as pd
-import sqlite3
-from pathlib import Path
 from DB_insert import insert_jobs
 
-# Storing secrets isn't possible using the free plan of streamlit
-# We use the anon API key hardcoded here 
-# RLS were set up to restrict access to insert statements on jobs table
-SUPABASE_ANON_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0"
-SUPABASE_DB_URL = (
-    "postgresql://postgres.YOURPROJECTREF:"+SUPABASE_ANON_API_KEY+"@aws-0-REGION.pooler.supabase.com:5432/postgres"
-)
 job_list_path='data/top_jobs.pkl'
-db_path=Path("data/jobs_ref.db")
 
 # Load the job data from a .pkl file
 @st.cache_data(ttl=300)
