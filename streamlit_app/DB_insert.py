@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine, text
+from sqlalchemy import Date, Boolean
 from sqlalchemy.dialects.postgresql import JSON
 
 # ❶ Define your connection string directly (this is safe with anon key and correct RLS policy)
