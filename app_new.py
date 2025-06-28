@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 from pathlib import Path
+from sqlalchemy import create_engine, text
 
 # Storing secrets isn't possible using the free plan of streamlit
 # We use the anon API key hardcoded here 
