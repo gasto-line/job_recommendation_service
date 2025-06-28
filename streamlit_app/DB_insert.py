@@ -21,6 +21,13 @@ def insert_jobs(jobs_df: pd.DataFrame) -> None:
                 conn,
                 if_exists="replace",
                 index=False,
+                dtype={
+                    'area_json': 'JSON',
+                    'posted_date': 'DATE',
+                    'retrieved_date': 'DATE',
+                    'raw_payload': 'JSON',
+                    'applied': 'BOOLEAN'
+                }
                 method="multi",
             )
 
