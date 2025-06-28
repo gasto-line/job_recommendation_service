@@ -26,7 +26,7 @@ def insert_jobs(jobs_df: pd.DataFrame) -> None:
                     'posted_date': 'DATE',
                     'retrieved_date': 'DATE',
                     'raw_payload': 'JSON',
-                    'applied': 'BOOLEAN'
+                    'applied': 'BOOLEAN',
                 }
                 method="multi",
             )
