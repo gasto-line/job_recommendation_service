@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine, text
+from sqlalchemy.dialects.postgresql import JSON, DATE, BOOLEAN
 
 # ❶ Define your connection string directly (this is safe with anon key and correct RLS policy)
 SUPABASE_ANON_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0"
@@ -27,7 +28,7 @@ def insert_jobs(jobs_df: pd.DataFrame) -> None:
                     'retrieved_date': 'DATE',
                     'raw_payload': 'JSON',
                     'applied': 'BOOLEAN',
-                }
+                },
                 method="multi",
             )
 
