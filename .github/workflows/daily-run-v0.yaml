@@ -31,9 +31,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run script
-        run: |
-          python generate_top_jobs.py
+#      - name: Run script
+#        run: |
+#          python generate_top_jobs.py
 
 
       # Here we add the steps to create or update a GitHub release and upload the generated PKL file.
@@ -57,10 +57,13 @@ jobs:
               --notes "Automated daily refresh" \
               --draft=false \
               --prerelease=false
+              echo "Release created."
           fi
 
       - name: Upload (or replace) the PKL
       # --clobber will overwrite the existing asset named top_jobs.pkl if present.
         run: |
+          echo "Uploading top_jobs.pkl to the release..."
           gh release upload top-jobs-latest data/top_jobs.pkl \
             --clobber
+            echo "Upload complete."
