@@ -3,15 +3,23 @@
 import streamlit as st
 import pandas as pd
 from DB_insert import insert_jobs
+import io
+import requests
 
-job_list_path='data/top_jobs.pkl'
+job_list_url='https://github.com/gasto-line/job_recommendation_service/releases/download/top-jobs-latest/top_jobs.pkl'
 
 # Load the job data from a .pkl file
 @st.cache_data(ttl=300)
 #It might be better to refresh the cache whenever the .pkl file is updated
 def load_jobs():
     try:
-        return pd.read_pickle(job_list_path)
+        response = requests.get(job_list_url)
+        response.raise_for_status()  # Check for HTTP errors
+        # Convert the binary file extracted from HTTP request into a file-like object
+        job_list_file = io.BytesIO(response.content)
+        # Load the DataFrame from the bytes object
+        st.info("Job data loaded successfully from GitHub.")
+        return pd.read_pickle(job_list_file)
     except Exception as e:
         st.error(f"Failed to load data: {e}")
         return pd.DataFrame()
