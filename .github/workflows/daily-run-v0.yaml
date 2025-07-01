@@ -1,0 +1,66 @@
+name: Daily Job Recommendation
+
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
+  ADZUNA_API_KEY: ${{ secrets.ADZUNA_API_KEY }}
+  ADZUNA_API_ID: ${{ secrets.ADZUNA_API_ID }}
+  SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+
+
+on:
+  schedule:
+    - cron: '0 6 * 29 *'
+  workflow_dispatch:
+
+jobs:
+  run-recommender:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run script
+        run: |
+          python generate_top_jobs.py
+
+
+      # Here we add the steps to create or update a GitHub release and upload the generated PKL file.
+      - name: Authenticate gh CLI
+      # Tells the GitHub CLI (gh) to read a token from stdin and use it for all subsequent commands.
+      # After this, you can run gh … without manually adding --hostname or --oauth-token.
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Create or update release
+      # view tries to fetch the release metadata
+      # draft: if true, the release is created as a draft that won’t be public until you manually publish it.
+      # prerelease: if true, marks the release as a “pre-release” (e.g., beta or RC) rather than a full official release.
+      # Setting both to false means “create or update a full, published release.”
+        run: |      
+          if gh release view top-jobs-latest; then
+            echo "Release already exists, updating..."
+          else
+            echo "Release not found, creating..."
+            gh release create top-jobs-latest \
+              --title "Top Jobs Data (latest)" \
+              --notes "Automated daily refresh" \
+              --draft=false \
+              --prerelease=false
+          fi
+
+      - name: Upload (or replace) the PKL
+      # --clobber will overwrite the existing asset named top_jobs.pkl if present.
+        run: |
+          gh release upload top-jobs-latest data/top_jobs.pkl \
+            --clobber
