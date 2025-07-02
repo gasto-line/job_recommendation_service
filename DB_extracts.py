@@ -7,6 +7,8 @@ import os
 
 # ❶ Import the database password from Streamlit secrets
 DB_PSW = os.getenv("DB_PSW")
+if not DB_PSW:
+    raise ValueError("Database password (DB_PSW) is not set in environment variables.")
 SUPABASE_DB_URL = (
     "postgresql://postgres.irutkdcynqycaveefmpe:"+ DB_PSW +"@aws-0-eu-west-3.pooler.supabase.com:5432/postgres"
 )
@@ -31,3 +33,4 @@ def extract_jobs_hash():
         return pd.DataFrame(columns=["job_hash"])
 #%%
 df= extract_jobs_hash()
+# %%
