@@ -4,8 +4,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy import Date, Boolean
 from sqlalchemy.dialects.postgresql import JSON
 
-# ❶ Define your connection string directly (this is safe with anon key and correct RLS policy)
-SUPABASE_ANON_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0"
+# ❶ Import the database password from Streamlit secrets
 DB_PSW=st.secrets["DB_PSW"]
 SUPABASE_DB_URL = (
     "postgresql://postgres.irutkdcynqycaveefmpe:"+DB_PSW+"@aws-0-eu-west-3.pooler.supabase.com:5432/postgres"
