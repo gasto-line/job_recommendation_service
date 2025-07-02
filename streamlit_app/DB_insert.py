@@ -59,6 +59,7 @@ def insert_jobs(jobs_df: pd.DataFrame) -> None:
                     ai_justification, user_justification,
                     applied
                 FROM tmp_jobs
+                WHERE user_score IS NOT NULL
                 ON CONFLICT (job_hash) DO NOTHING;
             """))
 
