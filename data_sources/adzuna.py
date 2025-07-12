@@ -74,5 +74,3 @@ def load_adzuna():
     df = df[columns]
     
     return(df)
-
-# %%
