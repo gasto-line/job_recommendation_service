@@ -31,6 +31,3 @@ def extract_jobs_hash():
     except Exception as e:
         print(f"Error extracting job hashes: {e}")
         return pd.DataFrame(columns=["job_hash"])
-#%%
-df= extract_jobs_hash()
-# %%

@@ -75,5 +75,4 @@ def load_adzuna():
     
     return(df)
 
-load_adzuna()
 # %%

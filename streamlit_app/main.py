@@ -73,10 +73,6 @@ def main():
         st.success("Scores submitted!")
         st.dataframe(jobs_df[["title", "company", "user_score", "applied"]])
 
-        # Optional: save to CSV or Pickle
-        jobs_df.to_csv("outputs/scored_jobs.csv", index=False)
-        jobs_df.to_pickle("outputs/scored_jobs.pkl")
-
         # Insert the new scored jobs into our permanent SQlite DataBase
         insert_jobs(jobs_df)
 
