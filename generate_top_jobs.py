@@ -39,7 +39,10 @@ OUTPUT_PICKLE = "data/top_jobs.pkl"
 top_df.to_pickle(OUTPUT_PICKLE)
 print(f"Top {TOP_N} jobs saved to {OUTPUT_PICKLE}")
 
+
+'''
 #%%
 from email_sending import send_email
 # Send myself a direct link to streamlit
 send_email(TOP_N)
+'''
