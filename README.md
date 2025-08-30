@@ -98,7 +98,8 @@ Conventional job-alert platforms rely on static search filters and sparse metada
 The system runs automatically via GitHub Actions daily at 6 AM UTC. No manual intervention required.
 
 ## Daily Workflow
-1. **10:00 AM UTC** – GitHub Action triggers automatically
+
+1. **8:00 AM UTC** – GitHub Action triggers automatically
 2. Fetch 50 new job postings from Adzuna API
 3. Generate unique job hashes and remove duplicates
 4. Filter out jobs already in PostgreSQL reference database
