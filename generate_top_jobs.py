@@ -35,11 +35,14 @@ AI_scored_df = compute_gpt_match_score(filtered_df)
 # Sort and select top-N jobs
 top_df = AI_scored_df.sort_values("ai_score", ascending=False).head(TOP_N)
 # Save to pickle for Streamlit app
-OUTPUT_PICKLE = "data/top_jobs.pkl"
+OUTPUT_PICKLE = "top_jobs.pkl"
 top_df.to_pickle(OUTPUT_PICKLE)
 print(f"Top {TOP_N} jobs saved to {OUTPUT_PICKLE}")
 
+
+'''
 #%%
 from email_sending import send_email
 # Send myself a direct link to streamlit
 send_email(TOP_N)
+'''
