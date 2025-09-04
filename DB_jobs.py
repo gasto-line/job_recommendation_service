@@ -10,7 +10,7 @@ host = "aws-0-eu-west-3.pooler.supabase.com"
 database = "postgres"
 
 def get_engine(DB_PSW):
-    connection_string = f"postgresql://{username}:{DB_PSW}@{host}:{port}/{database}"
+    connection_string = f"postgresql://{database}.{username}:{DB_PSW}@{host}:{port}/{database}"
     return create_engine(connection_string, pool_pre_ping=True)
 
 def extract_jobs_hash(engine):
