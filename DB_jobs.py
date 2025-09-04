@@ -29,10 +29,10 @@ def extract_jobs_hash(engine):
         print(f"Error extracting job hashes: {e}")
         return pd.DataFrame(columns=["job_hash"])
 
-def insert_jobs(jobs_df: pd.DataFrame,engine) -> None:
+def insert_jobs(jobs_df: pd.DataFrame,engine) -> list[bool, Exception]:
     try:
         with engine.begin() as conn:
-            # ❸ Replace the tmp_jobs staging table with new data
+            # Replace the tmp_jobs staging table with new data
             jobs_df.to_sql(
                 "tmp_jobs",
                 conn,
@@ -48,7 +48,7 @@ def insert_jobs(jobs_df: pd.DataFrame,engine) -> None:
                 method="multi",
             )
 
-            # ❹ Insert new rows into the main jobs table
+            # Insert new rows into the main jobs table
             conn.execute(text("""
                 INSERT INTO jobs (
                     job_hash,
@@ -77,6 +77,6 @@ def insert_jobs(jobs_df: pd.DataFrame,engine) -> None:
                 WHERE user_score IS NOT NULL
                 ON CONFLICT (job_hash) DO NOTHING;
             """))
-        print("✅ Data successfully inserted")
+        return [True,None]
     except Exception as e:
-        print(f"❌ Database insert failed: {e}")
+        return [False,e]

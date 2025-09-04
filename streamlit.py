@@ -80,7 +80,12 @@ def main():
             engine = get_engine(DB_PSW)
         else:
             raise ValueError("Database password (DB_PSW) is not set streamlit secrets")
-        insert_jobs(jobs_df,engine)
+            
+        reponse = insert_jobs(jobs_df,engine)
+        if reponse[0]:
+            st.success("Jobs inserted successfully!")
+        else:
+            st.error("Failed to insert jobs!"+str(reponse[1]))
 
 if __name__ == "__main__":
     main()
