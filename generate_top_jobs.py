@@ -1,8 +1,14 @@
 #%%
 import pandas as pd
+import os
 
 # Defines the number of jobs that will be kept
 TOP_N = 10  # Can be changed dynamically
+
+# Import the jobs database password from env variables
+DB_PSW = os.getenv("DB_PSW")
+if not DB_PSW:
+    raise ValueError("Database password (DB_PSW) is not set in environment variables.")
 
 #%%
 # Builds the data gathered from various sources
@@ -23,8 +29,10 @@ raw_df = raw_df.drop_duplicates(subset='job_hash')
 
 #%%
 # Add a filter on jobs that are already in the reference database
-from DB_extracts import extract_jobs_hash
-exclude_set=set(extract_jobs_hash().job_hash)
+from DB_jobs import extract_jobs_hash, get_engine
+engine = get_engine(DB_PSW)
+
+exclude_set=set(extract_jobs_hash(engine).job_hash)
 # mask rows whose 'job_hash' is NOT in that set
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
