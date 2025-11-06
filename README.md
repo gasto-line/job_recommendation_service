@@ -13,6 +13,7 @@ _A smart hybrid system to match job opportunities to your personal expectations,
 6. [Data & Model Details](#data--model-details)
 7. [Roadmap](#roadmap)
 8. [Contributing](#contributing)
+9. [Future Perspectives](#future-perspectives)
 ---
 
 ## Project Vision
@@ -128,11 +129,12 @@ The system runs automatically via GitHub Actions daily at 6 AM UTC. No manual in
 - **Local Development Tools** – Enhanced testing and debugging infrastructure.
 - **Performance Optimization** – Caching and rate limiting improvements.
 
+## Future Perspectives
+
+- **Adjustable Criteria Weights in Streamlit** – Allow the job seeker to tune how much importance is given to key criteria such as location, sector of activity, salary, contract type, seniority, and remote/on‑site. When salary is not explicitly provided, it can be approximated from other attributes in the job description. These weights will directly influence the ranking of recommendations. Changing any weight in the Streamlit UI will automatically trigger a non‑interactive GitHub Actions workflow run to recompute and publish updated recommendations.
+
+- **Model Selection in the UI** – Provide a dropdown in the Streamlit app to choose the matching model implementation (e.g., different GPT variants, a lightweight local model, or a rule‑based baseline). The selected model will be used for scoring and recorded alongside results for traceability and easy A/B comparison.
+
 ---
 
 *© 2025 — Automatic Job Recommendation Service*
-
-
-
-
-
