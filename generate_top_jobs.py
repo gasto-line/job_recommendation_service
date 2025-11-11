@@ -36,6 +36,19 @@ exclude_set=set(extract_jobs_hash(engine).job_hash)
 # mask rows whose 'job_hash' is NOT in that set
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
+
+#%%
+from fasttext_process import run_fasttext_inference, tokenization
+
+
+input_df = filtered_df[["description","title"]].applymap(tokenization)
+_, jobs_embeddings = run_fasttext_inference(input_df["description"].tolist(),input_df["title"].tolist())
+
+#%%
+import json
+with open("data/ideal_jobs_embedding.json", "r") as f:
+    ideal_jobs_embedding = np.array(json.load(f))
+
 #%%
 from GPT_process import compute_gpt_match_score
 # Add a column with AI_score and AI_justification for each job

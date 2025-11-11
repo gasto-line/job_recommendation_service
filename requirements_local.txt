@@ -1,0 +1,6 @@
+jupyter
+pyyaml
+str
+fasttext
+hugginface_hub
+sagemaker
