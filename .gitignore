@@ -1,7 +1,6 @@
 .env
 .venv
-config/*
 ai_notes/*
-ssm/*
+useful_commands
 *.deb
 *.pem
