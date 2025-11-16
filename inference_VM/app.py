@@ -47,8 +47,9 @@ def get_embedding(data: TextInput):
     input = data.input
     # Run the language sorting worker leveraging the fasttext language detection model
     # Returns a dictionnary having one key for each language FR & EN 
-    # For each key, we have a list containing the list of tokens 
-    # and a list with their corresponding index
+    # For each key, we have two lists
+    # The first is the index of that language job field in the input list
+    # The second is a list for each job field containing the list of tokens of this job's field
     print("Calling worker for language identification")
     try:
         group_input=call_worker(model_lang_path, input)
@@ -56,6 +57,8 @@ def get_embedding(data: TextInput):
         raise HTTPException(status_code=500, detail=f"worker failed on language identification: {e}")
     print("Retrieving worker output")
 
+    # With the output grouped by language key we can run the inference in batches
+    # The inference is applied running a subprocess on the second list
     print("Calling worker for french model inference")
     FR_input = group_input["FR"][1]
     try:
@@ -72,16 +75,12 @@ def get_embedding(data: TextInput):
         raise HTTPException(status_code=500, detail=f"worker failed on english model inference: {e}")
     print("English model inference retrieved")
 
-    # We join the french and english indexes
-    order=group_input["FR"][0]+group_input["EN"][0]
-    # Make sure that the index list is complete
-    assert(sorted(order) == list(range(len(input))))
-    # We join the outputs in the same order
-    output=FR_output+EN_output
-    # Get the embeddings in their original order
-    ordered_output=[output[i] for i in order]
+    # Create a output variable
+    group_output=group_input
+    group_output["FR"][1]=FR_output
+    group_output["EN"][1]=EN_output
 
-    return (ordered_output)
+    return (group_output)
 
 @app.get("/health")
 def health():

@@ -1,9 +1,7 @@
 # ideal_jobs_embedding_generator.py
 
 #%%
-import yaml
-import pandas as pd
-import json
+import yaml, json, pandas as pd
 
 #%%
 ideal_jobs = {}
@@ -32,10 +30,20 @@ ideal_jobs_df_new.loc[list(ideal_jobs_df.index+"_fr"),"company"]=ideal_jobs_df["
 
 ideal_jobs_df=ideal_jobs_df_new
 # %%
-from fasttext_process import run_fasttext_inference, tokenization
+from fasttext_process import launch_inference_instance, run_fasttext_inference, tokenization
+import numpy as np
 
 ideal_jobs_tok_df = ideal_jobs_df.applymap(tokenization)
-mean_embedding, _ = run_fasttext_inference(ideal_jobs_tok_df["description"].tolist(), ideal_jobs_tok_df["title"].tolist())
+public_ip = launch_inference_instance()
 
-with open("data/ideal_jobs_embedding.json", "w") as f:
-    json.dump(mean_embedding.tolist(),f)
+#%%
+ideal_jobs_embedding_dict = {}
+for field in ["description","title"]:
+    ideal_jobs_embedding_dict[field]={}
+    grouped_embeddings = run_fasttext_inference(public_ip, ideal_jobs_tok_df[field].tolist())
+    for lang in ["FR","EN"]:
+        ideal_jobs_embedding_dict[field][lang]=np.mean(grouped_embeddings[lang][1],axis=0).tolist()
+
+#%%
+with open("data/ideal_jobs_embedding_dict.json", "w") as f:
+    json.dump(ideal_jobs_embedding_dict,f)

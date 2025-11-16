@@ -13,7 +13,7 @@ if not DB_PSW:
 #%%
 # Builds the data gathered from various sources
 from data_sources.adzuna import load_adzuna
-raw_df = load_adzuna()
+raw_df = load_adzuna(25)
 
 #%%
 # Function that generates a unique identifier for the jobs
@@ -38,16 +38,24 @@ filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
 
 #%%
-from fasttext_process import run_fasttext_inference, tokenization
-
+from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance
 
 input_df = filtered_df[["description","title"]].applymap(tokenization)
-_, jobs_embeddings = run_fasttext_inference(input_df["description"].tolist(),input_df["title"].tolist())
+public_ip=launch_inference_instance()
 
 #%%
-import json
-with open("data/ideal_jobs_embedding.json", "r") as f:
-    ideal_jobs_embedding = np.array(json.load(f))
+jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["description"].tolist())
+jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"].tolist())
+
+#%%
+from fasttext_process import get_field_wise_scoring
+import numpy as np
+
+jobs_description_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"description")
+jobs_title_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"title")
+
+jobs_general_scores=np.mean([jobs_description_scores]+[jobs_title_scores],axis=0)
+filtered_df["fasttext_score"]=jobs_general_scores
 
 #%%
 from GPT_process import compute_gpt_match_score
@@ -61,9 +69,7 @@ top_df.to_pickle(OUTPUT_PICKLE)
 print(f"Top {TOP_N} jobs saved to {OUTPUT_PICKLE}")
 
 
-'''
 #%%
 from email_sending import send_email
 # Send myself a direct link to streamlit
 send_email(TOP_N)
-'''
