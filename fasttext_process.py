@@ -20,12 +20,16 @@ def tokenization(text):
 # Returns the means of all those embeddings too if needed
 def launch_inference_instance():
     """Run full EC2 provisioning and inference workflow, returning job embeddings."""
-    
+    print("running the launch_function")
     # Step 1: Launch instance
     try:
-        print("now running the bash script through subprocess")
+        print("running the bash script through subprocess")
         result = subprocess.run(
-            ["bash", "inference_VM/EC2_provisioning.sh"], capture_output=True, text=True, check=True
+            ["bash", "inference_VM/EC2_provisioning.sh"]
+            , capture_output=True
+            , text=True
+            , check=True
+            , timeout=30
         )
         public_ip = result.stdout.strip()
         print(f"✅ Public IP: {public_ip}")
