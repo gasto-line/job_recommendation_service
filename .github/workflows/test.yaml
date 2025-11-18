@@ -1,4 +1,4 @@
-name: Daily Job Recommendation
+name: Workflow_test
 
 env:
   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
