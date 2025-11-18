@@ -23,6 +23,7 @@ def launch_inference_instance():
     
     # Step 1: Launch instance
     try:
+        print("now running the bash script through subprocess")
         result = subprocess.run(
             ["bash", "inference_VM/EC2_provisioning.sh"], capture_output=True, text=True, check=True
         )
