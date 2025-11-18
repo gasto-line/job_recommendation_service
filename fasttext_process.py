@@ -22,11 +22,21 @@ def launch_inference_instance():
     """Run full EC2 provisioning and inference workflow, returning job embeddings."""
     
     # Step 1: Launch instance
-    result = subprocess.run(
-        ["bash", "inference_VM/EC2_provisioning.sh"], capture_output=True, text=True, check=True
-    )
-    public_ip = result.stdout.strip()
-    print(f"✅ Public IP: {public_ip}")
+    try:
+        result = subprocess.run(
+            ["bash", "inference_VM/EC2_provisioning.sh"], capture_output=True, text=True, check=True
+        )
+        public_ip = result.stdout.strip()
+        print(f"✅ Public IP: {public_ip}")
+        print("STDOUT:", result.stdout)
+        print("STDERR:", result.stderr)
+    
+    except subprocess.CalledProcessError as e:
+        print("❌ EC2 provisioning script failed!")
+        print("Return code:", e.returncode)
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
+        raise  # important: re-raise to fail the workflow
 
     # Step 2: Wait for the app
     url = f"http://{public_ip}:8080/health"

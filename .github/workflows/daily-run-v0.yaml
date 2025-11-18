@@ -34,6 +34,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::992382721552:role/job-recommend-repo-github-action-role
+          aws-region: eu-west-3
+
       - name: Run script
         run: |
           python generate_top_jobs.py
