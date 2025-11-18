@@ -1,0 +1,49 @@
+name: Workflow_test
+
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
+  ADZUNA_API_KEY: ${{ secrets.ADZUNA_API_KEY }}
+  ADZUNA_API_ID: ${{ secrets.ADZUNA_API_ID }}
+  SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+  DB_PSW: ${{ secrets.DB_PSW }}
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  run-recommender:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with: 
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::992382721552:role/job-recommend-repo-github-action-role
+          aws-region: eu-west-3
+
+      - name: Run script
+        run: |
+          ./test.sh
+
+
+
