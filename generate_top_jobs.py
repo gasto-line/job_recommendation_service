@@ -39,7 +39,7 @@ filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
 #%%
 from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance
-print("test to see is buffer flush this")
+
 input_df = filtered_df[["description","title"]].applymap(tokenization)
 public_ip=launch_inference_instance()
 
