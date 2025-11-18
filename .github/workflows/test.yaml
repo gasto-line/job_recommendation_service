@@ -43,6 +43,7 @@ jobs:
 
       - name: Run script
         run: |
+          chmod +x inference_VM/EC2_provisioning.sh
           ./test.sh
 
 

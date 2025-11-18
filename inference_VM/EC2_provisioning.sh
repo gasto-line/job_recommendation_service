@@ -13,7 +13,8 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --query 'Instances[0].InstanceId' \
   --output text
 )
-  
+
+echo "$INSTANCE_ID"
 aws ec2 wait instance-running --instance-ids "$INSTANCE_ID"
 
 PUBLIC_IP=$(aws ec2 describe-instances \
