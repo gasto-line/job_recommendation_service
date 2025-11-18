@@ -44,7 +44,7 @@ jobs:
 
       - name: Run script
         run: |
-          python generate_top_jobs.py
+          python -u generate_top_jobs.py
 
 
       # Here we add the steps to create or update a GitHub release and upload the generated PKL file.
