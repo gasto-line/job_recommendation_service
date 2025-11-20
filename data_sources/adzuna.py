@@ -16,11 +16,16 @@ APP_KEY = os.getenv("ADZUNA_API_KEY")
 # Base API URL
 base_url = "https://api.adzuna.com/v1/api/jobs/fr/search/1"
 
-# Parameters as a dictionary
-params = {
+
+
+#%%
+def load_adzuna(number_of_jobs: int):
+
+    # Parameters as a dictionary
+    params = {
     "app_id": APP_ID,
     "app_key": APP_KEY,
-    "results_per_page": 50,
+    "results_per_page": number_of_jobs,
     "what": "data",
     "what_or": "cloud devops MLops junior platform engineer ingénieur stage infrastructure",
     "what_exclude": "commercial apprenticeship alternance apprentissage marketing senior architect POM",
@@ -28,14 +33,10 @@ params = {
     "distance": 20,
     "max_days_old": 2,
     "sort_by": "relevance"
-}
+    }
 
-# Perform GET request
-response = requests.get(base_url, params=params)
-
-#%%
-def load_adzuna():
-
+    # Perform GET request
+    response = requests.get(base_url, params=params)
     #Take the first part of the JSON which contains the job details
     jobs=response.json()['results']
     #Convert the JSON payload into a pandas dataframe

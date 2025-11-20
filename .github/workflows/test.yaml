@@ -41,11 +41,9 @@ jobs:
           role-to-assume: arn:aws:iam::992382721552:role/job-recommend-repo-github-action-role
           aws-region: eu-west-3
 
-
       - name: Run script
         run: |
-          chmod +x ./test.sh
+          chmod +x inference_VM/EC2_provisioning.sh
           ./test.sh
-
 
 

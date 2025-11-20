@@ -57,7 +57,7 @@ def insert_jobs(jobs_df: pd.DataFrame,engine) -> list[bool, Exception]:
                     description, url,
                     posted_date, retrieved_date,
                     raw_payload,
-                    prompt_version,
+                    prompt_version, model_implementation,
                     ai_score, user_score,
                     ai_justification, user_justification,
                     applied
@@ -69,7 +69,7 @@ def insert_jobs(jobs_df: pd.DataFrame,engine) -> list[bool, Exception]:
                     description, redirect_url,
                     posted_date, retrieved_date,
                     raw_payload,
-                    prompt_version,
+                    prompt_version, model_implementation,
                     ai_score, user_score,
                     ai_justification, user_justification,
                     applied

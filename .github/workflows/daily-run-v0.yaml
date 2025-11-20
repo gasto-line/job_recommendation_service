@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   run-recommender:
@@ -24,6 +25,7 @@ jobs:
         with: 
           persist-credentials: true
 
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -34,9 +36,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::992382721552:role/job-recommend-repo-github-action-role
+          aws-region: eu-west-3
+
       - name: Run script
         run: |
-          python generate_top_jobs.py
+          python -u generate_top_jobs.py
 
 
       # Here we add the steps to create or update a GitHub release and upload the generated PKL file.

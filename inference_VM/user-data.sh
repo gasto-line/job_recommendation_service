@@ -1,13 +1,63 @@
+#!/bin/bash
+
+# --- Variables ---
+BUCKET="sagemaker-eu-west-3-992382721552"  
+REGION="eu-west-3"
+S3_FR_MODEL_KEY="facebook/fasttext-fr-vectors/model.bin"
+S3_EN_MODEL_KEY="facebook/fasttext-en-vectors/model.bin"
+S3_LANG_MODEL_KEY="facebook/fasttext-language-identification/model.bin"
+LOCAL_FR_MODEL_PATH="/home/ec2-user/fr_model.bin"
+LOCAL_EN_MODEL_PATH="/home/ec2-user/en_model.bin"
+LOCAL_LANG_MODEL_PATH="/home/ec2-user/lang_model.bin"
+
+# Ensure logs are uploaded even if script fails
+trap 'aws s3 cp /var/log/cloud-init-output.log s3://'"$BUCKET"'/cloud-init-output.log || echo "Log upload failed"' EXIT
+
+# --- Update and install packages ---
+dnf update -y
+dnf install -y python3-pip awscli gcc gcc-c++ make git python3-devel
+
+# --- Install Python dependencies ---
+#python3 -m venv /home/ec2-user/venv
+# /home/ec2-user/venv/bin/activate
+python3 -m pip install --upgrade --ignore-installed "numpy<2.0.0" setuptools wheel boto3 fasttext fastapi uvicorn
+
+# create the worker script for inference and language identification
+cat << EOF > worker.py
+import sys, json, fasttext
+model_path = sys.argv[1]
+model = fasttext.load_model(model_path)
+payload = json.load(sys.stdin)
+# payload contains list of texts / tokens ...
+if "lang" in model_path:
+    result = {"FR": [[],[]], "EN": [[],[]]}
+    for i,text in enumerate(payload):
+        full_text=" ".join(text)
+        lang = model.predict(full_text)[0][0]
+        if lang == "__label__fra_Latn":
+            result["FR"][0].append(i)
+            result["FR"][1].append(text)
+        elif lang == "__label__eng_Latn":
+            result["EN"][0].append(i)
+            result["EN"][1].append(text)
+else:
+    result = {"embeddings": []}
+    for text in payload:
+        result["embeddings"].append([model.get_word_vector(token).tolist() for token in text])
+
+print(json.dumps(result))
+# process exits -> memory freed
+EOF
+
+# create the inference srcipt to run
+cat << EOF > app.py
 import boto3
 import subprocess, json
 from typing import List
 from fastapi import FastAPI
-from fastapi import HTTPException
-from pandas.core import groupby
 from pydantic import BaseModel
 
 # Getting variables
-bucket = "$BUCKET"
 model_fr_path = "$LOCAL_FR_MODEL_PATH"
 model_en_path = "$LOCAL_EN_MODEL_PATH"
 model_lang_path = "$LOCAL_LANG_MODEL_PATH"
@@ -75,13 +125,23 @@ def get_embedding(data: TextInput):
         raise HTTPException(status_code=500, detail=f"worker failed on english model inference: {e}")
     print("English model inference retrieved")
 
-    # Create a output variable
-    group_output=group_input
-    group_output["FR"][1]=FR_output
-    group_output["EN"][1]=EN_output
+    # Now that we got the embeddings for the french and english key
+    # We can reorder the embeddings to match the original order of job's fields input
+    
+    # We join the french and english indexes
+    order=group_input["FR"][0]+group_input["EN"][0]
+    # Make sure that the index list is complete
+    assert(sorted(order) == list(range(len(input))))
+    # We join the outputs in the same order
+    output=FR_output+EN_output
+    # Get the embeddings in their original order
+    ordered_output=[output[i] for i in order]
 
-    return (group_output)
+    return (ordered_output)
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
+EOF
+
+uvicorn app:app --host 0.0.0.0 --port 8080
