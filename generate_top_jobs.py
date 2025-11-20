@@ -38,14 +38,6 @@ raw_df = raw_df.drop_duplicates(subset='job_hash')
 from DB_jobs import extract_jobs_hash, get_engine
 engine = get_engine(DB_PSW)
 exclude_set=set(extract_jobs_hash(engine).job_hash)
-<<<<<<< HEAD
-
-=======
-from DB_jobs import extract_jobs_hash, get_engine
-engine = get_engine(DB_PSW)
-
-exclude_set=set(extract_jobs_hash(engine).job_hash)
->>>>>>> main
 # mask rows whose 'job_hash' is NOT in that set
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
