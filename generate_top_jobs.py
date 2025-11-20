@@ -36,6 +36,7 @@ exclude_set=set(extract_jobs_hash(engine).job_hash)
 # mask rows whose 'job_hash' is NOT in that set
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
+<<<<<<< HEAD
 
 #%%
 from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance
@@ -57,6 +58,21 @@ jobs_title_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"
 jobs_general_scores=np.mean([jobs_description_scores]+[jobs_title_scores],axis=0)
 filtered_df["fasttext_score"]=jobs_general_scores
 
+=======
+"""
+#%%
+from fasttext_process import run_fasttext_inference, tokenization
+
+
+input_df = filtered_df[["description","title"]].applymap(tokenization)
+_, jobs_embeddings = run_fasttext_inference(input_df["description"].tolist(),input_df["title"].tolist())
+
+#%%
+import json
+with open("data/ideal_jobs_embedding.json", "r") as f:
+    ideal_jobs_embedding = np.array(json.load(f))
+"""
+>>>>>>> main
 #%%
 from GPT_process import compute_gpt_match_score
 # Add a column with AI_score and AI_justification for each job
@@ -69,6 +85,7 @@ top_df.to_pickle(OUTPUT_PICKLE)
 print(f"Top {TOP_N} jobs saved to {OUTPUT_PICKLE}")
 
 
+<<<<<<< HEAD
 
 
 
@@ -77,3 +94,9 @@ from email_sending import send_email
 # Send myself a direct link to streamlit
 send_email(TOP_N)
 """
+=======
+#%%
+from email_sending import send_email
+# Send myself a direct link to streamlit
+send_email(TOP_N)
+>>>>>>> main

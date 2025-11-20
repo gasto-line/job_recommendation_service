@@ -1,9 +1,7 @@
 import sys, json, fasttext
 model_path = sys.argv[1]
 model = fasttext.load_model(model_path)
-print("getting stdin")
 payload = json.load(sys.stdin)
-print("stdin retrieved")
 # payload contains list of texts / tokens ...
 if "lang" in model_path:
     result = {"FR": [[],[]], "EN": [[],[]]}
@@ -18,9 +16,8 @@ if "lang" in model_path:
             result["EN"][1].append(text)
 else:
     result = {"embeddings": []}
-    print("starting the embedding loop")
     for text in payload:
         result["embeddings"].append([model.get_word_vector(token).tolist() for token in text])
-    print("embedding loop finished")
+
 print(json.dumps(result))
 # process exits -> memory freed
