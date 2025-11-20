@@ -18,7 +18,6 @@ def tokenization(text):
 # Takes tokenised list of jobs description and title 
 # Returns an embedding for each jobs taking the mean of title and description embeddings
 # Returns the means of all those embeddings too if needed
-<<<<<<< HEAD
 def launch_inference_instance():
     """Run full EC2 provisioning and inference workflow, returning job embeddings."""
     print("running the launch_function")
@@ -43,17 +42,6 @@ def launch_inference_instance():
         print("STDOUT:", e.stdout)
         print("STDERR:", e.stderr)
         raise  # important: re-raise to fail the workflow
-=======
-def run_fasttext_inference(ideal_jobs_tok_description, ideal_jobs_tok_title):
-    """Run full EC2 provisioning and inference workflow, returning job embeddings."""
-    
-    # Step 1: Launch instance
-    result = subprocess.run(
-        ["bash", "inference_VM/EC2_provisioning.sh"], capture_output=True, text=True, check=True
-    )
-    public_ip = result.stdout.strip()
-    print(f"✅ Public IP: {public_ip}")
->>>>>>> main
 
     # Step 2: Wait for the app
     url = f"http://{public_ip}:8080/health"
@@ -67,7 +55,6 @@ def run_fasttext_inference(ideal_jobs_tok_description, ideal_jobs_tok_title):
             pass
         time.sleep(30)
         print("Waiting for the app to be ready...")
-<<<<<<< HEAD
     return (public_ip)
 
 # Takes in the public_ip of the instance and the list of jobs field in its tokenized form
@@ -123,34 +110,7 @@ def get_field_wise_scoring(jobs_field_grouped_embeddings,field: str):
 
     return(output)
 
-    
-    # Now that we have our similarity result for the field in question for french and english
-    # We can merge the similarity results and order them using their index list
-
-    FR_zipped = jobs_field_grouped_similarity["FR"][0] + jobs_field_grouped_similarity["FR"][1]
-    EN_zipped = jobs_field_grouped_similarity["EN"][0] + jobs_field_grouped_similarity["EN"][1]
-    zipped_similarity = list(zip(jobs_field_grouped_similarity["FR"]))+list(zip(jobs_field_grouped_similarity["EN"]))
-    #output = [v for _,v in sorted(zipped_similarity)]
-
-    #return(output)
         
         
 
 
-=======
-
-    # Step 3: Call the API
-    api_url = f"http://{public_ip}:8080/embed"
-    description_response = requests.post(api_url, json={"input": ideal_jobs_tok_description})
-    title_response = requests.post(api_url, json={"input": ideal_jobs_tok_title})
-
-    description_data = description_response.json()
-    title_data = title_response.json()
-
-    job_description_embeddings = [np.mean(df, axis=0) for df in description_data]
-    job_title_embeddings = [np.mean(df, axis=0) for df in title_data]
-    job_embeddings = (np.array(job_description_embeddings) + np.array(job_title_embeddings)) / 2
-    job_embedding = np.mean(job_embeddings, axis=0)
-
-    return job_embedding, job_embeddings
->>>>>>> main
