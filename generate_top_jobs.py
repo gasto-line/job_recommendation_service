@@ -37,11 +37,6 @@ raw_df = raw_df.drop_duplicates(subset='job_hash')
 # Add a filter on jobs that are already in the reference database
 from DB_jobs import extract_jobs_hash, get_engine
 engine = get_engine(DB_PSW)
-
-exclude_set=set(extract_jobs_hash(engine).job_hash)
-from DB_jobs import extract_jobs_hash, get_engine
-engine = get_engine(DB_PSW)
-
 exclude_set=set(extract_jobs_hash(engine).job_hash)
 # mask rows whose 'job_hash' is NOT in that set
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
@@ -66,6 +61,13 @@ jobs_title_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"
 
 jobs_general_scores=np.mean([jobs_description_scores]+[jobs_title_scores],axis=0)
 filtered_df["fasttext_score"]=jobs_general_scores
+<<<<<<< HEAD
+fasttext_toplist = filtered_df.sort_values("fasttext_score", ascending=False).head(TOP_N)
+FASTTEXT_PICKLE= "fasttext_toplist.pkl"
+fasttext_toplist.to_pickle(FASTTEXT_PICKLE)
+print(f"Top fasttext {TOP_N} jobs saved to {FASTTEXT_PICKLE}")
+=======
+>>>>>>> main
 
 #%%
 from GPT_process import compute_gpt_match_score
@@ -79,9 +81,12 @@ top_df.to_pickle(OUTPUT_PICKLE)
 print(f"Top {TOP_N} jobs saved to {OUTPUT_PICKLE}")
 
 
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> main
 """
 from email_sending import send_email
 # Send myself a direct link to streamlit

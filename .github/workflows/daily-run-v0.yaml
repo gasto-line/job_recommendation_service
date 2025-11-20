@@ -53,7 +53,7 @@ jobs:
       # After this, you can run gh … without manually adding --hostname or --oauth-token.
         run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
 
-      - name: Create or update release
+      - name: Create or update releases
       # view tries to fetch the release metadata
       # draft: if true, the release is created as a draft that won’t be public until you manually publish it.
       # prerelease: if true, marks the release as a “pre-release” (e.g., beta or RC) rather than a full official release.
@@ -70,11 +70,26 @@ jobs:
               --prerelease=false
               echo "Release created."
           fi
+          if gh release view fasttext_toplist; then
+            echo "Release already exists, updating..."
+          else
+            echo "Release not found, creating..."
+            gh release create fasttext_toplist \
+              --title "fasttext top list" \
+              --notes "Automated daily refresh" \
+              --draft=false \
+              --prerelease=false
+              echo "Release created."
+          fi
 
       - name: Upload (or replace) the PKL
       # --clobber will overwrite the existing asset named top_jobs.pkl if present.
         run: |
           echo "Uploading top_jobs.pkl to the release..."
           gh release upload top-jobs-latest top_jobs.pkl \
+            --clobber
+            echo "Upload complete."
+            echo "Uploading fasttext_toplist.pkl to the release..."
+          gh release upload fasttext_toplist fasttext_toplist.pkl \
             --clobber
             echo "Upload complete."
