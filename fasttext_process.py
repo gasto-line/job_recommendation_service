@@ -68,8 +68,11 @@ def run_fasttext_inference(public_ip,jobs_tokenized_field: list[list[str]]):
 
     # the data retrieved from the inference VM is in the form {"FR": [ [index],[[]..[token_embeddings]..[]] ],"EN": [ [index],[[embeddings]] ]}
     data = response.json()
+
+    '''
     with open("data/response_tmp.json", "w") as f:
         json.dump(data,f)
+    '''
 
     # We create an output in the form {"FR":[[index],[job_field_embeddings]],"EN":[[index],[job_field_embeddings]]}
     output = data.copy()
