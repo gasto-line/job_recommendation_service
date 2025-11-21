@@ -43,7 +43,7 @@ def get_file_last_commit_date(owner, repo, file_path):
         commit = r.json()[0]
         return commit["commit"]["author"]["date"]
     except:
-        return None
+        return ("?")
 
 # Main app
 def main():
@@ -57,7 +57,8 @@ def main():
     jobs_df = load_jobs(selected_url)
 
     lastest_update= get_file_last_commit_date("gasto-line", "job_recommendation_service", os.path.basename(selected_url))
-    st.title(f"Job Scoring Dashboard at {lastest_update}")
+    st.title(f"{IMPLEMENTATIONS[implementation]["label"]} job scoring Dashboard")
+    st.info(f"Lastest list update: {lastest_update}")
 
     if jobs_df.empty:
         st.warning("No job data found.")
