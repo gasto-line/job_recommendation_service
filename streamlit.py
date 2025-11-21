@@ -3,7 +3,7 @@
 import streamlit as st
 import pandas as pd
 from DB_jobs import get_engine, insert_jobs
-import io
+import io, os
 import requests
 
 IMPLEMENTATIONS = {
@@ -35,6 +35,16 @@ def load_jobs(url):
         st.error(f"Failed to load data: {e}")
         return pd.DataFrame()
 
+def get_file_last_commit_date(owner, repo, file_path):
+    url = f"https://api.github.com/repos/{owner}/{repo}/commits?path={file_path}&page=1&per_page=1"
+    try:
+        r = requests.get(url)
+        r.raise_for_status()
+        commit = r.json()[0]
+        return commit["commit"]["author"]["date"]
+    except:
+        return None
+
 # Main app
 def main():
     st.sidebar.title("Configuration")
@@ -43,11 +53,11 @@ def main():
                         options=list(IMPLEMENTATIONS.keys()),
                         format_func=lambda x: IMPLEMENTATIONS[x]["label"]
                         )
-
-    st.title("Job Scoring Dashboard")
     selected_url = IMPLEMENTATIONS[implementation]["url"]
     jobs_df = load_jobs(selected_url)
 
+    lastest_update= get_file_last_commit_date("gasto-line", "job_recommendation_service", os.path.basename(selected_url))
+    st.title(f"Job Scoring Dashboard at {lastest_update}")
 
     if jobs_df.empty:
         st.warning("No job data found.")
