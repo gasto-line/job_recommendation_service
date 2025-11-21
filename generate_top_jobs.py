@@ -1,7 +1,6 @@
 #%%
 import pandas as pd
 import os
-import os
 
 # Defines the number of jobs that will be kept
 TOP_N = 10  # Can be changed dynamically
