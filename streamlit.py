@@ -35,15 +35,18 @@ def load_jobs(url):
         st.error(f"Failed to load data: {e}")
         return pd.DataFrame()
 
-def get_file_last_commit_date(owner, repo, file_path):
-    url = f"https://api.github.com/repos/{owner}/{repo}/commits?path={file_path}&page=1&per_page=1"
+def get_release_asset_update_date(owner, repo, asset_name):
+    url = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
     try:
         r = requests.get(url)
         r.raise_for_status()
-        commit = r.json()[0]
-        return commit["commit"]["author"]["date"]
-    except:
-        return ("?")
+        release = r.json()
+        for asset in release.get("assets", []):
+            if asset.get("name") == asset_name:
+                return asset.get("updated_at")
+        return ("(release not found)")
+    except Exception:
+        return ("(Error)")
 
 # Main app
 def main():
@@ -55,7 +58,7 @@ def main():
                         )
     selected_url = IMPLEMENTATIONS[implementation]["url"]
     st.title(f"{IMPLEMENTATIONS[implementation]["label"]} job scoring Dashboard")
-    lastest_update= get_file_last_commit_date("gasto-line", "job_recommendation_service", os.path.basename(selected_url))
+    lastest_update= get_release_asset_update_date("gasto-line", "job_recommendation_service", os.path.basename(selected_url))
     st.info(f"Lastest list update: {lastest_update[:10]}")
     
     jobs_df = load_jobs(selected_url)
