@@ -54,25 +54,27 @@ jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"]
 #%%
 from fasttext_process import get_field_wise_scoring
 import numpy as np
+AI_scored_df = filtered_df.copy()
 
 jobs_description_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"description")
 jobs_title_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"title")
-
 jobs_general_scores=np.mean([jobs_description_scores]+[jobs_title_scores],axis=0)
-filtered_df["fasttext_score"]=jobs_general_scores
 
-fasttext_toplist = filtered_df.sort_values("fasttext_score", ascending=False).head(TOP_N)
-FASTTEXT_PICKLE= "fasttext_toplist.pkl"
-fasttext_toplist.to_pickle(FASTTEXT_PICKLE)
-print(f"Top fasttext {TOP_N} jobs saved to {FASTTEXT_PICKLE}")
+AI_scored_df["fasttext_score"]=jobs_general_scores
 
 #%%
 from GPT_process import compute_gpt_match_score
 # Add a column with AI_score and AI_justification for each job
-AI_scored_df = compute_gpt_match_score(filtered_df) 
-# Sort and select top-N jobs
+AI_scored_df = compute_gpt_match_score(AI_scored_df) 
+
+#%%
+# Generate the top list for each of the implementations
+fasttext_toplist = AI_scored_df.sort_values("fasttext_score", ascending=False).head(TOP_N)
+FASTTEXT_PICKLE= "fasttext_toplist.pkl"
+fasttext_toplist.to_pickle(FASTTEXT_PICKLE)
+print(f"Top fasttext {TOP_N} jobs saved to {FASTTEXT_PICKLE}")
+
 top_df = AI_scored_df.sort_values("ai_score", ascending=False).head(TOP_N)
-# Save to pickle for Streamlit app
 OUTPUT_PICKLE = "top_jobs.pkl"
 top_df.to_pickle(OUTPUT_PICKLE)
 print(f"Top {TOP_N} jobs saved to {OUTPUT_PICKLE}")
