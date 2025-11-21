@@ -54,12 +54,11 @@ def main():
                         format_func=lambda x: IMPLEMENTATIONS[x]["label"]
                         )
     selected_url = IMPLEMENTATIONS[implementation]["url"]
-    jobs_df = load_jobs(selected_url)
-
-    lastest_update= get_file_last_commit_date("gasto-line", "job_recommendation_service", os.path.basename(selected_url))
     st.title(f"{IMPLEMENTATIONS[implementation]["label"]} job scoring Dashboard")
-    st.info(f"Lastest list update: {lastest_update}")
-
+    lastest_update= get_file_last_commit_date("gasto-line", "job_recommendation_service", os.path.basename(selected_url))
+    st.info(f"Lastest list update: {lastest_update[:10]}")
+    
+    jobs_df = load_jobs(selected_url)
     if jobs_df.empty:
         st.warning("No job data found.")
         return
