@@ -36,14 +36,16 @@ def load_jobs(url):
         return pd.DataFrame()
 
 def get_release_asset_update_date(owner, repo, asset_name):
-    url = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
+    url = f"https://api.github.com/repos/{owner}/{repo}/releases"
     try:
         r = requests.get(url)
         r.raise_for_status()
-        release = r.json()
-        for asset in release.get("assets", []):
-            if asset.get("name") == asset_name:
-                return asset.get("updated_at")
+        releases = r.json()
+        for release in releases:
+            assets = release.get("assets")
+            for asset in assets:
+                if asset.get("name") == asset_name:
+                    return (asset.get("updated_at"))
         return ("(release not found)")
     except Exception:
         return ("(Error)")
