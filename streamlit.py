@@ -6,16 +6,25 @@ from DB_jobs import get_engine, insert_jobs
 import io
 import requests
 
-job_list_url='https://github.com/gasto-line/job_recommendation_service/releases/download/top-jobs-latest/top_jobs.pkl'
+IMPLEMENTATIONS = {
+    "LLM": {
+        "url": 'https://github.com/gasto-line/job_recommendation_service/releases/download/top-jobs-latest/top_jobs.pkl',
+        "label": "GPT3.5-based recommendation"
+    },
+    "fasttext": {
+        "url": 'https://github.com/gasto-line/job_recommendation_service/releases/download/fasttext_toplist/fasttext_toplist.pkl',
+        "label": "FastText-based recommendation"
+    }
+}
 
 DB_PSW=st.secrets["DB_PSW"]
 
 # Load the job data from a .pkl file
 @st.cache_data(ttl=300)
 #It might be better to refresh the cache whenever the .pkl file is updated
-def load_jobs():
+def load_jobs(url):
     try:
-        response = requests.get(job_list_url)
+        response = requests.get(url)
         response.raise_for_status()  # Check for HTTP errors
         # Convert the binary file extracted from HTTP request into a file-like object
         job_list_file = io.BytesIO(response.content)
@@ -28,8 +37,17 @@ def load_jobs():
 
 # Main app
 def main():
+    st.sidebar.title("Configuration")
+    implementation = st.sidebar.selectbox(
+                        "Select recommendation engine:",
+                        options=list(IMPLEMENTATIONS.keys()),
+                        format_func=lambda x: IMPLEMENTATIONS[x]["label"]
+                        )
+
     st.title("Job Scoring Dashboard")
-    jobs_df = load_jobs()
+    selected_url = IMPLEMENTATIONS[implementation]["url"]
+    jobs_df = load_jobs(selected_url)
+
 
     if jobs_df.empty:
         st.warning("No job data found.")
