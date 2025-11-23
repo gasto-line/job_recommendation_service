@@ -13,13 +13,15 @@ api_key = os.getenv("API_KEY")
 APP_ID = os.getenv("ADZUNA_API_ID")
 APP_KEY = os.getenv("ADZUNA_API_KEY")
 
-# Base API URL
-base_url = "https://api.adzuna.com/v1/api/jobs/fr/search/1"
 
 
 
 #%%
-def load_adzuna(number_of_jobs: int):
+def load_adzuna( number_of_jobs: int, page: int):
+
+    # Base API URL
+    base_url = "https://api.adzuna.com/v1/api/jobs/fr/search"
+    base_url += f"/{page}"
 
     # Parameters as a dictionary
     params = {

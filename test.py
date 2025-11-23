@@ -1,6 +1,6 @@
 
 #%%
-import requests, json
+import requests
 
 def debug_release(owner, repo):
     url = f"https://api.github.com/repos/{owner}/{repo}/releases"
@@ -20,15 +20,49 @@ def get_release_asset_update_date(owner, repo, asset_name):
         r.raise_for_status()
         releases = r.json()
         for release in releases:
-            asset = release.get["assets"]
-            if asset.get("name") == asset_name:
-                return asset.get("updated_at")
+            assets = release.get("assets")
+            for asset in assets:
+                if asset.get("name") == asset_name:
+                    return (asset.get("updated_at"))
         return ("(release not found)")
     except Exception:
         return ("(Error)")
 
 get_release_asset_update_date("gasto-line","job_recommendation_service","top_jobs.pkl")
+#%%
+r = requests.get(url)
+r.raise_for_status()
+releases = r.json()
+for release in releases:
+    print(release)
+    '''assets = release.get["assets"]
+    for asset in assets:
+        if asset.get("name") == asset_name:
+            print(asset.get("updated_at"))'''
 # %%
-for asset in release.get("assets", []):
-    print(asset)
+for release in releases:
+    assets = release.get("assets")
+    print(assets)
+    for asset in assets:
+        asset_name=asset.get("name")
+        print(asset_name)
+        if asset_name == "top_jobs.pkl":
+            print(asset.get("updated_at"))
+# %%
+def get_release_asset_update_date(owner, repo, asset_name):
+    url = f"https://api.github.com/repos/{owner}/{repo}/releases"
+    try:
+        r = requests.get(url)
+        r.raise_for_status()
+        releases = r.json()
+        for release in releases:
+            assets = release.get("assets")
+            for asset in assets:
+                if asset.get("name") == asset_name:
+                    return (asset.get("updated_at"))
+        return ("(release not found)")
+    except Exception:
+        return ("(Error)")
+
+get_release_asset_update_date("gasto-line","job_recommendation_service","top_jobs.pkl")
 # %%

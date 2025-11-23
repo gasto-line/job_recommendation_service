@@ -10,15 +10,13 @@ DB_PSW = os.getenv("DB_PSW")
 if not DB_PSW:
     raise ValueError("Database password (DB_PSW) is not set in environment variables.")
 
-# Import the jobs database password from env variables
-DB_PSW = os.getenv("DB_PSW")
-if not DB_PSW:
-    raise ValueError("Database password (DB_PSW) is not set in environment variables.")
-
 #%%
 # Builds the data gathered from various sources
 from data_sources.adzuna import load_adzuna
-raw_df = load_adzuna(25)
+import pandas as pd
+raw_df_1 = load_adzuna(50,1)
+raw_df_2 = load_adzuna(50,2)
+raw_df=pd.concat([raw_df_1,raw_df_2]).reset_index()
 
 #%%
 # Function that generates a unique identifier for the jobs
@@ -52,9 +50,40 @@ jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["d
 jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"].tolist())
 
 #%%
-from fasttext_process import get_field_wise_scoring
+from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance, get_field_wise_scoring
 import numpy as np
 AI_scored_df = filtered_df.copy()
+input_df = AI_scored_df[["description","title"]].applymap(tokenization)
+public_ip=launch_inference_instance()
+
+if len(input_df) > 30:
+    batches = [input_df.iloc[i:i+25] for i in range(0, len(input_df), 25)]
+else:
+    batches = [input_df] 
+#%%
+fasttext_score = []
+
+for batch in batches:
+    # Make the fasttext inference on each batch description and title
+    jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,batch["description"].tolist())
+    jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,batch["title"].tolist())
+    # Compute cosine similarity for title and description against the ideal jon reference
+    jobs_description_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"description")
+    jobs_title_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"title")
+    jobs_general_scores=np.mean([jobs_description_scores]+[jobs_title_scores],axis=0)
+
+    fasttext_score.append(jobs_general_scores)
+#%%
+def concatenate_batches(batch_list):
+    if len(batch_list)==1:
+        return(list(batch_list[0]))
+    else:
+        return(list(batch_list[0])+concatenate_batches(batch_list[1:]))
+
+AI_scored_df["fasttext_score"]=concatenate_batches(fasttext_score)
+#%%
+jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["description"].tolist())
+jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"].tolist())
 
 jobs_description_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"description")
 jobs_title_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"title")
