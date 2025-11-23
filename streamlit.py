@@ -3,7 +3,7 @@
 import streamlit as st
 import pandas as pd
 from DB_jobs import get_engine, insert_jobs
-import io, os
+import io, os, json
 import requests
 
 IMPLEMENTATIONS = {
@@ -60,7 +60,7 @@ def main():
                         )
     selected_url = IMPLEMENTATIONS[implementation]["url"]
     st.title(f"{IMPLEMENTATIONS[implementation]["label"]} job scoring Dashboard")
-    lastest_update= get_release_asset_update_date("gasto-line", "job_recommendation_service", os.path.basename(selected_url))
+    lastest_update= get_release_asset_update_date("gasto-line","job_recommendation_service", os.path.basename(selected_url))
     st.info(f"Lastest list update: {lastest_update[:10]}")
     
     jobs_df = load_jobs(selected_url)
