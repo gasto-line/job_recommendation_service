@@ -45,9 +45,6 @@ from fasttext_process import run_fasttext_inference, tokenization, launch_infere
 input_df = filtered_df[["description","title"]].applymap(tokenization)
 public_ip=launch_inference_instance()
 
-#%%
-jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["description"].tolist())
-jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"].tolist())
 
 #%%
 from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance, get_field_wise_scoring
@@ -82,14 +79,18 @@ def concatenate_batches(batch_list):
 
 AI_scored_df["fasttext_score"]=concatenate_batches(fasttext_score)
 #%%
-jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["description"].tolist())
+'''jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["description"].tolist())
+jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"].tolist())'''
+
+#%%
+'''jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["description"].tolist())
 jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"].tolist())
 
 jobs_description_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"description")
 jobs_title_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"title")
 jobs_general_scores=np.mean([jobs_description_scores]+[jobs_title_scores],axis=0)
 
-AI_scored_df["fasttext_score"]=jobs_general_scores
+AI_scored_df["fasttext_score"]=jobs_general_scores'''
 
 #%%
 from GPT_process import compute_gpt_match_score
