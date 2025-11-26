@@ -151,6 +151,8 @@ def get_embedding(data: TextInput):
     print("French model inference retrieved")
     print_memory("after getting the french model output")
 
+    time.sleep(0.2)
+
     print("Calling worker for english model inference")
     try:
         EN_output = call_worker(model_en_path,en_embeddings_path)["embeddings"]
