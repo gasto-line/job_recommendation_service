@@ -64,20 +64,25 @@ def run_fasttext_inference(public_ip,jobs_tokenized_field: list[list[str]]):
     #  Call the API for each tokenized jobs' field
     api_url = f"http://{public_ip}:8080/embed"
     response = requests.post(api_url, json={"input": jobs_tokenized_field}) 
-    print("response returned")
+
+    # Handle API call errors
+    if not response.ok:  # True if status code NOT in the 200–299 range
+        raise RuntimeError(
+            f"API call failed with status {response.status_code}: {response.text}"
+        )
+    print("API call successful")
 
     # the data retrieved from the inference VM is in the form {"FR": [ [index],[[]..[token_embeddings]..[]] ],"EN": [ [index],[[embeddings]] ]}
     data = response.json()
 
-    '''with open("data/response_tmp.json", "w") as f:
-        json.dump(data,f)'''
+    with open("data/response_tmp.json", "w") as f:
+        json.dump(data,f)
 
     # We create an output in the form {"FR":[[index],[job_field_embeddings]],"EN":[[index],[job_field_embeddings]]}
     output = data.copy()
     for lang in ["FR","EN"]:
         # Taking the mean of the token embeddings for each field
         output[lang][1]=[np.mean(df, axis=0) for df in data[lang][1]]
-        
     return (output)
 
 from numpy import dot
@@ -97,14 +102,13 @@ def get_field_wise_scoring(jobs_field_grouped_embeddings,field: str):
         return(dot(vec1, vec2) / (norm(vec1) * norm(vec2))) 
 
     zipped_similarity=[]
-    jobs_field_grouped_similarity = jobs_field_grouped_embeddings.copy()
+    #jobs_field_grouped_similarity = jobs_field_grouped_embeddings.copy()
     for lang in ["FR","EN"]:
         ref=ideal_jobs_field_grouped_embedding[lang]
         order=jobs_field_grouped_embeddings[lang][0]
         embeddings=jobs_field_grouped_embeddings[lang][1]
         #jobs_field_grouped_similarity[lang][1]= [similarity(ref,embedding) for embedding in embeddings]
         sim = [similarity(ref,embedding) for embedding in embeddings]
-
         zipped_similarity+=list(zip(order,sim))
 
     output = [v for _,v in sorted(zipped_similarity)]

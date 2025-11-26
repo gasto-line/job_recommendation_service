@@ -38,14 +38,6 @@ exclude_set=set(extract_jobs_hash(engine).job_hash)
 # mask rows whose 'job_hash' is NOT in that set
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
-
-#%%
-from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance
-
-input_df = filtered_df[["description","title"]].applymap(tokenization)
-public_ip=launch_inference_instance()
-
-
 #%%
 from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance, get_field_wise_scoring
 import numpy as np
@@ -53,8 +45,8 @@ AI_scored_df = filtered_df.copy()
 input_df = AI_scored_df[["description","title"]].applymap(tokenization)
 public_ip=launch_inference_instance()
 
-if len(input_df) > 30:
-    batches = [input_df.iloc[i:i+25] for i in range(0, len(input_df), 25)]
+if len(input_df) > 20:
+    batches = [input_df.iloc[i:i+20] for i in range(0, len(input_df), 20)]
 else:
     batches = [input_df] 
 #%%
@@ -78,6 +70,13 @@ def concatenate_batches(batch_list):
         return(list(batch_list[0])+concatenate_batches(batch_list[1:]))
 
 AI_scored_df["fasttext_score"]=concatenate_batches(fasttext_score)
+
+
+#%%
+'''from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance
+
+input_df = filtered_df[["description","title"]].applymap(tokenization)
+public_ip=launch_inference_instance()'''
 #%%
 '''jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["description"].tolist())
 jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"].tolist())'''

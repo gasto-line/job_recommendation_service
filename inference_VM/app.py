@@ -45,6 +45,13 @@ def call_worker(model_path, payload):
 @app.post("/embed")
 def get_embedding(data: TextInput):
     input = data.input
+
+    print("Writing the input tokens to disk")
+    with open(input_path,"w") as f:
+        json.dump(input, f)
+
+    print("File size:", os.path.getsize(input_path))
+
     # Run the language sorting worker leveraging the fasttext language detection model
     # Returns a dictionnary having one key for each language FR & EN 
     # For each key, we have two lists
@@ -52,31 +59,37 @@ def get_embedding(data: TextInput):
     # The second is a list for each job field containing the list of tokens of this job's field
     print("Calling worker for language identification")
     try:
-        group_input=call_worker(model_lang_path, input)
+        group_input=call_worker(model_lang_path, input_path)
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=f"worker failed on language identification: {e}")
     print("Retrieving worker output")
 
+    print("Writing french inference model input to disk")
+    with open(fr_embeddings_path,"w") as f:
+        json.dump(group_input["FR"][1],f)
+
+    print("Writing english inference model input to disk")
+    with open(en_embeddings_path,"w") as f:
+        json.dump(group_input["EN"][1],f)
+
     # With the output grouped by language key we can run the inference in batches
     # The inference is applied running a subprocess on the second list
     print("Calling worker for french model inference")
-    FR_input = group_input["FR"][1]
     try:
-        FR_output = call_worker(model_fr_path,FR_input)["embeddings"]
+        FR_output = call_worker(model_fr_path,fr_embeddings_path)["embeddings"]
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=f"worker failed on french model inference: {e}")
     print("French model inference retrieved")
 
     print("Calling worker for english model inference")
-    EN_input = group_input["EN"][1]
     try:
-        EN_output = call_worker(model_en_path,EN_input)["embeddings"]
+        EN_output = call_worker(model_en_path,en_embeddings_path)["embeddings"]
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=f"worker failed on english model inference: {e}")
     print("English model inference retrieved")
 
     # Create a output variable
-    group_output=group_input
+    group_output=group_input.copy()
     group_output["FR"][1]=FR_output
     group_output["EN"][1]=EN_output
 

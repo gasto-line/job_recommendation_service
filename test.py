@@ -49,6 +49,8 @@ for release in releases:
         if asset_name == "top_jobs.pkl":
             print(asset.get("updated_at"))
 # %%
+import requests
+
 def get_release_asset_update_date(owner, repo, asset_name):
     url = f"https://api.github.com/repos/{owner}/{repo}/releases"
     try:
@@ -65,4 +67,10 @@ def get_release_asset_update_date(owner, repo, asset_name):
         return ("(Error)")
 
 get_release_asset_update_date("gasto-line","job_recommendation_service","top_jobs.pkl")
+# %%
+import os
+
+url='https://github.com/gasto-line/job_recommendation_service/releases/download/top-jobs-latest/top_jobs.pkl'
+
+print(os.path.basename(url))
 # %%
