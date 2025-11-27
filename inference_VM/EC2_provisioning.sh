@@ -8,6 +8,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --key-name my-debug-key \
   --iam-instance-profile Name=EC2-get-model-role \
   --user-data file://inference_VM/VM_user_data.sh \
+  --instance-initiated-shutdown-behavior terminate \
   --security-group-ids 	sg-059648096d13c1a36 \
   --region eu-west-3 \
   --query 'Instances[0].InstanceId' \
@@ -22,3 +23,4 @@ PUBLIC_IP=$(aws ec2 describe-instances \
   --output text)
 
 echo "$PUBLIC_IP"
+echo "$INSTANCE_ID"
