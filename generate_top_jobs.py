@@ -5,10 +5,7 @@ import os
 # Defines the number of jobs that will be kept
 TOP_N = 10  # Can be changed dynamically
 
-# Import the jobs database password from env variables
-DB_PSW = os.getenv("DB_PSW")
-if not DB_PSW:
-    raise ValueError("Database password (DB_PSW) is not set in environment variables.")
+
 
 #%%
 # Builds the data gathered from various sources
@@ -19,20 +16,21 @@ raw_df_2 = load_adzuna(50,2)
 raw_df=pd.concat([raw_df_1,raw_df_2]).reset_index()
 
 #%%
-# Function that generates a unique identifier for the jobs
-def generate_job_hash(title, company, pub_date):
-    year = pub_date.year
-    month = pub_date.month
-    identifier = f"{title.strip().lower()}_{company.strip().lower()}_{year}_{month}"
-    return pd.util.hash_pandas_object(pd.Series(identifier)).astype(str)[0]
+from utils import generate_job_hash
 # Add a new column job_hash that uniquely identify jobs
 raw_df["posted_date"] = pd.to_datetime(raw_df["posted_date"])
 raw_df["job_hash"] = raw_df.apply(lambda row: generate_job_hash(row["title"], row["company"], row["posted_date"]), axis=1)
 raw_df = raw_df.drop_duplicates(subset='job_hash')
 
 #%%
-# Add a filter on jobs that are already in the reference database
 from DB_jobs import extract_jobs_hash, get_engine
+
+# Import the jobs database password from env variables
+DB_PSW = os.getenv("DB_PSW")
+if not DB_PSW:
+    raise ValueError("Database password (DB_PSW) is not set in environment variables.")
+
+# Add a filter on jobs that are already in the reference database
 engine = get_engine(DB_PSW)
 exclude_set=set(extract_jobs_hash(engine).job_hash)
 # mask rows whose 'job_hash' is NOT in that set
@@ -45,8 +43,9 @@ AI_scored_df = filtered_df.copy()
 input_df = AI_scored_df[["description","title"]].applymap(tokenization)
 public_ip=launch_inference_instance()
 
-if len(input_df) > 20:
-    batches = [input_df.iloc[i:i+20] for i in range(0, len(input_df), 20)]
+#%%
+if len(input_df) > 50:
+    batches = [input_df.iloc[i:i+50] for i in range(0, len(input_df), 50)]
 else:
     batches = [input_df] 
 #%%
