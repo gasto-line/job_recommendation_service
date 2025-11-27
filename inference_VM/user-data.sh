@@ -23,30 +23,7 @@ dnf install -y python3-pip awscli gcc gcc-c++ make git python3-devel
 python3 -m pip install --upgrade --ignore-installed "numpy<2.0.0" setuptools wheel boto3 fasttext fastapi uvicorn
 
 # create the worker script for inference and language identification
-cat << EOF > worker.py
-import sys, json, fasttext
-model_path = sys.argv[1]
-model = fasttext.load_model(model_path)
-payload = json.load(sys.stdin)
-# payload contains list of texts / tokens ...
-if "lang" in model_path:
-    result = {"FR": [[],[]], "EN": [[],[]]}
-    for i,text in enumerate(payload):
-        full_text=" ".join(text)
-        lang = model.predict(full_text)[0][0]
-        if lang == "__label__fra_Latn":
-            result["FR"][0].append(i)
-            result["FR"][1].append(text)
-        elif lang == "__label__eng_Latn":
-            result["EN"][0].append(i)
-            result["EN"][1].append(text)
-else:
-    result = {"embeddings": []}
-    for text in payload:
-        result["embeddings"].append([model.get_word_vector(token).tolist() for token in text])
-
-print(json.dumps(result))
-# process exits -> memory freed
+cat << EOF > 
 EOF
 
 # create the inference srcipt to run
