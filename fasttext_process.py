@@ -31,7 +31,8 @@ def launch_inference_instance():
             , check=True
             , timeout=30
         )
-        public_ip = result.stdout.strip()
+        public_ip = result.stdout.strip().split("\n")[0]
+        instance_id = result.stdout.strip().split("\n")[1]
         print(f"✅ Public IP: {public_ip}")
         print("STDOUT:", result.stdout)
         print("STDERR:", result.stderr)
@@ -55,7 +56,7 @@ def launch_inference_instance():
             pass
         time.sleep(30)
         print("Waiting for the app to be ready...")
-    return (public_ip)
+    return (public_ip,instance_id)
 
 # Takes in the public_ip of the instance and the list of jobs field in its tokenized form
 # Returns a dictionnary of format {"FR":[[index],[job_field_embeddings]],"EN":[[index],[job_field_embeddings]]}

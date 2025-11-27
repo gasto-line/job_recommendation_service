@@ -24,12 +24,10 @@ raw_df = raw_df.drop_duplicates(subset='job_hash')
 
 #%%
 from DB_jobs import extract_jobs_hash, get_engine
-
 # Import the jobs database password from env variables
 DB_PSW = os.getenv("DB_PSW")
 if not DB_PSW:
     raise ValueError("Database password (DB_PSW) is not set in environment variables.")
-
 # Add a filter on jobs that are already in the reference database
 engine = get_engine(DB_PSW)
 exclude_set=set(extract_jobs_hash(engine).job_hash)
@@ -37,18 +35,21 @@ exclude_set=set(extract_jobs_hash(engine).job_hash)
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
 #%%
-from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance, get_field_wise_scoring
-import numpy as np
 AI_scored_df = filtered_df.copy()
 input_df = AI_scored_df[["description","title"]].applymap(tokenization)
-public_ip=launch_inference_instance()
-
-#%%
 if len(input_df) > 50:
     batches = [input_df.iloc[i:i+50] for i in range(0, len(input_df), 50)]
 else:
     batches = [input_df] 
+
 #%%
+from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance, get_field_wise_scoring
+import numpy as np
+
+public_ip, instance_id =launch_inference_instance()
+#%%
+import boto3
+ec2 = boto3.client("ec2", region_name="eu-west-3")
 fasttext_score = []
 
 for batch in batches:
@@ -61,6 +62,8 @@ for batch in batches:
     jobs_general_scores=np.mean([jobs_description_scores]+[jobs_title_scores],axis=0)
 
     fasttext_score.append(jobs_general_scores)
+
+ec2.terminate_instances(InstanceIds=[instance_id])
 #%%
 def concatenate_batches(batch_list):
     if len(batch_list)==1:

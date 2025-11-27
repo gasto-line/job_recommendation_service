@@ -1,4 +1,8 @@
-
+#%%
+def f():
+    a="gekk"
+    b="grok"
+    return(a,b)
 #%%
 import requests
 
