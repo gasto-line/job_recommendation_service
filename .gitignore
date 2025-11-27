@@ -5,3 +5,4 @@ useful_commands
 *.deb
 *.pem
 test*
+*.pkl
