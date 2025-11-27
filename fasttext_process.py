@@ -1,19 +1,7 @@
 # fasttext_process.py
 
-import subprocess, re, json, time, requests, numpy as np, pandas as pd
+import subprocess, json, time, requests, numpy as np, pandas as pd
 from requests.exceptions import RequestException
-
-def tokenization(text):
-    text = re.sub(r"[^a-zA-Z0-9\s#&œ+éèêàâç'’]","",text)
-    text = text.lower()
-    text = re.split(r"['’\s]",text)
-    while "" in text:
-        text.remove("")
-    while "l" in text:
-        text.remove("l")
-    while "d" in text:
-        text.remove("d")
-    return (text)
 
 # Takes tokenised list of jobs description and title 
 # Returns an embedding for each jobs taking the mean of title and description embeddings

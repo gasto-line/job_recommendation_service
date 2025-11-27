@@ -35,6 +35,7 @@ exclude_set=set(extract_jobs_hash(engine).job_hash)
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
 #%%
+from utils import tokenization
 AI_scored_df = filtered_df.copy()
 input_df = AI_scored_df[["description","title"]].applymap(tokenization)
 if len(input_df) > 50:
@@ -43,7 +44,7 @@ else:
     batches = [input_df] 
 
 #%%
-from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance, get_field_wise_scoring
+from fasttext_process import run_fasttext_inference, launch_inference_instance, get_field_wise_scoring
 import numpy as np
 
 public_ip, instance_id =launch_inference_instance()
