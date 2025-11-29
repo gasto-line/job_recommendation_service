@@ -20,3 +20,9 @@ def tokenization(text):
     while "d" in text:
         text.remove("d")
     return (text)
+
+def flatten_list(batch_list):
+    if len(batch_list)==1:
+        return(list(batch_list[0]))
+    else:
+        return(list(batch_list[0])+flatten_list(batch_list[1:]))
