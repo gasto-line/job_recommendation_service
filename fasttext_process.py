@@ -1,57 +1,15 @@
 # fasttext_process.py
 
-import subprocess, json, time, requests, numpy as np, pandas as pd
+import json, requests, numpy as np, pandas as pd
 from requests.exceptions import RequestException
-
-# Takes tokenised list of jobs description and title 
-# Returns an embedding for each jobs taking the mean of title and description embeddings
-# Returns the means of all those embeddings too if needed
-def launch_inference_instance():
-    """Run full EC2 provisioning and inference workflow, returning job embeddings."""
-    print("running the launch_function")
-    # Step 1: Launch instance
-    try:
-        print("running the bash script through subprocess")
-        result = subprocess.run(
-            ["bash", "inference_VM/EC2_provisioning.sh"]
-            , capture_output=True
-            , text=True
-            , check=True
-            , timeout=30
-        )
-        public_ip = result.stdout.strip().split("\n")[0]
-        instance_id = result.stdout.strip().split("\n")[1]
-        print(f"✅ Public IP: {public_ip}")
-        print("STDOUT:", result.stdout)
-        print("STDERR:", result.stderr)
-    
-    except subprocess.CalledProcessError as e:
-        print("❌ EC2 provisioning script failed!")
-        print("Return code:", e.returncode)
-        print("STDOUT:", e.stdout)
-        print("STDERR:", e.stderr)
-        raise  # important: re-raise to fail the workflow
-
-    # Step 2: Wait for the app
-    url = f"http://{public_ip}:8080/health"
-    while True:
-        try:
-            r = requests.get(url, timeout=3)
-            if r.status_code == 200:
-                print("✅ App is ready!")
-                break
-        except RequestException:
-            pass
-        time.sleep(30)
-        print("Waiting for the app to be ready...")
-    return (public_ip,instance_id)
+from utils import flatten_list
 
 # Takes in the public_ip of the instance and the list of jobs field in its tokenized form
 # Returns a dictionnary of format {"FR":[[index],[job_field_embeddings]],"EN":[[index],[job_field_embeddings]]}
 def run_fasttext_inference(public_ip,jobs_tokenized_field: list[list[str]]):
 
     #  Call the API for each tokenized jobs' field
-    api_url = f"http://{public_ip}:8080/embed"
+    api_url = f"http://{public_ip}:8080/token"
     response = requests.post(api_url, json={"input": jobs_tokenized_field}) 
 
     # Handle API call errors
@@ -64,14 +22,20 @@ def run_fasttext_inference(public_ip,jobs_tokenized_field: list[list[str]]):
     # the data retrieved from the inference VM is in the form {"FR": [ [index],[[]..[token_embeddings]..[]] ],"EN": [ [index],[[embeddings]] ]}
     data = response.json()
 
-    with open("data/response_tmp.json", "w") as f:
-        json.dump(data,f)
-
     # We create an output in the form {"FR":[[index],[job_field_embeddings]],"EN":[[index],[job_field_embeddings]]}
-    output = data.copy()
+    output = {
+    "FR": [data["FR"][0], None],
+    "EN": [data["EN"][0], None]
+    }
     for lang in ["FR","EN"]:
         # Taking the mean of the token embeddings for each field
-        output[lang][1]=[np.mean(df, axis=0) for df in data[lang][1]]
+        field_embeddings=[np.mean(df, axis=0) for df in data[lang][1]]
+        output[lang][1]=field_embeddings
+
+    # Sanity checks 
+    assert len(output["FR"][0])==len(output["FR"][1])
+    assert len(output["EN"][0])==len(output["EN"][1])
+    assert len(output["FR"][0])+len(output["EN"][0])==len(jobs_tokenized_field)
     return (output)
 
 from numpy import dot
@@ -101,9 +65,32 @@ def get_field_wise_scoring(jobs_field_grouped_embeddings,field: str):
         zipped_similarity+=list(zip(order,sim))
 
     output = [v for _,v in sorted(zipped_similarity)]
-
+    
+    # Sanity checks
+    assert len(output)==len(jobs_field_grouped_embeddings["FR"][0])+len(jobs_field_grouped_embeddings["EN"][0])
     return(output)
         
+
+def get_fasttext_score(input_df,batch_size,public_ip):
+    selected_fields = input_df.columns.tolist()
+    fasttext_score = []
+    if len(input_df) > batch_size:
+        batches = [input_df.iloc[i:i+batch_size] for i in range(0, len(input_df), batch_size)]
+    else:
+        batches = [input_df] 
+
+    for batch in batches:
+        field_score = []
+        for field in selected_fields:
+            jobs_field_grouped_embeddings=run_fasttext_inference(public_ip,batch[field].tolist())
+            jobs_field_scores = get_field_wise_scoring(jobs_field_grouped_embeddings,field)
+            field_score.append(jobs_field_scores)
+
+        jobs_general_scores=np.mean(field_score,axis=0)
+        fasttext_score.append(jobs_general_scores)
+
+    return((flatten_list(fasttext_score)))
+
         
 
 

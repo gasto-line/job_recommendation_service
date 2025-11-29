@@ -5,10 +5,9 @@ import os
 # Defines the number of jobs that will be kept
 TOP_N = 10  # Can be changed dynamically
 
-
-
 #%%
-# Builds the data gathered from various sources
+####################################################
+# EXTRACT RAW DATA FROM DATA SOURCES
 from data_sources.adzuna import load_adzuna
 import pandas as pd
 raw_df_1 = load_adzuna(50,1)
@@ -16,6 +15,8 @@ raw_df_2 = load_adzuna(50,2)
 raw_df=pd.concat([raw_df_1,raw_df_2]).reset_index()
 
 #%%
+####################################################
+# CLEANING AND FILTERING
 from utils import generate_job_hash
 # Add a new column job_hash that uniquely identify jobs
 raw_df["posted_date"] = pd.to_datetime(raw_df["posted_date"])
@@ -35,66 +36,39 @@ exclude_set=set(extract_jobs_hash(engine).job_hash)
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
 #%%
-from utils import tokenization
 AI_scored_df = filtered_df.copy()
-input_df = AI_scored_df[["description","title"]].applymap(tokenization)
-if len(input_df) > 50:
-    batches = [input_df.iloc[i:i+50] for i in range(0, len(input_df), 50)]
-else:
-    batches = [input_df] 
+
+####################################################
+# FASTEXT PROCESS
+
+# Fields taken into account for fasttext scoring
+selected_fields = [
+    "description"
+    ,"title"
+]
 
 #%%
-from fasttext_process import run_fasttext_inference, launch_inference_instance, get_field_wise_scoring
-import numpy as np
+from inference_VM.launch_VM import launch_inference_instance
 
-public_ip, instance_id =launch_inference_instance()
+public_ip, instance_id =launch_inference_instance("inference_VM/fasttext_token_VM.sh")
+
+#%%
+from fasttext_process import get_fasttext_score
+from utils import tokenization
+
+token_input_df = AI_scored_df[selected_fields].applymap(tokenization)
+AI_scored_df["fasttext_score"]=get_fasttext_score(public_ip=public_ip
+                                                  ,input_df=token_input_df
+                                                  ,batch_size=50)
+
 #%%
 import boto3
 ec2 = boto3.client("ec2", region_name="eu-west-3")
-fasttext_score = []
-
-for batch in batches:
-    # Make the fasttext inference on each batch description and title
-    jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,batch["description"].tolist())
-    jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,batch["title"].tolist())
-    # Compute cosine similarity for title and description against the ideal jon reference
-    jobs_description_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"description")
-    jobs_title_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"title")
-    jobs_general_scores=np.mean([jobs_description_scores]+[jobs_title_scores],axis=0)
-
-    fasttext_score.append(jobs_general_scores)
-
 ec2.terminate_instances(InstanceIds=[instance_id])
-#%%
-def concatenate_batches(batch_list):
-    if len(batch_list)==1:
-        return(list(batch_list[0]))
-    else:
-        return(list(batch_list[0])+concatenate_batches(batch_list[1:]))
-
-AI_scored_df["fasttext_score"]=concatenate_batches(fasttext_score)
-
 
 #%%
-'''from fasttext_process import run_fasttext_inference, tokenization, launch_inference_instance
-
-input_df = filtered_df[["description","title"]].applymap(tokenization)
-public_ip=launch_inference_instance()'''
-#%%
-'''jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["description"].tolist())
-jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"].tolist())'''
-
-#%%
-'''jobs_description_grouped_embeddings=run_fasttext_inference(public_ip,input_df["description"].tolist())
-jobs_title_grouped_embeddings=run_fasttext_inference(public_ip,input_df["title"].tolist())
-
-jobs_description_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"description")
-jobs_title_scores = get_field_wise_scoring(jobs_description_grouped_embeddings,"title")
-jobs_general_scores=np.mean([jobs_description_scores]+[jobs_title_scores],axis=0)
-
-AI_scored_df["fasttext_score"]=jobs_general_scores'''
-
-#%%
+####################################################
+# GPT PROCESS
 from GPT_process import compute_gpt_match_score
 # Add a column with AI_score and AI_justification for each job
 AI_scored_df = compute_gpt_match_score(AI_scored_df) 
