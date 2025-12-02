@@ -4,6 +4,39 @@ import json, requests, numpy as np, pandas as pd
 from requests.exceptions import RequestException
 from utils import flatten_list
 
+
+def call_api(public_ip, input, input_type: str):
+    api_url = f"http://{public_ip}:8080/{input_type}"
+    try:
+        response = requests.post(api_url, json={"input": input})
+        response.raise_for_status()  # Raise an error for bad status codes
+        print("API call successful")
+        return response.json()
+    except RequestException as e:
+        raise RuntimeError(f"API call failed: {e}")
+
+def token_tofield_embeddings(data: dict):
+    # the data retrieved from the inference VM is in the form {"FR": [ [index],[[]..[token_embeddings]..[]] ],"EN": [ [index],[[embeddings]] ]}
+    # We create an output in the form {"FR":[[index],[job_field_embeddings]],"EN":[[index],[job_field_embeddings]]}
+    output = {
+    "FR": [data["FR"][0], None],
+    "EN": [data["EN"][0], None]
+    }
+    for lang in ["FR","EN"]:
+        field_embeddings=[np.mean(df, axis=0) for df in data[lang][1]]
+        output[lang][1]=field_embeddings
+    
+    return output
+
+def get_field_embeddings(public_ip,input,input_type: str):
+    data = call_api(public_ip, input, input_type)
+    if input_type=="token":
+        return token_tofield_embeddings(data)
+    elif input_type=="sentence": 
+        return data
+    else:
+        raise ValueError(f"Invalid input_type: {input_type}. Must be 'token' or 'sentence'.")
+
 # Takes in the public_ip of the instance and the list of jobs field in its tokenized form
 # Returns a dictionnary of format {"FR":[[index],[job_field_embeddings]],"EN":[[index],[job_field_embeddings]]}
 def run_fasttext_inference(public_ip,jobs_tokenized_field: list[list[str]]):
@@ -71,7 +104,7 @@ def get_field_wise_scoring(jobs_field_grouped_embeddings,field: str):
     return(output)
         
 
-def get_fasttext_score(input_df,batch_size,public_ip):
+def get_fasttext_score(input_df,input_type, batch_size,public_ip):
     selected_fields = input_df.columns.tolist()
     fasttext_score = []
     if len(input_df) > batch_size:
@@ -82,7 +115,10 @@ def get_fasttext_score(input_df,batch_size,public_ip):
     for batch in batches:
         field_score = []
         for field in selected_fields:
-            jobs_field_grouped_embeddings=run_fasttext_inference(public_ip,batch[field].tolist())
+            #jobs_field_grouped_embeddings=run_fasttext_inference(public_ip,batch[field].tolist())
+            jobs_field_grouped_embeddings=get_field_embeddings(public_ip=public_ip
+                                                               ,input=batch[field].tolist()
+                                                               ,input_type=input_type)
             jobs_field_scores = get_field_wise_scoring(jobs_field_grouped_embeddings,field)
             field_score.append(jobs_field_scores)
 

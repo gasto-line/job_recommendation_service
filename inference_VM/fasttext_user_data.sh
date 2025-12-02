@@ -19,6 +19,6 @@ echo "Installing dependencies..."
 pip install -r requirements.txt
 
 echo "Starting inference API..."
-nohup uvicorn app_test:app --host 0.0.0.0 --port 8080
+nohup uvicorn app:app --host 0.0.0.0 --port 8080
 
 END
