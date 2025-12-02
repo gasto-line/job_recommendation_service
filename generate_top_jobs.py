@@ -50,15 +50,17 @@ selected_fields = [
 #%%
 from inference_VM.launch_VM import launch_inference_instance
 
-public_ip, instance_id =launch_inference_instance("inference_VM/fasttext_token_VM.sh")
+public_ip, instance_id =launch_inference_instance("inference_VM/fasttext_VM.sh",instance_type="t3.large")
 
 #%%
 from fasttext_process import get_fasttext_score
 from utils import tokenization
 
-token_input_df = AI_scored_df[selected_fields].applymap(tokenization)
+#token_input_df = AI_scored_df[selected_fields].applymap(tokenization)
+sentence_input_df = AI_scored_df[selected_fields]
 AI_scored_df["fasttext_score"]=get_fasttext_score(public_ip=public_ip
-                                                  ,input_df=token_input_df
+                                                  ,input_df=sentence_input_df
+                                                  ,input_type="sentence"
                                                   ,batch_size=50)
 
 #%%
