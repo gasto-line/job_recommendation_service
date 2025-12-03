@@ -87,11 +87,6 @@ OUTPUT_PICKLE = "llm_toplist.pkl"
 llm_toplist.to_pickle(OUTPUT_PICKLE)
 print(f"Top {TOP_N} jobs saved to {OUTPUT_PICKLE}")
 
-top_df = AI_scored_df.sort_values("ai_score", ascending=False).head(TOP_N)
-OUTPUT_PICKLE = "top_jobs.pkl"
-top_df.to_pickle(OUTPUT_PICKLE)
-print(f"Top {TOP_N} jobs saved to {OUTPUT_PICKLE}")
-
 """
 from email_sending import send_email
 # Send myself a direct link to streamlit
