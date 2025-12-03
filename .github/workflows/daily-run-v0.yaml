@@ -59,17 +59,6 @@ jobs:
       # prerelease: if true, marks the release as a “pre-release” (e.g., beta or RC) rather than a full official release.
       # Setting both to false means “create or update a full, published release.”
         run: |      
-          if gh release view top-jobs-latest; then
-            echo "Release already exists, updating..."
-          else
-            echo "Release not found, creating..."
-            gh release create top-jobs-latest \
-              --title "Top Jobs Data (latest)" \
-              --notes "Automated daily refresh" \
-              --draft=false \
-              --prerelease=false
-              echo "Release created."
-          fi
           if gh release view llm_toplist; then
             echo "Release already exists, updating..."
           else
