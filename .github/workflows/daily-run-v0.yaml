@@ -70,6 +70,17 @@ jobs:
               --prerelease=false
               echo "Release created."
           fi
+          if gh release view llm_toplist; then
+            echo "Release already exists, updating..."
+          else
+            echo "Release not found, creating..."
+            gh release create llm_toplist \
+              --title "llm top list" \
+              --notes "Automated daily refresh" \
+              --draft=false \
+              --prerelease=false
+              echo "Release created."
+          fi
           if gh release view fasttext_toplist; then
             echo "Release already exists, updating..."
           else
@@ -93,3 +104,6 @@ jobs:
           gh release upload fasttext_toplist fasttext_toplist.pkl \
             --clobber
             echo "Upload complete."
+          gh release upload llm_toplist llm_toplist.pkl \
+            --clobber
+            echo "Upload complete."  
