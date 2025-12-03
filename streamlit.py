@@ -8,7 +8,7 @@ import requests
 
 IMPLEMENTATIONS = {
     "LLM": {
-        "url": 'https://github.com/gasto-line/job_recommendation_service/releases/download/llm_toplist/llm_toplist_jobs.pkl',
+        "url": 'https://github.com/gasto-line/job_recommendation_service/releases/download/llm_toplist/llm_toplist.pkl',
         "label": "GPT3.5-based recommendation"
     },
     "fasttext": {
