@@ -82,6 +82,11 @@ FASTTEXT_PICKLE= "fasttext_toplist.pkl"
 fasttext_toplist.to_pickle(FASTTEXT_PICKLE)
 print(f"Top fasttext {TOP_N} jobs saved to {FASTTEXT_PICKLE}")
 
+llm_toplist = AI_scored_df.sort_values("ai_score", ascending=False).head(TOP_N)
+OUTPUT_PICKLE = "llm_toplist.pkl"
+llm_toplist.to_pickle(OUTPUT_PICKLE)
+print(f"Top {TOP_N} jobs saved to {OUTPUT_PICKLE}")
+
 top_df = AI_scored_df.sort_values("ai_score", ascending=False).head(TOP_N)
 OUTPUT_PICKLE = "top_jobs.pkl"
 top_df.to_pickle(OUTPUT_PICKLE)
