@@ -85,14 +85,12 @@ jobs:
       - name: Upload (or replace) the PKL
       # --clobber will overwrite the existing asset named top_jobs.pkl if present.
         run: |
-          echo "Uploading top_jobs.pkl to the release..."
-          gh release upload top-jobs-latest top_jobs.pkl \
-            --clobber
-            echo "Upload complete."
-            echo "Uploading fasttext_toplist.pkl to the release..."
+          echo "Uploading fasttext_toplist.pkl to the release..."
           gh release upload fasttext_toplist fasttext_toplist.pkl \
             --clobber
             echo "Upload complete."
+            
+          echo "Uploading llm_toplist.pkl to the release..."
           gh release upload llm_toplist llm_toplist.pkl \
             --clobber
             echo "Upload complete."  
