@@ -74,7 +74,6 @@ def dashboard():
     if st.button("Logout"):
         supabase.auth.sign_out()
         st.session_state["user"] = None
-        st.experimental_rerun()
 
 # ---------------------------------------------------------
 # Main navigation logic
