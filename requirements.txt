@@ -6,5 +6,6 @@ openai==1.77.0
 PyYAML==6.0.2
 python-dotenv==1.1.0
 streamlit==1.45.0
+supabase
 sqlalchemy
 psycopg2-binary
