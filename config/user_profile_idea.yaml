@@ -1,0 +1,16 @@
+job_titles:
+  - List of job titles considered
+ideal_job_description: >
+  - Short description of the ideal job of the user
+
+technical_skills:
+  - Dictionnary of technical skills with proficiency levels
+
+general skills: 
+  - Dictionnary with limited keys and proficiency levels
+    - Expression (oral and written): Excellent
+    - Project management: Good
+    - Modeling complexity: Excellent
+    - Business acumen: Good
+education_level: Master's degree in Data Science
+experience: Junior (less than 3 years)
