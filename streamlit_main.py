@@ -60,9 +60,12 @@ def login():
 
             st.session_state["user"] = response.user
             st.success("You are now logged in!")
+            st.rerun()
 
         except Exception as e:
             st.error("Invalid credentials or error")
+        
+
 
 # ---------------------------------------------------------
 # Protected dashboard
