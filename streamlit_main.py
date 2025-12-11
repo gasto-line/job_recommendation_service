@@ -10,6 +10,19 @@ SUPABASE_KEY = st.secrets["SUPABASE_ANON_KEY"]
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+st.markdown(
+    """
+    <style>
+        .main .block-container {
+            max-width: 1200px !important;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # ---------------------------------------------------------
 # Helper: store session in Streamlit
 # ---------------------------------------------------------
@@ -153,10 +166,7 @@ def profile_page():
     skill_families = general_skills_table["Category"].tolist()
     default_weights = [20, 20, 20, 20]
     weights = []
-    skill_df=pd.DataFrame({
-            "Category": skill_families,
-            "Weight (%)": weights
-        })
+
     cols = st.columns(2)  # 2 columns per row, more compact
 
     for i, family in enumerate(skill_families):
@@ -167,9 +177,13 @@ def profile_page():
 
     total = sum(weights)
     st.write(f"### Total: **{total}%**")
-
     if total != 100:
         st.error("The total must be exactly 100%.")
+    
+    skill_df = pd.DataFrame({
+        "Category": skill_families,
+        "Weight (%)": weights
+    })
 
     # Education
     st.subheader("Equivalent relevant education level")
