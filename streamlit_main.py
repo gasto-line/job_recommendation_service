@@ -10,6 +10,8 @@ SUPABASE_KEY = st.secrets["SUPABASE_ANON_KEY"]
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+
+st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
@@ -23,7 +25,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.set_page_config(layout="wide")
 # ---------------------------------------------------------
 # Helper: store session in Streamlit
 # ---------------------------------------------------------
