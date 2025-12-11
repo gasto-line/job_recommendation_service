@@ -97,7 +97,7 @@ def login_page():
 # ---------------------------------------------------------
 def profile_page():
     st.title("Your Job Profile")
-    st.info("We recommend filling honest answers to get the best job recommendations.")
+    st.caption("👉 We recommend filling honest answers to get the best job recommendations.")
 
     target_tab, skillset_tab, experience_tab = st.tabs(
     ["Target job", "Skills", "Experience"]
@@ -154,7 +154,7 @@ def profile_page():
             lambda c: f"{CATEGORY_ICONS[c]} **{c}**"
         )
 
-        st.dataframe(sector_table.set_index("Category"), hide_index=True)
+        st.dataframe(sector_table.set_index("Category"), hide_index=False)
         sectors = st.multiselect(
             "Select preferred sectors",
             sector_table["Category"].tolist()
@@ -163,7 +163,7 @@ def profile_page():
     with skillset_tab:
         # Technical skills - dynamic table
         st.subheader("Technical Skills distribution")
-        st.info("Choose only your top technical skills (max 5) inluding programming languages, tools, frameworks, etc.")
+        st.caption("👉 Choose only your top technical skills (max 5) inluding programming languages, tools, frameworks, etc.")
 
         if "skills" not in st.session_state:
             st.session_state.skills = [
@@ -193,15 +193,16 @@ def profile_page():
             st.session_state.skills.append({"name": "", "Weight (%)": 0})
             st.rerun()
 
-        tech_df = pd.DataFrame(st.session_state.skills)
-        st.subheader("Technical skills weights (must total 100%)")
         tech_total = tech_df["Weight (%)"].sum()
         st.write(f"Total = **{tech_total}%**")
-
         if tech_total != 100:
             st.warning("Technical skills must total 100%.")
 
+        tech_df = pd.DataFrame(st.session_state.skills)
+
         # General skills
+        st.subheader("General skills distribution")
+
         general_skills_table = pd.DataFrame([
         ["Cognitive & Technical Skills",
         "Problem-solving, analysis, modeling, technical expertise, creativity"],
@@ -212,9 +213,6 @@ def profile_page():
         ["Business & Contextual Understanding",
         "Business acumen, industry knowledge, risk, strategy"]
         ], columns=["Category", "Includes"])
-
-        st.subheader("Rate your general skills (must total 100%)")
-        st.dataframe(general_skills_table, hide_index=True)
 
         st.caption("👉 Evaluate your relative strengths honestly — the goal is to compare *your own* skills to one another.")
         skill_families = general_skills_table["Category"].tolist()
@@ -230,7 +228,7 @@ def profile_page():
                 weights.append(w)
 
         skill_total = sum(weights)
-        st.write(f"### Total: **{skill_total}%**")
+        st.write(f"Total: **{skill_total}%**")
         if skill_total != 100:
             st.error("The total must be exactly 100%.")
         
@@ -238,6 +236,8 @@ def profile_page():
             "Category": skill_families,
             "Weight (%)": weights
         })
+
+        st.dataframe(general_skills_table, hide_index=True)
 
     with experience_tab:
         # Education
@@ -272,8 +272,8 @@ def profile_page():
     if st.button("Save profile"):
         if tech_total != 100 or skill_total != 100:
             st.error("Please correct the skill weights — totals must be 100%.")
-            return
-
+        
+        try:
         supabase.table("profiles").upsert({
             "user_id": st.session_state["user"].id,
             "job_titles": job_titles,
