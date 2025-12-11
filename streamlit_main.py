@@ -111,7 +111,7 @@ def profile_page():
         for i, title in enumerate(st.session_state.job_titles):
             cols = st.columns([0.8, 0.2])
             st.session_state.job_titles[i] = cols[0].text_input(
-                f"Job Title {i+1}", title, key=f"jt_{i}"
+                f"Job Title {i+1}", title, key=f"jt_{i}", label_visibility="hidden"
             )
             if cols[1].button("❌", key=f"del_{i}"):
                 st.session_state.job_titles.pop(i)
@@ -232,8 +232,8 @@ def profile_page():
                 weights.append(w)
 
         skill_total = sum(weights)
-        st.write(f"### Total: **{total}%**")
-        if total != 100:
+        st.write(f"### Total: **{skill_total}%**")
+        if skill_total != 100:
             st.error("The total must be exactly 100%.")
         
         skill_df = pd.DataFrame({
