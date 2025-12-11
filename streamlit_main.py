@@ -253,7 +253,7 @@ def profile_page():
         "Project management, planning, QA, documentation"],
         ["Social & Communication",
         "Communication, collaboration, negotiation, empathy"],
-        ["Business & Contextal",
+        ["Business & Contextual",
         "Business acumen, industry knowledge, risk, strategy"]
         ], columns=["Category", "Includes"])
         skill_families = general_skills_table["Category"].tolist().copy()
