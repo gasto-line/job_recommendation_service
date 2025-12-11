@@ -23,6 +23,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.set_page_config(layout="wide")
 # ---------------------------------------------------------
 # Helper: store session in Streamlit
 # ---------------------------------------------------------
@@ -94,8 +95,6 @@ def login_page():
 # PROFILE PAGE
 # ---------------------------------------------------------
 def profile_page():
-    st.set_page_config(layout="wide")
-
     st.title("Your Job Profile")
     st.info("We recommend filling honest answers to get the best job recommendations.")
 
