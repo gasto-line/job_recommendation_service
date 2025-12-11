@@ -96,143 +96,126 @@ def login_page():
 def profile_page():
 
     st.title("Your Job Profile")
-
     st.info("We recommend filling honest answers to get the best job recommendations.")
 
-    # Representation of summary tables
-    def reference_card(title, dataframe):
-        st.markdown(
-            f"""
-            <div style="
-                background-color:#F5F7FB;
-                padding:18px;
-                border-radius:10px;
-                border:1px solid #DDE1EA;
-                margin-bottom:15px;
-            ">
-                <h3 style="margin-top:0;">{title}</h3>
-            </div>
-            """,
-            unsafe_allow_html=True,
+    target_tab, skillset_tab, experience_tab = st.tabs(
+    ["Target job", "Skills", "Experience"]
+    )
+
+    with target_tab:
+        # Job titles
+        st.subheader("Job Titles You're Considering")
+        job_titles =st.data_editor(
+            ["Title_1", "Title_2", "Title_3"],
+            num_rows="dynamic")
+
+        # Ideal job description
+        st.subheader("Describe Your Ideal Job")
+        ideal_job = st.text_area("Short description")
+
+        # Preferred sectors
+        st.subheader("Preferred Sectors")
+
+        sector_table = pd.DataFrame([
+        ["Natural Resources", "Extract from nature", "Farming, mining"],
+        ["Energy & Utilities", "Essential utilities", "Power, water, waste"],
+        ["Manufacturing", "Transform materials", "Pharma, automotive"],
+        ["Infrastructure & Transport", "Build & move", "Logistics, construction"],
+        ["ICT & Digital", "Digital systems", "Cloud, AI, telecom"],
+        ["Services & Commerce", "Sell goods & services", "Consulting, retail"],
+        ["Public & Social Systems", "Govern society", "Health, gov, research"]
+        ], columns=["Category", "Core idea", "Examples"])
+
+        st.dataframe(sector_table, hide_index=True)
+        sectors = st.multiselect(
+            "Select preferred sectors",
+            sector_table["Category"].tolist()
         )
-        st.dataframe(dataframe, use_container_width=True)
 
+    with skillset_tab:
+        # Technical skills - dynamic table
+        st.subheader("Technical Skills distribution (not more than 5, must sum to 100%)")
+        tech_df = st.data_editor(
+            pd.DataFrame({
+                "Category": ["Programming language", "Software", "Tool", "Framework", "Other"],
+                "Weight (%)": [20, 20, 20, 20, 20]
+            }),
+            num_rows="dynamic"
+            ,hide_index=True
+        )
+        tech_total = tech_df["Weight (%)"].sum()
+        st.write(f"Total = **{tech_total}%**")
 
-    # Job titles
-    st.subheader("Job Titles You're Considering")
-    job_titles =st.data_editor(
-         ["Title_1", "Title_2", "Title_3"],
-        num_rows="dynamic")
+        if tech_total != 100:
+            st.warning("Technical skills must total 100%.")
 
-    # Ideal job description
-    st.subheader("Describe Your Ideal Job")
-    ideal_job = st.text_area("Short description")
+        # General skills
+        general_skills_table = pd.DataFrame([
+        ["Cognitive & Technical Skills",
+        "Problem-solving, analysis, modeling, technical expertise, creativity"],
+        ["Execution & Operational Skills",
+        "Project management, planning, QA, documentation"],
+        ["Social & Communication Skills",
+        "Communication, collaboration, negotiation, empathy"],
+        ["Business & Contextual Understanding",
+        "Business acumen, industry knowledge, risk, strategy"]
+        ], columns=["Category", "Core Idea", "Includes"])
 
-    # Technical skills - dynamic table
-    st.subheader("Technical Skills distribution (not more than 5, must sum to 100%)")
-    tech_df = st.data_editor(
-        pd.DataFrame({
-            "Category": ["Programming language", "Software", "Tool", "Framework", "Other"],
-            "Weight (%)": [20, 20, 20, 20, 20]
-        }),
-        num_rows="dynamic"
-    )
-    tech_total = tech_df["Weight (%)"].sum()
-    st.write(f"Total = **{tech_total}%**")
+        st.subheader("Rate your general skills (must total 100%)")
+        st.dataframe(general_skills_table, hide_index=True)
 
-    if tech_total != 100:
-        st.warning("Technical skills must total 100%.")
+        st.caption("👉 Evaluate your relative strengths honestly — the goal is to compare *your own* skills to one another.")
+        skill_families = general_skills_table["Category"].tolist()
+        default_weights = [20, 20, 20, 20]
+        weights = []
 
-    # General skills
-    general_skills_table = pd.DataFrame([
-    ["Cognitive & Technical Skills",
-     "Understanding, analysing, designing, building",
-     "Problem-solving, analysis, modeling, technical expertise, creativity"],
-    ["Execution & Operational Skills",
-     "Ability to get things done reliably",
-     "Project management, planning, QA, documentation"],
-    ["Social & Communication Skills",
-     "Ability to work with others",
-     "Communication, collaboration, negotiation, empathy"],
-    ["Business & Contextual Understanding",
-     "Understanding why work matters",
-     "Business acumen, industry knowledge, risk, strategy"]
-    ], columns=["Category", "Core Idea", "Includes"])
+        cols = st.columns(2)  # 2 columns per row, more compact
 
-    st.subheader("Rate your general skills (must total 100%)")
-    reference_card("General Skills Reference", general_skills_table)
+        for i, family in enumerate(skill_families):
+            col = cols[i % 2]
+            with col:
+                w = col.slider(family, 0, 100, default_weights[i], step=10)
+                weights.append(w)
 
-    st.caption("👉 Evaluate your relative strengths honestly — the goal is to compare *your own* skills to one another.")
-    skill_families = general_skills_table["Category"].tolist()
-    default_weights = [20, 20, 20, 20]
-    weights = []
+        total = sum(weights)
+        st.write(f"### Total: **{total}%**")
+        if total != 100:
+            st.error("The total must be exactly 100%.")
+        
+        skill_df = pd.DataFrame({
+            "Category": skill_families,
+            "Weight (%)": weights
+        })
 
-    cols = st.columns(2)  # 2 columns per row, more compact
+    with experience_tab:
+        # Education
+        st.subheader("Equivalent relevant education level")
+        education = st.selectbox(
+            "Highest relevant education",
+            ["None","Bachelor", "Master", "PhD"]
+        )
+        education_map = {
+        "None": 0,
+        "Bachelor": 1,
+        "Master": 2,
+        "PhD": 3
+        }
+        education_code = education_map[education]
 
-    for i, family in enumerate(skill_families):
-        col = cols[i % 2]
-        with col:
-            w = col.slider(family, 0, 100, default_weights[i], step=10)
-            weights.append(w)
-
-    total = sum(weights)
-    st.write(f"### Total: **{total}%**")
-    if total != 100:
-        st.error("The total must be exactly 100%.")
-    
-    skill_df = pd.DataFrame({
-        "Category": skill_families,
-        "Weight (%)": weights
-    })
-
-    # Education
-    st.subheader("Equivalent relevant education level")
-    education = st.selectbox(
-        "Highest relevant education",
-        ["None","Bachelor", "Master", "PhD"]
-    )
-    education_map = {
-    "None": 0,
-    "Bachelor": 1,
-    "Master": 2,
-    "PhD": 3
-    }
-    education_code = education_map[education]
-
-
-    # Preferred sectors
-    sector_table = pd.DataFrame([
-    ["Natural Resources", "Extract from nature", "Farming, mining"],
-    ["Energy & Utilities", "Essential utilities", "Power, water, waste"],
-    ["Manufacturing", "Transform materials", "Pharma, automotive"],
-    ["Infrastructure & Transport", "Build & move", "Logistics, construction"],
-    ["ICT & Digital", "Digital systems", "Cloud, AI, telecom"],
-    ["Services & Commerce", "Sell goods & services", "Consulting, retail"],
-    ["Public & Social Systems", "Govern society", "Health, gov, research"]
-    ], columns=["Category", "Core idea", "Examples"])
-
-    st.subheader("Preferred Sectors")
-    reference_card("Sector Classification", sector_table)
-    sectors = st.multiselect(
-        "Select preferred sectors",
-        sector_table["Family"].tolist()
-    )
-
-    # Experience
-    st.subheader("Equivalent years of relevant experience")
-    experience = st.selectbox(
-        "Select your range",
-        ["0-6 months","1-2 years", "3-5 years", "6-10 years", "10+ years"]
-    )
-    experience_map = {
-    "0-6 months": 0,
-    "1-2 years": 1,
-    "3-5 years": 2,
-    "6-10 years": 3,
-    "10+ years": 4
-    }
-    experience_code = experience_map[experience]
-
+        # Work experience
+        st.subheader("Equivalent years of relevant work experience")
+        experience = st.selectbox(
+            "Select your range",
+            ["0-6 months","1-2 years", "3-5 years", "6-10 years", "10+ years"]
+        )
+        experience_map = {
+        "0-6 months": 0,
+        "1-2 years": 1,
+        "3-5 years": 2,
+        "6-10 years": 3,
+        "10+ years": 4
+        }
+        experience_code = experience_map[experience]
 
     if st.button("Save profile"):
         if tech_total != 100 or general_total != 100:
