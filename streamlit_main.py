@@ -274,17 +274,19 @@ def profile_page():
             st.error("Please correct the skill weights — totals must be 100%.")
         
         try:
-        supabase.table("profiles").upsert({
-            "user_id": st.session_state["user"].id,
-            "job_titles": job_titles,
-            "ideal_job": ideal_job,
-            "technical_skills": tech_df.to_dict("records"),
-            "general_skills": skill_df.to_dict("records"),
-            "education": education_code,
-            "sectors": sectors,
-            "experience": experience_code
-        })
-        st.success("Profile saved!")
+            supabase.table("profiles").upsert({
+                "user_id": st.session_state["user"].id,
+                "job_titles": job_titles,
+                "ideal_job": ideal_job,
+                "technical_skills": tech_df.to_dict("records"),
+                "general_skills": skill_df.to_dict("records"),
+                "education": education_code,
+                "sectors": sectors,
+                "experience": experience_code
+            })
+            st.success("Profile saved!")
+        except Exception as e:
+            st.error(f"Error saving profile: {e}")
 
 
 # ---------------------------------------------------------
