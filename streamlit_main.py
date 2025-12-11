@@ -86,6 +86,25 @@ def profile_page():
 
     st.info("We recommend filling honest answers to get the best job recommendations.")
 
+    # Representation of summary tables
+    def reference_card(title, dataframe):
+        st.markdown(
+            f"""
+            <div style="
+                background-color:#F5F7FB;
+                padding:18px;
+                border-radius:10px;
+                border:1px solid #DDE1EA;
+                margin-bottom:15px;
+            ">
+                <h3 style="margin-top:0;">{title}</h3>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.dataframe(dataframe, use_container_width=True)
+
+
     # Job titles
     st.subheader("Job Titles You're Considering")
     job_titles =st.data_editor(
@@ -100,7 +119,7 @@ def profile_page():
     st.subheader("Technical Skills distribution (not more than 5, must sum to 100%)")
     tech_df = st.data_editor(
         pd.DataFrame({
-            "Skill": ["Programming language", "Software", "Tool", "Framework", "Other"],
+            "Category": ["Programming language", "Software", "Tool", "Framework", "Other"],
             "Weight (%)": [20, 20, 20, 20, 20]
         }),
         num_rows="dynamic"
@@ -124,31 +143,33 @@ def profile_page():
      "Communication, collaboration, negotiation, empathy"],
     ["Business & Contextual Understanding",
      "Understanding why work matters",
-     "Business acumen, industry knowledge, risk, strategy"],
-    ["Self-Management & Professionalism",
-     "Managing yourself",
-     "Autonomy, ethics, reliability, stress management"]
+     "Business acumen, industry knowledge, risk, strategy"]
     ], columns=["Category", "Core Idea", "Includes"])
 
-    st.subheader("General Skills (must sum to 100%)")
-    col_left, col_right = st.columns([1, 1.3])
+    st.subheader("Rate your general skills (must total 100%)")
+    reference_card("General Skills Reference", general_skills_table)
 
-    with col_left:
-        general_df = st.data_editor(
-            pd.DataFrame({
-                "Skill Family": general_skills_table["Category"].tolist(),
-                "Proficiency (%)": [20, 20, 20, 20, 20]
-            }),
-            num_rows="fixed"
-        )
-        general_total = general_df["Proficiency (%)"].sum()
-        st.write(f"Total = **{general_total}%**")
-        if general_total != 100:
-            st.warning("General skills must total 100%.")
+    st.caption("👉 Evaluate your relative strengths honestly — the goal is to compare *your own* skills to one another.")
+    skill_families = general_skills_table["Category"].tolist()
+    default_weights = [20, 20, 20, 20]
+    weights = []
+    skill_df=pd.DataFrame({
+            "Category": skill_families,
+            "Weight (%)": weights
+        })
+    cols = st.columns(2)  # 2 columns per row, more compact
 
-    with col_right:
-        st.markdown("### General Skills Reference")
-        st.dataframe(general_skills_table, use_container_width=True)
+    for i, family in enumerate(skill_families):
+        col = cols[i % 2]
+        with col:
+            w = col.slider(family, 0, 100, default_weights[i], step=10)
+            weights.append(w)
+
+    total = sum(weights)
+    st.write(f"### Total: **{total}%**")
+
+    if total != 100:
+        st.error("The total must be exactly 100%.")
 
     # Education
     st.subheader("Equivalent relevant education level")
@@ -177,18 +198,11 @@ def profile_page():
     ], columns=["Category", "Core idea", "Examples"])
 
     st.subheader("Preferred Sectors")
-
-    col_form, col_table = st.columns([1, 1.2])
-
-    with col_form:
-        sectors = st.multiselect(
-            "Select preferred sectors",
-            sector_table["Category"].tolist()
-        )
-
-    with col_table:
-        st.markdown("### Sector Reference")
-        st.dataframe(sector_table, use_container_width=True)
+    reference_card("Sector Classification", sector_table)
+    sectors = st.multiselect(
+        "Select preferred sectors",
+        sector_table["Family"].tolist()
+    )
 
     # Experience
     st.subheader("Equivalent years of relevant experience")
@@ -216,7 +230,7 @@ def profile_page():
             "job_titles": job_titles,
             "ideal_job": ideal_job,
             "technical_skills": tech_df.to_dict("records"),
-            "general_skills": general_df.to_dict("records"),
+            "general_skills": skill_df.to_dict("records"),
             "education": education_code,
             "sectors": sectors,
             "experience": experience_code
