@@ -1,6 +1,6 @@
 numpy==2.1.1
 pandas==2.2.3
-matplotlib==3.8.1
+matplotlib
 requests==2.32.3
 boto3 ==1.28.39
 openai==1.77.0
