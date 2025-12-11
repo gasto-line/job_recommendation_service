@@ -284,7 +284,7 @@ def profile_page():
 
         # Visualize general skills pie chart
         # Extract labels & values
-        labels = list(GENERAL_SKILL_ICONS.values())
+        labels = skill_families
         sizes = weights
         # Define complementary colors (or use random_colors(len(sizes)))
         colors = random.sample(COMPLEMENT_COLORS,len(sizes))
