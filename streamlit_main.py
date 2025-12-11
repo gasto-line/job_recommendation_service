@@ -193,12 +193,11 @@ def profile_page():
             st.session_state.skills.append({"name": "", "Weight (%)": 0})
             st.rerun()
 
+        tech_df = pd.DataFrame(st.session_state.skills)
         tech_total = tech_df["Weight (%)"].sum()
         st.write(f"Total = **{tech_total}%**")
         if tech_total != 100:
             st.warning("Technical skills must total 100%.")
-
-        tech_df = pd.DataFrame(st.session_state.skills)
 
         # General skills
         st.subheader("General skills distribution")
