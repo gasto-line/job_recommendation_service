@@ -94,6 +94,7 @@ def login_page():
 # PROFILE PAGE
 # ---------------------------------------------------------
 def profile_page():
+    st.set_page_config(layout="wide")
 
     st.title("Your Job Profile")
     st.info("We recommend filling honest answers to get the best job recommendations.")
@@ -134,7 +135,8 @@ def profile_page():
 
     with skillset_tab:
         # Technical skills - dynamic table
-        st.subheader("Technical Skills distribution (not more than 5, must sum to 100%)")
+        st.subheader("Technical Skills distribution")
+        st.info("Choose only your top technical skills (max 5) inluding programming languages, tools, frameworks, etc.")
         tech_df = st.data_editor(
             pd.DataFrame({
                 "Category": ["Programming language", "Software", "Tool", "Framework", "Other"],
@@ -159,7 +161,7 @@ def profile_page():
         "Communication, collaboration, negotiation, empathy"],
         ["Business & Contextual Understanding",
         "Business acumen, industry knowledge, risk, strategy"]
-        ], columns=["Category", "Core Idea", "Includes"])
+        ], columns=["Category", "Includes"])
 
         st.subheader("Rate your general skills (must total 100%)")
         st.dataframe(general_skills_table, hide_index=True)
