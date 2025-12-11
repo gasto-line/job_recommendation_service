@@ -242,8 +242,7 @@ def profile_page():
             "Cognitive & Technical": "🧠",
             "Execution & Operational": "🛠️",
             "Social & Communication": "💬",
-            "Business & Contextual": "📊",
-            "Self-Management & Professionalism": "🎯"  # if you later add the 5th category
+            "Business & Contextual": "📊"
         }
 
         general_skills_table = pd.DataFrame([
