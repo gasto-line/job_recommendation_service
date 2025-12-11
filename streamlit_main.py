@@ -218,7 +218,7 @@ def profile_page():
 
         # Extract labels & values
         labels = [s["name"] for s in st.session_state.skills]
-        sizes = [s["weight"] for s in st.session_state.skills]
+        sizes = [s["Weight (%)"] for s in st.session_state.skills]
         # Define complementary colors (or use random_colors(len(sizes)))
         colors = random.sample(COMPLEMENT_COLORS,len(sizes))
         # Matplotlib figure
