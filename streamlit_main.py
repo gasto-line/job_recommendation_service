@@ -11,7 +11,7 @@ SUPABASE_KEY = st.secrets["SUPABASE_ANON_KEY"]
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="centered")
 st.markdown(
     """
     <style>
@@ -106,9 +106,23 @@ def profile_page():
     with target_tab:
         # Job titles
         st.subheader("Job Titles You're Considering")
-        job_titles =st.data_editor(
-            ["Title_1", "Title_2", "Title_3"],
-            num_rows="dynamic")
+        if "job_titles" not in st.session_state:
+            st.session_state.job_titles = ["Title 1", "Title 2"]
+        for i, title in enumerate(st.session_state.job_titles):
+            cols = st.columns([0.8, 0.2])
+            st.session_state.job_titles[i] = cols[0].text_input(
+                f"Job Title {i+1}", title, key=f"jt_{i}"
+            )
+            if cols[1].button("❌", key=f"del_{i}"):
+                st.session_state.job_titles.pop(i)
+                st.rerun()
+
+        if st.button("➕ Add a job title"):
+            st.session_state.job_titles.append("")
+            st.rerun()
+
+        st.write("Current job titles:", st.session_state.job_titles)
+        job_titles = st.session_state.job_titles
 
         # Ideal job description
         st.subheader("Describe Your Ideal Job")
@@ -127,7 +141,21 @@ def profile_page():
         ["Public & Social Systems", "Govern society", "Health, gov, research"]
         ], columns=["Category", "Core idea", "Examples"])
 
-        st.dataframe(sector_table, hide_index=True)
+        CATEGORY_ICONS = {
+            "Natural Resources": "🌱",
+            "Energy & Utilities": "⚡",
+            "Manufacturing": "🏭",
+            "Infrastructure & Transport": "🚚",
+            "ICT & Digital": "💻",
+            "Services & Commerce": "🛍️",
+            "Public & Social Systems": "🏛️",
+        }
+        # Add icons to category column
+        sector_table["Category"] = sector_table["Category"].apply(
+            lambda c: f"{CATEGORY_ICONS[c]} **{c}**"
+        )
+
+        st.dataframe(sector_table.set_index("Category").T, hide_index=True)
         sectors = st.multiselect(
             "Select preferred sectors",
             sector_table["Category"].tolist()
@@ -137,14 +165,38 @@ def profile_page():
         # Technical skills - dynamic table
         st.subheader("Technical Skills distribution")
         st.info("Choose only your top technical skills (max 5) inluding programming languages, tools, frameworks, etc.")
-        tech_df = st.data_editor(
-            pd.DataFrame({
-                "Category": ["Programming language", "Software", "Tool", "Framework", "Other"],
-                "Weight (%)": [20, 20, 20, 20, 20]
-            }),
-            num_rows="dynamic"
-            ,hide_index=True
-        )
+
+        if "skills" not in st.session_state:
+            st.session_state.skills = [
+                {"name": "Python", "Weight (%)": 50},
+                {"name": "Cloud", "Weight (%)": 40},
+            ]
+        for i, skill in enumerate(st.session_state.skills):
+            cols = st.columns([0.5, 0.4, 0.1])
+            st.session_state.skills[i]["name"] = cols[0].text_input(
+                "Skill", skill["name"], key=f"skill_name_{i}"
+            )
+
+            st.session_state.skills[i]["Weight (%)"] = cols[1].slider(
+                "Weight (%)",
+                0, 100,
+                skill["Weight (%)"],
+                step=10,
+                key=f"skill_weight_{i}"
+            )
+
+            if cols[2].button("❌", key=f"del_skill_{i}"):
+                st.session_state.skills.pop(i)
+                st.rerun()
+
+        if st.button("➕ Add a new skill"):
+            st.session_state.skills.append({"name": "", "Weight (%)": 0})
+            st.rerun()
+
+        st.write("Current skills:", st.session_state.skills)
+
+        tech_df = pd.DataFrame(st.session_state.skills)
+        st.subheader("Technical skills weights (must total 100%)")
         tech_total = tech_df["Weight (%)"].sum()
         st.write(f"Total = **{tech_total}%**")
 
@@ -179,7 +231,7 @@ def profile_page():
                 w = col.slider(family, 0, 100, default_weights[i], step=10)
                 weights.append(w)
 
-        total = sum(weights)
+        skill_total = sum(weights)
         st.write(f"### Total: **{total}%**")
         if total != 100:
             st.error("The total must be exactly 100%.")
@@ -220,7 +272,7 @@ def profile_page():
         experience_code = experience_map[experience]
 
     if st.button("Save profile"):
-        if tech_total != 100 or general_total != 100:
+        if tech_total != 100 or skill_total != 100:
             st.error("Please correct the skill weights — totals must be 100%.")
             return
 
