@@ -111,7 +111,7 @@ def profile_page():
         for i, title in enumerate(st.session_state.job_titles):
             cols = st.columns([0.8, 0.2])
             st.session_state.job_titles[i] = cols[0].text_input(
-                f"Job Title {i+1}", title, key=f"jt_{i}", label_visibility="hidden"
+                f"Job Title {i+1}", title, key=f"jt_{i}", label_visibility="collapsed"
             )
             if cols[1].button("❌", key=f"del_{i}"):
                 st.session_state.job_titles.pop(i)
@@ -121,7 +121,6 @@ def profile_page():
             st.session_state.job_titles.append("")
             st.rerun()
 
-        st.write("Current job titles:", st.session_state.job_titles)
         job_titles = st.session_state.job_titles
 
         # Ideal job description
@@ -155,7 +154,7 @@ def profile_page():
             lambda c: f"{CATEGORY_ICONS[c]} **{c}**"
         )
 
-        st.dataframe(sector_table.set_index("Category").T, hide_index=True)
+        st.dataframe(sector_table.set_index("Category"), hide_index=True)
         sectors = st.multiselect(
             "Select preferred sectors",
             sector_table["Category"].tolist()
@@ -174,7 +173,7 @@ def profile_page():
         for i, skill in enumerate(st.session_state.skills):
             cols = st.columns([0.5, 0.4, 0.1])
             st.session_state.skills[i]["name"] = cols[0].text_input(
-                "Skill", skill["name"], key=f"skill_name_{i}"
+                "Skill", skill["name"], key=f"skill_name_{i}", label_visibility="collapsed"
             )
 
             st.session_state.skills[i]["Weight (%)"] = cols[1].slider(
@@ -182,7 +181,8 @@ def profile_page():
                 0, 100,
                 skill["Weight (%)"],
                 step=10,
-                key=f"skill_weight_{i}"
+                key=f"skill_weight_{i}",
+                label_visibility="collapsed"
             )
 
             if cols[2].button("❌", key=f"del_skill_{i}"):
@@ -192,8 +192,6 @@ def profile_page():
         if st.button("➕ Add a new skill"):
             st.session_state.skills.append({"name": "", "Weight (%)": 0})
             st.rerun()
-
-        st.write("Current skills:", st.session_state.skills)
 
         tech_df = pd.DataFrame(st.session_state.skills)
         st.subheader("Technical skills weights (must total 100%)")
