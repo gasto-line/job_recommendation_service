@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import random
+import matplotlib.pyplot as plt
 from supabase import create_client, Client
 
 # ---------------------------------------------------------
@@ -127,6 +129,7 @@ def profile_page():
         st.subheader("Describe Your Ideal Job")
         ideal_job = st.text_area("Short description")
 
+        # -------------------------
         # Preferred sectors
         st.subheader("Preferred Sectors")
 
@@ -140,6 +143,8 @@ def profile_page():
         ["Public & Social Systems", "Govern society", "Health, gov, research"]
         ], columns=["Category", "Core idea", "Examples"])
 
+        categories = sector_table["Category"].tolist().copy()
+
         CATEGORY_ICONS = {
             "Natural Resources": "🌱",
             "Energy & Utilities": "⚡",
@@ -149,18 +154,29 @@ def profile_page():
             "Services & Commerce": "🛍️",
             "Public & Social Systems": "🏛️",
         }
-        # Add icons to category column
         sector_table["Category"] = sector_table["Category"].apply(
-            lambda c: f"{CATEGORY_ICONS[c]} **{c}**"
+            lambda c: f"{CATEGORY_ICONS[c]} {c}"
         )
 
         st.dataframe(sector_table.set_index("Category"), hide_index=False)
         sectors = st.multiselect(
             "Select preferred sectors",
-            sector_table["Category"].tolist()
+            categories
         )
 
     with skillset_tab:
+        with skillset_tab:
+            COMPLEMENT_COLORS = ["#00202e",
+                                "#003f5c",
+                                    "#2c4875",
+                                    "#8a508f",
+                                        "#bc5090",
+                                        "#ff6361",
+                                            "#ff8531",
+                                            "#ffa600",
+                                                "#ffd380"
+            ]
+        # -------------------------
         # Technical skills - dynamic table
         st.subheader("Technical Skills distribution")
         st.caption("👉 Choose only your top technical skills (max 5) inluding programming languages, tools, frameworks, etc.")
@@ -195,31 +211,61 @@ def profile_page():
 
         tech_df = pd.DataFrame(st.session_state.skills)
         tech_total = tech_df["Weight (%)"].sum()
-        st.write(f"Total = **{tech_total}%**")
+        #st.write(f"Total = **{tech_total}%**")
         if tech_total != 100:
-            st.warning("Technical skills must total 100%.")
+            st.error("Total must be 100%" \
+            "current total: " + str(tech_total) + "%")
 
+        # Extract labels & values
+        labels = [s["name"] for s in st.session_state.skills]
+        sizes = [s["weight"] for s in st.session_state.skills]
+        # Define complementary colors (or use random_colors(len(sizes)))
+        colors = random.sample(COMPLEMENT_COLORS,len(sizes))
+        # Matplotlib figure
+        fig, ax = plt.subplots()
+        ax.pie(
+            sizes,
+            labels=labels,
+            autopct='%1.1f%%',
+            startangle=90,
+            colors=colors
+        )
+        ax.axis('equal')  # Equal aspect ratio ensures the pie is circular.
+        # Display in Streamlit
+        st.pyplot(fig)
+
+        # -------------------------
         # General skills
         st.subheader("General skills distribution")
 
+        GENERAL_SKILL_ICONS = {
+            "Cognitive & Technical": "🧠",
+            "Execution & Operational": "🛠️",
+            "Social & Communication": "💬",
+            "Business & Contextual": "📊",
+            "Self-Management & Professionalism": "🎯"  # if you later add the 5th category
+        }
+
         general_skills_table = pd.DataFrame([
-        ["Cognitive & Technical Skills",
+        ["Cognitive & Technical",
         "Problem-solving, analysis, modeling, technical expertise, creativity"],
-        ["Execution & Operational Skills",
+        ["Execution & Operational",
         "Project management, planning, QA, documentation"],
-        ["Social & Communication Skills",
+        ["Social & Communication",
         "Communication, collaboration, negotiation, empathy"],
-        ["Business & Contextual Understanding",
+        ["Business & Contextal",
         "Business acumen, industry knowledge, risk, strategy"]
         ], columns=["Category", "Includes"])
+        skill_families = general_skills_table["Category"].tolist().copy()
 
-        st.caption("👉 Evaluate your relative strengths honestly — the goal is to compare *your own* skills to one another.")
-        skill_families = general_skills_table["Category"].tolist()
+        general_skills_table["Category"] = general_skills_table["Category"].apply(
+            lambda c: f"{GENERAL_SKILL_ICONS[c]} {c}"
+        )
+        st.dataframe(general_skills_table, hide_index=True)
+
         default_weights = [20, 20, 20, 20]
         weights = []
-
         cols = st.columns(2)  # 2 columns per row, more compact
-
         for i, family in enumerate(skill_families):
             col = cols[i % 2]
             with col:
@@ -229,14 +275,32 @@ def profile_page():
         skill_total = sum(weights)
         st.write(f"Total: **{skill_total}%**")
         if skill_total != 100:
-            st.error("The total must be exactly 100%.")
+            st.error("Total must be 100%" \
+            "current total: " + str(tech_total) + "%")
         
         skill_df = pd.DataFrame({
             "Category": skill_families,
             "Weight (%)": weights
         })
 
-        st.dataframe(general_skills_table, hide_index=True)
+        # Visualize general skills pie chart
+        # Extract labels & values
+        labels = list(GENERAL_SKILL_ICONS.values())
+        sizes = weights
+        # Define complementary colors (or use random_colors(len(sizes)))
+        colors = random.sample(COMPLEMENT_COLORS,len(sizes))
+        # Matplotlib figure
+        fig, ax = plt.subplots()
+        ax.pie(
+            sizes,
+            labels=labels,
+            autopct='%1.1f%%',
+            startangle=90,
+            colors=colors
+        )
+        ax.axis('equal')  # Equal aspect ratio ensures the pie is circular.
+        # Display in Streamlit
+        st.pyplot(fig)
 
     with experience_tab:
         # Education
