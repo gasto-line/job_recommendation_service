@@ -306,7 +306,8 @@ def profile_page():
         st.subheader("Equivalent relevant education level")
         education = st.selectbox(
             "Highest relevant education",
-            ["None","Bachelor", "Master", "PhD"]
+            ["None","Bachelor", "Master", "PhD"],
+            label_visibility="collapsed"
         )
         education_map = {
         "None": 0,
@@ -320,7 +321,8 @@ def profile_page():
         st.subheader("Equivalent years of relevant work experience")
         experience = st.selectbox(
             "Select your range",
-            ["0-6 months","1-2 years", "3-5 years", "6-10 years", "10+ years"]
+            ["0-6 months","1-2 years", "3-5 years", "6-10 years", "10+ years"],
+            label_visibility="collapsed"
         )
         experience_map = {
         "0-6 months": 0,
@@ -335,20 +337,21 @@ def profile_page():
         if tech_total != 100 or skill_total != 100:
             st.error("Please correct the skill weights — totals must be 100%.")
         
-        try:
-            supabase.table("profiles").upsert({
-                "user_id": st.session_state["user"].id,
-                "job_titles": job_titles,
-                "ideal_job": ideal_job,
-                "technical_skills": tech_df.to_dict("records"),
-                "general_skills": skill_df.to_dict("records"),
-                "education": education_code,
-                "sectors": sectors,
-                "experience": experience_code
-            })
-            st.success("Profile saved!")
-        except Exception as e:
-            st.error(f"Error saving profile: {e}")
+        else:
+            try:
+                response=supabase.table("user_profile").upsert({
+                    "user_id": st.session_state["user"].id,
+                    "job_titles": job_titles,
+                    "ideal_job": ideal_job,
+                    "technical_skills": tech_df.to_dict("records"),
+                    "general_skills": skill_df.to_dict("records"),
+                    "education": education_code,
+                    "sectors": sectors,
+                    "experience": experience_code
+                })
+                st.write(response)
+            except Exception as e:
+                st.error(f"Error saving profile: {e}")
 
 
 # ---------------------------------------------------------
