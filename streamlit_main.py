@@ -214,7 +214,7 @@ def profile_page():
         #st.write(f"Total = **{tech_total}%**")
         if tech_total != 100:
             st.error("Total must be 100%" \
-            "current total: " + str(tech_total) + "%")
+            "\ncurrent total: " + str(tech_total) + "%")
 
         # Extract labels & values
         labels = [s["name"] for s in st.session_state.skills]
@@ -275,7 +275,7 @@ def profile_page():
         st.write(f"Total: **{skill_total}%**")
         if skill_total != 100:
             st.error("Total must be 100%" \
-            "current total: " + str(tech_total) + "%")
+            "\ncurrent total: " + str(tech_total) + "%")
         
         skill_df = pd.DataFrame({
             "Category": skill_families,
