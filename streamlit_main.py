@@ -348,7 +348,7 @@ def profile_page():
                     "education": education_code,
                     "sectors": sectors,
                     "experience": experience_code
-                })
+                    }).execute()
                 st.write(response)
             except Exception as e:
                 st.error(f"Error saving profile: {e}")
