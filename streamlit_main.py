@@ -134,13 +134,11 @@ def profile_page():
             )
             if cols[1].button("❌", key=f"del_{i}"):
                 st.session_state.job_titles.pop(i)
-                target_tab.empty()
-                profile_page()
+                st.rerun()
 
         if st.button("➕ Add a job title"):
             st.session_state.job_titles.append("")
-            target_tab.empty()
-            profile_page()
+            st.rerun()
 
         job_titles = st.session_state.job_titles
 
@@ -222,13 +220,11 @@ def profile_page():
 
             if cols[2].button("❌", key=f"del_skill_{i}"):
                 st.session_state.skills.pop(i)
-                skillset_tab.empty()
-                profile_page()
+                st.rerun()
 
         if st.button("➕ Add a new skill"):
             st.session_state.skills.append({"name": "", "Weight (%)": 0})
-            skillset_tab.empty()
-            profile_page()
+            st.rerun()
 
         tech_df = pd.DataFrame(st.session_state.skills)
         tech_total = tech_df["Weight (%)"].sum()
