@@ -389,6 +389,7 @@ def main():
         if st.sidebar.button("Logout"):
             supabase.auth.sign_out()
             st.session_state["user"] = None
+            st.supabase_session = None
             st.rerun() 
 
     else:
