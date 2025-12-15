@@ -80,36 +80,39 @@ def signup_page():
 # Login page
 # ---------------------------------------------------------
 def login_page():
-    st.subheader("Login")
 
-    email = st.text_input("Email")
-    password = st.text_input("Password", type="password")
+    with login_page.container():
+        st.subheader("Login")
 
-    if st.button("Login"):
-        try:
-            response = supabase.auth.sign_in_with_password({
-                "email": email,
-                "password": password
-            })
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
 
-            st.session_state["user"] = response.user
-            st.session_state["supabase_session"] = response.session
-            st.success("You are now logged in!")
-            main()
+        if st.button("Login"):
+            try:
+                response = supabase.auth.sign_in_with_password({
+                    "email": email,
+                    "password": password
+                })
 
-        except Exception as e:
-            st.error(f"Invalid credentials or error: {e}")
+                st.session_state["user"] = response.user
+                st.session_state["supabase_session"] = response.session
+                st.success("You are now logged in!")
+                login_page.empty()
+                main()
 
-    # Password reset
-    if st.button("Forgot your password?"):
-        if not email:
-            st.error("Please enter your email first.")
-        else:
-            supabase.auth.reset_password_for_email(
-                email,
-                options={"redirect_to": "https://job-recommendation-service.streamlit.app"}
-            )
-            st.success("Password reset link sent! Check your email.")
+            except Exception as e:
+                st.error(f"Invalid credentials or error: {e}")
+
+        # Password reset
+        if st.button("Forgot your password?"):
+            if not email:
+                st.error("Please enter your email first.")
+            else:
+                supabase.auth.reset_password_for_email(
+                    email,
+                    options={"redirect_to": "https://job-recommendation-service.streamlit.app"}
+                )
+                st.success("Password reset link sent! Check your email.")
 
 # ---------------------------------------------------------
 # PROFILE PAGE
