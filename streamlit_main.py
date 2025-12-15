@@ -78,6 +78,7 @@ def login_page():
 
             st.session_state["user"] = response.user
             st.success("You are now logged in!")
+            main()
 
         except Exception as e:
             st.error("Invalid credentials or error")
