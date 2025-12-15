@@ -377,8 +377,8 @@ def profile_page():
 # MAIN NAVIGATION
 # ---------------------------------------------------------
 def main():
-    st.info(st.query_params.get_all("recovery"))
-    if st.query_params.get_all("recovery"):
+    st.info(st.query_params.get_all("type"))
+    if st.query_params.get_all("type")=="recovery":
         st.subheader("Reset your password")
 
         new_password = st.text_input("New password", type="password")
