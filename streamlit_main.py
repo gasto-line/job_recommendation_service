@@ -97,7 +97,7 @@ def login_page():
             main()
 
         except Exception as e:
-            st.error("Invalid credentials or error")
+            st.error(f"Invalid credentials or error: {e}")
 
     # Password reset
     if st.button("Forgot your password?"):
