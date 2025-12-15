@@ -27,7 +27,7 @@ def init_supabase():
 
     return supabase
 
-init_supabase()
+supabase = init_supabase()
 
 st.set_page_config(layout="centered")
 st.markdown(
