@@ -19,7 +19,7 @@ def init_supabase():
 
     supabase = st.session_state.supabase
 
-    if "supabase_session" in st.session_state:
+    if "supabase_session" in st.session_state and st.session_state.supabase_session:
         supabase.auth.set_session(
             st.session_state.supabase_session.access_token,
             st.session_state.supabase_session.refresh_token
