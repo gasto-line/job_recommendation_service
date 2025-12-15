@@ -366,7 +366,7 @@ def profile_page():
                     "sectors": sectors,
                     "experience": experience_code
                     }).execute()
-                st.write(response)
+                st.success("Profile saved successfully!")
                 supabase.rpc("debug_auth_uid").execute()
             except Exception as e:
                 st.error(f"Error saving profile: {e}")
@@ -389,7 +389,7 @@ def main():
         if st.sidebar.button("Logout"):
             supabase.auth.sign_out()
             st.session_state["user"] = None
-            main()  
+            st.rerun() 
 
     else:
         page = st.sidebar.radio("Navigation", ["Login", "Sign Up"])
