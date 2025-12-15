@@ -78,7 +78,7 @@ def login_page():
 
             st.session_state["user"] = response.user
             st.success("You are now logged in!")
-            st.rerun()
+            main()
 
         except Exception as e:
             st.error("Invalid credentials or error")
@@ -117,11 +117,11 @@ def profile_page():
             )
             if cols[1].button("❌", key=f"del_{i}"):
                 st.session_state.job_titles.pop(i)
-                st.rerun()
+                main()
 
         if st.button("➕ Add a job title"):
             st.session_state.job_titles.append("")
-            st.rerun()
+            main()
 
         job_titles = st.session_state.job_titles
 
@@ -203,11 +203,11 @@ def profile_page():
 
             if cols[2].button("❌", key=f"del_skill_{i}"):
                 st.session_state.skills.pop(i)
-                st.rerun()
+                main()
 
         if st.button("➕ Add a new skill"):
             st.session_state.skills.append({"name": "", "Weight (%)": 0})
-            st.rerun()
+            main()
 
         tech_df = pd.DataFrame(st.session_state.skills)
         tech_total = tech_df["Weight (%)"].sum()
@@ -371,7 +371,7 @@ def main():
         if st.sidebar.button("Logout"):
             supabase.auth.sign_out()
             st.session_state["user"] = None
-            st.rerun()  
+            main()  
 
     else:
         page = st.sidebar.radio("Navigation", ["Login", "Sign Up"])
