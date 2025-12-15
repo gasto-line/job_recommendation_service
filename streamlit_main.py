@@ -10,7 +10,22 @@ from supabase import create_client, Client
 SUPABASE_URL = st.secrets["SUPABASE_URL"]
 SUPABASE_KEY = st.secrets["SUPABASE_ANON_KEY"]
 
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+def init_supabase():
+    if "supabase" not in st.session_state:
+        st.session_state.supabase = create_client(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        )
+
+    supabase = st.session_state.supabase
+
+    if "supabase_session" in st.session_state:
+        supabase.auth.set_session(
+            st.session_state.supabase_session.access_token,
+            st.session_state.supabase_session.refresh_token
+        )
+
+    return supabase
 
 
 st.set_page_config(layout="centered")
@@ -77,6 +92,7 @@ def login_page():
             })
 
             st.session_state["user"] = response.user
+            st.session_state["supabase_session"] = response.session
             st.success("You are now logged in!")
             main()
 
@@ -117,10 +133,12 @@ def profile_page():
             )
             if cols[1].button("❌", key=f"del_{i}"):
                 st.session_state.job_titles.pop(i)
+                target_tab.empty()
                 profile_page()
 
         if st.button("➕ Add a job title"):
             st.session_state.job_titles.append("")
+            target_tab.empty()
             profile_page()
 
         job_titles = st.session_state.job_titles
@@ -165,8 +183,8 @@ def profile_page():
         )
 
     with skillset_tab:
-        with skillset_tab:
-            COMPLEMENT_COLORS = ["#00202e",
+            
+        COMPLEMENT_COLORS = ["#00202e",
                                 "#003f5c",
                                     "#2c4875",
                                     "#8a508f",
@@ -203,10 +221,12 @@ def profile_page():
 
             if cols[2].button("❌", key=f"del_skill_{i}"):
                 st.session_state.skills.pop(i)
+                skillset_tab.empty()
                 profile_page()
 
         if st.button("➕ Add a new skill"):
             st.session_state.skills.append({"name": "", "Weight (%)": 0})
+            skillset_tab.empty()
             profile_page()
 
         tech_df = pd.DataFrame(st.session_state.skills)
@@ -350,6 +370,7 @@ def profile_page():
                     "experience": experience_code
                     }).execute()
                 st.write(response)
+                supabase.rpc("debug_auth_uid").execute()
             except Exception as e:
                 st.error(f"Error saving profile: {e}")
 
