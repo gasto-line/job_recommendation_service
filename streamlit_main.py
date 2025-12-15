@@ -377,7 +377,7 @@ def profile_page():
 # MAIN NAVIGATION
 # ---------------------------------------------------------
 def main():
-    st.info(st.query_params.get_all("type"))
+    st.info(st.query_params.to_dict())
     if st.query_params.get_all("type")=="recovery":
         st.subheader("Reset your password")
 
