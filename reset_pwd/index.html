@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+</head>
+<body>
+  <h2>Reset your password</h2>
+
+  <input type="password" id="password" placeholder="New password" />
+  <button onclick="reset()">Update password</button>
+
+  <script>
+    const supabase = supabase.createClient(
+      "https://irutkdcynqycaveefmpe.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0"
+    );
+
+    async function reset() {
+      const { error } = await supabase.auth.updateUser({
+        password: document.getElementById("password").value
+      });
+
+      if (error) {
+        alert(error.message);
+      } else {
+        window.location.href = "https://job-recommendation-service.streamlit.app";
+      }
+    }
+  </script>
+</body>
+</html>
