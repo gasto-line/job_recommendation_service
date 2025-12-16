@@ -377,21 +377,8 @@ def profile_page():
 # MAIN NAVIGATION
 # ---------------------------------------------------------
 def main():
-    st.write(st.query_params)
-    if st.query_params.get_all("type")=="recovery":
-        st.subheader("Reset your password")
 
-        new_password = st.text_input("New password", type="password")
-        confirm = st.text_input("Confirm password", type="password")
-
-        if st.button("Update password"):
-            if new_password != confirm:
-                st.error("Passwords do not match")
-            else:
-                supabase.auth.update_user({"password": new_password})
-                st.success("Password updated successfully")
-
-    elif st.session_state["user"]:
+    if st.session_state["user"]:
         page = st.sidebar.radio("Navigation", ["Profile", "Top Job Selection"])
 
         if page == "Profile":
