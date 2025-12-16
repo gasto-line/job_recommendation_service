@@ -108,7 +108,7 @@ def login_page():
         else:
             supabase.auth.reset_password_for_email(
                 email,
-                options={"redirect_to": "https://jobrecommendationservice-reset-pwd.streamlit.app/"}
+                options={"redirect_to": "https://gasto-line.github.io/job_recommendation_service/reset_pwd/"}
             )
             st.success("Password reset link sent! Check your email.")
 
