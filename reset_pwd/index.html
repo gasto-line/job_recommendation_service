@@ -1,31 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <meta charset="UTF-8" />
+  <title>Reset password</title>
+
+  <!-- Force Supabase JS v2 -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <h2>Reset your password</h2>
 
-  <input type="password" id="password" placeholder="New password" />
-  <button onclick="reset()">Update password</button>
+  <input
+    type="password"
+    id="password"
+    placeholder="New password"
+  />
+  <button id="reset-btn">Update password</button>
+
+  <p id="status"></p>
 
   <script>
+    const SUPABASE_URL = "https://irutkdcynqycaveefmpe.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0";
+
     const supabase = supabase.createClient(
-      "https://irutkdcynqycaveefmpe.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0"
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
     );
 
-    async function reset() {
+    async function resetPassword() {
+      const status = document.getElementById("status");
+      status.textContent = "Checking session...";
+
+      // 1️⃣ Ensure session exists
+      const { data: { session }, error: sessionError } =
+        await supabase.auth.getSession();
+
+      if (!session) {
+        status.textContent =
+          "No active session. Please use the link from your email again.";
+        return;
+      }
+
+      // 2️⃣ Update password
+      status.textContent = "Updating password...";
+
+      const password =
+        document.getElementById("password").value;
+
       const { error } = await supabase.auth.updateUser({
-        password: document.getElementById("password").value
+        password
       });
 
       if (error) {
-        alert(error.message);
+        status.textContent = error.message;
       } else {
-        window.location.href = "https://job-recommendation-service.streamlit.app";
+        status.textContent = "Password updated! Redirecting...";
+        setTimeout(() => {
+          window.location.href =
+            "https://job-recommendation-service.streamlit.app";
+        }, 1500);
       }
     }
+
+    document
+      .getElementById("reset-btn")
+      .addEventListener("click", resetPassword);
   </script>
 </body>
 </html>
