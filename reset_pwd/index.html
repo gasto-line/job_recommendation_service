@@ -1,116 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Reset password</title>
+  <title>Reset Password</title>
 
+  <!-- Supabase client -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
   <style>
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-family: Arial, sans-serif;
-      background: #f6f7f9;
+      justify-content: center;
+      background: #f5f7fa;
+      font-family: system-ui, sans-serif;
     }
 
     .card {
-      background: white;
+      width: 100%;
+      max-width: 420px;
       padding: 32px;
-      border-radius: 8px;
-      width: 360px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      text-align: center;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
     }
 
-    h2 {
-      margin-bottom: 24px;
-    }
-
-    input {
+    input, button {
       width: 100%;
-      padding: 14px;
-      font-size: 16px;
+      padding: 12px;
       margin-bottom: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
       font-size: 16px;
-      cursor: pointer;
-    }
-
-    #status {
-      margin-top: 16px;
-      font-size: 14px;
-      min-height: 18px;
     }
   </style>
 </head>
 
 <body>
-  <h2>Reset your password</h2>
-
-  <input
-    type="password"
-    id="password"
-    placeholder="New password"
-  />
-  <button id="reset-btn">Update password</button>
-
-  <p id="status"></p>
+  <div class="card">
+    <h2>Reset your password</h2>
+    <input id="password" type="password" placeholder="New password" />
+    <button onclick="resetPassword()">Reset password</button>
+    <p id="status"></p>
+  </div>
 
   <script>
+    console.log("Script loaded");
+
     const SUPABASE_URL = "https://irutkdcynqycaveefmpe.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0";
 
-    const supabase = supabase.createClient(
+    const supabaseClient = supabase.createClient(
       SUPABASE_URL,
       SUPABASE_ANON_KEY
     );
 
     async function resetPassword() {
+      console.log("Reset button clicked");
+
+      const password = document.getElementById("password").value;
       const status = document.getElementById("status");
-      status.textContent = "Checking session...";
 
-      console.log("🔍 Checking session...");
-      const sessionResponse = await supabase.auth.getSession();
-      console.log("Session response:", sessionResponse);
+      const { error } = await supabaseClient.auth.updateUser({
+        password: password
+      });
 
-      const session = sessionResponse.data.session;
-
-      if (!session) {
-        status.textContent =
-          "No active session. Please use the link from your email again.";
-        return;
-      }
-
-      status.textContent = "Updating password...";
-
-      const password =
-        document.getElementById("password").value;
-
-      console.log("🔐 Updating password...");
-      const updateResponse =
-        await supabase.auth.updateUser({ password });
-
-      console.log("Update response:", updateResponse);
-
-      if (updateResponse.error) {
-        status.textContent = updateResponse.error.message;
+      if (error) {
+        console.error(error);
+        status.textContent = error.message;
       } else {
         status.textContent = "Password updated successfully!";
       }
     }
-
-
-    document
-      .getElementById("reset-btn")
-      .addEventListener("click", resetPassword);
   </script>
 </body>
 </html>
