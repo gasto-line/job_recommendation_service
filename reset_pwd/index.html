@@ -4,9 +4,54 @@
   <meta charset="UTF-8" />
   <title>Reset password</title>
 
-  <!-- Force Supabase JS v2 -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: #f6f7f9;
+    }
+
+    .card {
+      background: white;
+      padding: 32px;
+      border-radius: 8px;
+      width: 360px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #status {
+      margin-top: 16px;
+      font-size: 14px;
+      min-height: 18px;
+    }
+  </style>
 </head>
+
 <body>
   <h2>Reset your password</h2>
 
@@ -32,9 +77,11 @@
       const status = document.getElementById("status");
       status.textContent = "Checking session...";
 
-      // 1️⃣ Ensure session exists
-      const { data: { session }, error: sessionError } =
-        await supabase.auth.getSession();
+      console.log("🔍 Checking session...");
+      const sessionResponse = await supabase.auth.getSession();
+      console.log("Session response:", sessionResponse);
+
+      const session = sessionResponse.data.session;
 
       if (!session) {
         status.textContent =
@@ -42,26 +89,24 @@
         return;
       }
 
-      // 2️⃣ Update password
       status.textContent = "Updating password...";
 
       const password =
         document.getElementById("password").value;
 
-      const { error } = await supabase.auth.updateUser({
-        password
-      });
+      console.log("🔐 Updating password...");
+      const updateResponse =
+        await supabase.auth.updateUser({ password });
 
-      if (error) {
-        status.textContent = error.message;
+      console.log("Update response:", updateResponse);
+
+      if (updateResponse.error) {
+        status.textContent = updateResponse.error.message;
       } else {
-        status.textContent = "Password updated! Redirecting...";
-        setTimeout(() => {
-          window.location.href =
-            "https://job-recommendation-service.streamlit.app";
-        }, 1500);
+        status.textContent = "Password updated successfully!";
       }
     }
+
 
     document
       .getElementById("reset-btn")
