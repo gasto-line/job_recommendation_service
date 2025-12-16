@@ -108,7 +108,7 @@ def login_page():
         else:
             supabase.auth.reset_password_for_email(
                 email,
-                options={"redirect_to": "https://job-recommendation-service.streamlit.app"}
+                options={"redirect_to": "https://jobrecommendationservice-reset-pwd.streamlit.app/"}
             )
             st.success("Password reset link sent! Check your email.")
 
