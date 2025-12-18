@@ -382,7 +382,7 @@ def main():
         page = st.sidebar.radio("Navigation", ["Profile", "Top Job Selection"])
 
         if page == "Profile":
-            profile_page()
+            job_ranking_page()
 
         elif page == "Top Job Selection":
             st.write("Your job ranking app goes here.")
