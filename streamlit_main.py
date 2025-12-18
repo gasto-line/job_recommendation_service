@@ -401,8 +401,6 @@ def main():
         else:
             signup_page()
 
-main()
-
 # ---------------------------------------------------------
 # JOB RANKING
 # ---------------------------------------------------------
@@ -420,3 +418,7 @@ def job_ranking_page():
         pass
     else:
         st.error("Unknown implementation selected.")
+
+
+
+main()
