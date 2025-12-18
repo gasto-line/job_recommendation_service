@@ -31,21 +31,30 @@ Description: {description_text}
 
 Rate the match as a score between 0 and 10. Add a short justification of less than 200 characters.
 """
+def build_prompt(row, user_profile):
+    techs= [t["name"] for t in user_profile["technical_skills"]]
+    reverse_education_map={0: 'None',
+                        1: 'Bachelor',
+                          2: 'Master',
+                            3: 'PhD'}
 
-
-def build_prompt(row):
+    reverse_experience_map={0: '0-6 months',
+                        1: '1-2 years',
+                        2: '3-5 years',
+                        3: '6-10 years',
+                        4: '10+ years'}
+    
     return PROMPT_TEMPLATE.format(
-        titles=", ".join(USER_PROFILE["job_titles"]),
-        description=USER_PROFILE["ideal_job_description"],
-        skills=", ".join(USER_PROFILE["technical_skills"]),
-        education=USER_PROFILE["education_level"],
-        experience=USER_PROFILE["experience"],
+        titles=", ".join(user_profile["job_titles"]),
+        description=user_profile["ideal_job"],
+        skills=", ".join(techs),
+        education=reverse_education_map[user_profile["education"]],
+        experience=reverse_experience_map[user_profile["experience"]],
 
         job_title=row.get("title", ""),
         company=row.get("company", ""),
         description_text=row.get("description", "")[:1000]  # limit to 1000 tokens for simplicity
     )
-
 
 def call_openai(prompt, model="gpt-3.5-turbo"):
     try:
@@ -59,7 +68,6 @@ def call_openai(prompt, model="gpt-3.5-turbo"):
         print(f"OpenAI error: {e}")
         return None
 
-
 def extract_score(response_text):
     try:
         score=int(list(filter(str.isdigit, response_text))[0])
@@ -69,18 +77,18 @@ def extract_score(response_text):
     return None
 
 
-def compute_gpt_match_score(df, model="gpt-3.5-turbo", delay=2):
+def compute_gpt_match_score(df, user_profile, model="gpt-3.5-turbo", delay=2):
     scores = []
     for _, row in df.iterrows():
-        prompt = build_prompt(row)
+        prompt = build_prompt(row,user_profile)
         response = call_openai(prompt, model=model)
         ai_score = extract_score(response) if response else None
         scores.append({
             "job_hash": row["job_hash"],
             "ai_score": ai_score,
             "model_version": model,
-            "ai_justification": response,
-            "prompt_version": "v1",
+            "llm_comment": response,
+            "llm_version": "1.0.0",
             "model_implementation": "LLM_scoring"
         })
         sleep(delay)  # Respect rate limits

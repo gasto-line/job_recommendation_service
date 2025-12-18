@@ -4,16 +4,36 @@ from sqlalchemy import Date, Boolean
 from sqlalchemy.dialects.postgresql import JSON
 import os
 
+# Import the jobs database password from env variables
+DB_PSW = os.getenv("DB_PSW")
+if not DB_PSW:
+    raise ValueError("Database password (DB_PSW) is not set in environment variables.")
+
 username = "irutkdcynqycaveefmpe"
 port = 5432
 host = "aws-0-eu-west-3.pooler.supabase.com"
 database = "postgres"
 
-def get_engine(DB_PSW):
+def get_engine():
     connection_string = f"postgresql://{database}.{username}:{DB_PSW}@{host}:{port}/{database}"
     return create_engine(connection_string, pool_pre_ping=True)
 
-def extract_jobs_hash(engine):
+def profile_extraction(engine, user_id):
+    try:
+        with engine.connect() as conn:
+            query = text("""
+                SELECT *
+                FROM user_profile
+                WHERE user_id = :user_id
+            """)
+            result = conn.execute(query, {"user_id": user_id}).mappings().one()
+            return dict(result) if result else None
+    except Exception as e:
+        print(f"Error extracting user profile: {e}")
+        return None
+    
+
+def extract_jobs_hash(engine,user_id):
     """
     Extracts job hashes from the database.
     
@@ -22,61 +42,56 @@ def extract_jobs_hash(engine):
     """
     try:
         with engine.connect() as conn:
-            query = text("SELECT job_hash FROM jobs")
-            result = pd.read_sql(query, conn)
+            query = text("SELECT job_hash FROM ai_review WHERE user_id = :user_id")
+            result = pd.read_sql(query, conn, params = {"user_id": user_id})
             return result
     except Exception as e:
         print(f"Error extracting job hashes: {e}")
         return pd.DataFrame(columns=["job_hash"])
+    
 
-def insert_jobs(jobs_df: pd.DataFrame,engine) -> list[bool, Exception]:
+def insert_ai_review(jobs_df: pd.DataFrame,engine, user_id) -> list[bool, Exception]:
+    records = jobs_df.to_dict(orient="records")
+    records = [{**record, "user_id": user_id} for record in records]
+
+    optional_fields = ["ai_score",
+                        "fasttext_score",
+                          "llm_comment",
+                            "llm_version",
+                              "fasttext_version",
+                                "company",
+                                  "description",
+                                    "location",
+                                      "area_json"]
+    
+    for record in records:
+        for field in optional_fields:
+            if field not in record:
+                record[field] = None
+
     try:
         with engine.begin() as conn:
-            # Replace the tmp_jobs staging table with new data
-            jobs_df.to_sql(
-                "tmp_jobs",
-                conn,
-                if_exists="replace",
-                index=False,
-                dtype={
-                    'area_json': JSON(),
-                    'posted_date': Date(),
-                    'retrieved_date': Date(),
-                    'raw_payload': JSON(),
-                    'applied': Boolean(),
-                },
-                method="multi",
-            )
 
-            # Insert new rows into the main jobs table
             conn.execute(text("""
-                INSERT INTO jobs (
-                    job_hash,
-                    title, company,
-                    location, area_json,
-                    description, url,
-                    posted_date, retrieved_date,
-                    raw_payload,
-                    prompt_version, model_implementation,
-                    ai_score, user_score,
-                    ai_justification, user_justification,
-                    applied
-                )
-                SELECT
-                    job_hash,
-                    title, company,
-                    location, area_json,
-                    description, redirect_url,
-                    posted_date, retrieved_date,
-                    raw_payload,
-                    prompt_version, model_implementation,
-                    ai_score, user_score,
-                    ai_justification, user_justification,
-                    applied
-                FROM tmp_jobs
-                WHERE user_score IS NOT NULL
-                ON CONFLICT (job_hash) DO NOTHING;
-            """))
+                            INSERT INTO job_info (
+                                job_hash, title, company, description, location, area_json, posted_date, retrieved_date, raw_payload, url
+                            )
+                            VALUES (
+                                :job_hash, :title, :company, :description, :location, :area_json, :posted_date, :retrieved_date, :raw_payload, :redirect_url
+                            )
+                            ON CONFLICT (job_hash) DO NOTHING
+                            """),
+                            records)
+            
+            conn.execute(text("""
+                            INSERT INTO ai_review (
+                                job_hash, user_id, llm_score, fasttext_score, llm_comment, llm_version, fasttext_version 
+                            )
+                            VALUES (
+                                :job_hash, :user_id, :llm_score, :fasttext_score, :llm_comment, :llm_version, :fasttext_version
+                            )
+                            """),
+                            records)
         return [True,None]
     except Exception as e:
         return [False,e]
