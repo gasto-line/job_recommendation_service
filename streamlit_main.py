@@ -379,13 +379,13 @@ def profile_page():
 def main():
 
     if st.session_state["user"]:
-        page = st.sidebar.radio("Navigation", ["Profile", "Top Job Selection"])
+        page = st.sidebar.radio("Navigation", ["Profile", "Job Selection"])
 
         if page == "Profile":
-            job_ranking_page()
+            profile_page()
 
-        elif page == "Top Job Selection":
-            st.write("Your job ranking app goes here.")
+        elif page == "Job Selection":
+            job_ranking_page()
 
         st.sidebar.markdown("---")
         if st.sidebar.button("Logout"):
@@ -408,7 +408,9 @@ def job_ranking_page():
     st.title("Job Recommendations")
     implementation = st.radio("Choose implementation", ["FastText", "LLM"])
     job_df = supabase.rpc("get_jobs_with_ai_review",{"p_user_id": st.session_state["user"].id}).execute()
+    test_df = supabase.rpc("get_10_jobs").execute()
     st.write(job_df)
+    st.write(test_df)
 
     if implementation == "FastText":
         pass
