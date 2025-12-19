@@ -458,7 +458,10 @@ def job_ranking_page():
 
         insert_df= jobs_df[["job_hash", "score", "applied", "comment"]]
         insert_df["user_id"]= st.session_state["user"].id
+        insert_df = insert_df.where(pd.notnull(insert_df), None)
+        
         insert_records= insert_df.to_dict("records")
+        st.write(insert_records)
 
         try:
             response=supabase.table("user_review").upsert(insert_records).execute()
