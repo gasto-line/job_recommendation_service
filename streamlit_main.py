@@ -407,14 +407,56 @@ def main():
 def job_ranking_page():
     st.title("Job Recommendations")
     implementation = st.radio("Choose implementation", ["FastText", "LLM"])
-    job_df = supabase.rpc("get_jobs_with_ai_review",{"p_user_id": st.session_state["user"].id}).execute()
-    st.write(job_df)
 
     if implementation == "FastText":
         pass
     elif implementation == "LLM":
-        llm_jobs= supabase.rpc("get_llm_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
-        st.write(llm_jobs)
+        jobs_df= supabase.rpc("get_llm_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
     else:
         st.error("Unknown implementation selected.")
+
+    if jobs_df.empty:
+        st.warning("No job data found.")
+        return
+
+    st.subheader("Rate the Jobs")
+    scores = {}
+    justifications = {}
+    applications = {}
+
+    for idx, row in jobs_df.iterrows():
+        job_title = row.get("title", "Unknown Title")
+        company = row.get("company", "Unknown Company")
+        job_url = row.get("redirect_url", "#")
+
+        with st.expander(f"{job_title} at {company}"):
+            st.write(f"[{job_url}]({job_url})")
+            st.write(f"**Location**: {row.get('location', 'N/A')}")
+            st.write(f"**Description**: {row.get('description', 'No description available.')[:500]}...")
+
+            # Enable rating this job
+            wants_to_rate = st.checkbox("Rate this job?", key=f"rate_{idx}")
+
+            if wants_to_rate:
+
+                # Score input
+                score = st.slider(f"Score this job", 1, 10, 5, key=f"score_{idx}")
+                scores[idx] = score
+
+                # Justification input
+                justification = st.text_area("Optional justification", key=f"justif_{idx}")
+                justifications[idx] = justification
+
+                # Application checkbox
+                applied = st.checkbox("Tick if you applied", key=f"applied_{idx}")
+                applications[idx] = applied
+
+    if st.button("Submit Scores"):
+        jobs_df["user_score"] = jobs_df.index.map(scores.get)
+        jobs_df["user_justification"] = jobs_df.index.map(justifications.get)
+        jobs_df["applied"] = jobs_df.index.map(applications.get)
+
+        st.write(jobs_df[["title", "company", "user_score", "applied"]])
+
+
 main()
