@@ -407,14 +407,15 @@ def main():
 def job_ranking_page():
     st.title("Job Recommendations")
     implementation = st.radio("Choose implementation", ["FastText", "LLM"])
+    jobs_df = pd.DataFrame()
 
     if implementation == "FastText":
         pass
     elif implementation == "LLM":
-        jobs_df= supabase.rpc("get_llm_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
+        jobs_list= supabase.rpc("get_llm_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
+        jobs_df = pd.DataFrame(jobs_list.data)
     else:
         st.error("Unknown implementation selected.")
-
     if jobs_df.empty:
         st.warning("No job data found.")
         return
