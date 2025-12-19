@@ -368,7 +368,6 @@ def profile_page():
                     "experience": experience_code
                     }).execute()
                 st.success("Profile saved successfully!")
-                supabase.rpc("debug_auth_uid").execute()
             except Exception as e:
                 st.error(f"Error saving profile: {e}")
 
@@ -405,8 +404,8 @@ def main():
 # JOB RANKING
 # ---------------------------------------------------------
 def job_ranking_page():
-    st.title("Job Recommendations")
     implementation = st.radio("Choose implementation", ["FastText", "LLM"])
+    st.title("Job Recommendations")
     jobs_df = pd.DataFrame()
 
     if implementation == "FastText":
@@ -453,11 +452,19 @@ def job_ranking_page():
                 applications[idx] = applied
 
     if st.button("Submit Scores"):
-        jobs_df["user_score"] = jobs_df.index.map(scores.get)
-        jobs_df["user_justification"] = jobs_df.index.map(justifications.get)
+        jobs_df["score"] = jobs_df.index.map(scores.get)
+        jobs_df["comment"] = jobs_df.index.map(justifications.get)
         jobs_df["applied"] = jobs_df.index.map(applications.get)
 
-        st.write(jobs_df[["title", "company", "user_score", "applied"]])
+        insert_df= jobs_df[["job_hash", "score", "applied", "comment"]]
+        insert_df["user_id"]= st.session_state["user"].id
+        insert_records= insert_df.to_dict("records")
 
+        try:
+            response=supabase.table("user_review").upsert(insert_records).execute()
+            st.write(response)
+            st.success("Profile saved successfully!")
+        except Exception as e:
+            st.error(f"Error saving profile: {e}")
 
 main()
