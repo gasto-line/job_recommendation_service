@@ -428,7 +428,7 @@ def job_ranking_page():
     for idx, row in jobs_df.iterrows():
         job_title = row.get("title", "Unknown Title")
         company = row.get("company", "Unknown Company")
-        job_url = row.get("redirect_url", "#")
+        job_url = row.get("url", "#")
 
         with st.expander(f"{job_title} at {company}"):
             st.write(f"[{job_url}]({job_url})")
