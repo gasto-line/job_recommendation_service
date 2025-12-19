@@ -408,19 +408,13 @@ def job_ranking_page():
     st.title("Job Recommendations")
     implementation = st.radio("Choose implementation", ["FastText", "LLM"])
     job_df = supabase.rpc("get_jobs_with_ai_review",{"p_user_id": st.session_state["user"].id}).execute()
-    test_df = supabase.rpc("get_10_jobs").execute()
     st.write(job_df)
-    st.write(test_df)
 
     if implementation == "FastText":
         pass
-
     elif implementation == "LLM":
-        
-        pass
+        llm_jobs= supabase.rpc("get_LLM_selected_jobs",{"p_user_id": st.session_state["user"].id}).execute()
+        st.write(llm_jobs)
     else:
         st.error("Unknown implementation selected.")
-
-
-
 main()
