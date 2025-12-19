@@ -413,7 +413,7 @@ def job_ranking_page():
     if implementation == "FastText":
         pass
     elif implementation == "LLM":
-        llm_jobs= supabase.rpc("get_LLM_selected_jobs",{"p_user_id": st.session_state["user"].id}).execute()
+        llm_jobs= supabase.rpc("get_llm_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
         st.write(llm_jobs)
     else:
         st.error("Unknown implementation selected.")
