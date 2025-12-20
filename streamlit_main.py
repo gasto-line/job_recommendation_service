@@ -458,7 +458,7 @@ def job_ranking_page():
         insert_df["comment"] = insert_df.index.map(justifications.get)
         insert_df["applied"] = insert_df.index.map(applications.get)
 
-        insert_df= jobs_df[["job_hash", "score", "applied", "comment"]]
+        insert_df= insert_df[["job_hash", "score", "applied", "comment"]]
         insert_df["user_id"]= st.session_state["user"].id
         
         insert_records= insert_df.to_dict("records")
