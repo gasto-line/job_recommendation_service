@@ -441,7 +441,8 @@ def job_ranking_page():
 
                 # Score input
                 score = st.slider(f"Score this job", 1, 10, 5, key=f"score_{idx}")
-                scores[idx] = score
+                if score:
+                    scores[idx] = score
 
                 # Justification input
                 justification = st.text_area("Optional justification", key=f"justif_{idx}")
@@ -452,13 +453,14 @@ def job_ranking_page():
                 applications[idx] = applied
 
     if st.button("Submit Scores"):
-        jobs_df["score"] = jobs_df.index.map(scores.get)
-        jobs_df["comment"] = jobs_df.index.map(justifications.get)
-        jobs_df["applied"] = jobs_df.index.map(applications.get)
+        insert_df= jobs_df[score.keys()]
+
+        insert_df["score"] = insert_df.index.map(scores.get)
+        insert_df["comment"] = insert_df.index.map(justifications.get)
+        insert_df["applied"] = insert_df.index.map(applications.get)
 
         insert_df= jobs_df[["job_hash", "score", "applied", "comment"]]
         insert_df["user_id"]= st.session_state["user"].id
-        insert_df = insert_df.where(pd.notnull(insert_df), None)
         
         insert_records= insert_df.to_dict("records")
         st.write(insert_records)
