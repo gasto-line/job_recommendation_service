@@ -453,7 +453,7 @@ def job_ranking_page():
                 applications[idx] = applied
 
     if st.button("Submit Scores"):
-        insert_df= jobs_df[score.keys()]
+        insert_df= jobs_df[scores.keys()]
 
         insert_df["score"] = insert_df.index.map(scores.get)
         insert_df["comment"] = insert_df.index.map(justifications.get)
