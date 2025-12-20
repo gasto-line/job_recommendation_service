@@ -441,8 +441,7 @@ def job_ranking_page():
 
                 # Score input
                 score = st.slider(f"Score this job", 1, 10, 5, key=f"score_{idx}")
-                if score:
-                    scores[idx] = score
+                scores[idx] = score
 
                 # Justification input
                 justification = st.text_area("Optional justification", key=f"justif_{idx}")
@@ -453,7 +452,7 @@ def job_ranking_page():
                 applications[idx] = applied
 
     if st.button("Submit Scores"):
-        insert_df= jobs_df[scores.keys()]
+        insert_df= jobs_df.loc[list(scores.keys())]
 
         insert_df["score"] = insert_df.index.map(scores.get)
         insert_df["comment"] = insert_df.index.map(justifications.get)
