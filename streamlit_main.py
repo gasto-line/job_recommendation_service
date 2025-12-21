@@ -387,6 +387,11 @@ def main():
             job_ranking_page()
 
         st.sidebar.markdown("---")
+        if st.sidebar.button("Refresh selection"):
+            #API call to the VM
+            pass
+
+        st.sidebar.markdown("---")
         if st.sidebar.button("Logout"):
             supabase.auth.sign_out()
             st.session_state["user"] = None
@@ -409,7 +414,8 @@ def job_ranking_page():
     jobs_df = pd.DataFrame()
 
     if implementation == "FastText":
-        pass
+        jobs_list= supabase.rpc("get_fasttext_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
+        jobs_df = pd.DataFrame(jobs_list.data)
     elif implementation == "LLM":
         jobs_list= supabase.rpc("get_llm_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
         jobs_df = pd.DataFrame(jobs_list.data)
@@ -462,11 +468,9 @@ def job_ranking_page():
         insert_df["user_id"]= st.session_state["user"].id
         
         insert_records= insert_df.to_dict("records")
-        st.write(insert_records)
 
         try:
             response=supabase.table("user_review").upsert(insert_records).execute()
-            st.write(response)
             st.success("Profile saved successfully!")
         except Exception as e:
             st.error(f"Error saving profile: {e}")
