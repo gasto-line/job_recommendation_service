@@ -4,7 +4,6 @@ import json, requests, numpy as np, pandas as pd
 from requests.exceptions import RequestException
 from utils import flatten_list
 
-
 def call_api(public_ip, input, input_type: str):
     api_url = f"http://{public_ip}:8080/{input_type}"
     try:
