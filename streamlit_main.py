@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import random
+from requests.exceptions import RequestException
 import matplotlib.pyplot as plt
 from supabase import create_client, Client
 
@@ -357,7 +358,7 @@ def profile_page():
         
         else:
             try:
-                response=supabase.table("user_profile").upsert({
+                user_profile={
                     "user_id": st.session_state["user"].id,
                     "job_titles": job_titles,
                     "ideal_job": ideal_job,
@@ -366,7 +367,8 @@ def profile_page():
                     "education": education_code,
                     "sectors": sectors,
                     "experience": experience_code
-                    }).execute()
+                    }
+                response=supabase.table("user_profile").upsert(user_profile).execute()
                 st.success("Profile saved successfully!")
             except Exception as e:
                 st.error(f"Error saving profile: {e}")
@@ -476,3 +478,16 @@ def job_ranking_page():
             st.error(f"Error saving profile: {e}")
 
 main()
+
+#%%
+def call_api(public_ip, input, input_type: str):
+    api_url = f"http://{public_ip}:8080/{input_type}"
+    try:
+        response = requests.post(api_url, json={"input": input})
+        response.raise_for_status()  # Raise an error for bad status codes
+        print("API call successful")
+        return response.json()
+    except RequestException as e:
+        raise RuntimeError(f"API call failed: {e}")
+try:
+

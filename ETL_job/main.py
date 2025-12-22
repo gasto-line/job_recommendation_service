@@ -16,13 +16,28 @@ engine = get_engine()
 user_profile = profile_extraction(engine, user_id)
 
 #%%
+from ideal_jobs_embedding_generator import generate_ideal_jobs
+from launch_VM import launch_inference_instance
+from fasttext_process import call_api
+import numpy as np
+
+ideal_jobs=generate_ideal_jobs(user_profile)
+public_ip, instance_id =launch_inference_instance("inference_VM/fasttext_VM.sh",instance_type="t3.large")
+ideal_jobs_embeddings = {}
+for field in ideal_jobs.keys():
+    field_grouped_embeddings=call_api(public_ip, ideal_jobs[field], "sentence")
+    for lang in field_grouped_embeddings.keys():
+        ideal_jobs_embeddings[lang]=np.mean(field_grouped_embeddings[lang][1], axis=0)
+
+
+#%%
 ####################################################
 # EXTRACT RAW DATA FROM DATA SOURCES
 from data_sourcing import generate_adzuna_keywords, load_adzuna
 
 adzuna_keywords=generate_adzuna_keywords(user_profile)
 raw_df = None
-for i in range(5):
+for i in range(2):
     raw_dfi= load_adzuna(50,i+1,adzuna_keywords)
     raw_df = pd.concat([raw_df,raw_dfi]) if raw_df is not None else raw_dfi
 raw_df= raw_df.reset_index()

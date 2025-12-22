@@ -64,6 +64,7 @@ def insert_ai_review(jobs_df: pd.DataFrame,engine, user_id) -> list[bool, Except
                                     "location",
                                       "area_json"]
     
+    # fill the missing keys with empty values to allow the insert statement
     for record in records:
         for field in optional_fields:
             if field not in record:
@@ -92,6 +93,26 @@ def insert_ai_review(jobs_df: pd.DataFrame,engine, user_id) -> list[bool, Except
                             )
                             """),
                             records)
+        return [True,None]
+    except Exception as e:
+        return [False,e]
+    
+
+def insert_embeddings(ideal_embeddings: dict,engine, user_id) -> list[bool, Exception]:
+    record = {"user_id": user_id, "fasttext_ref_embed": ideal_embeddings}
+    try:
+        with engine.begin() as conn:
+
+            conn.execute(text("""
+                            INSERT INTO user_profile (
+                                user_id, fasttext_ref_embed
+                            )
+                            VALUES (
+                                :user_id, :fasttext_ref_embed
+                            )
+                            ON CONFLICT (user_id) DO NOTHING
+                            """),
+                            record)
         return [True,None]
     except Exception as e:
         return [False,e]
