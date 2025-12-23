@@ -9,7 +9,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --instance-type "$INSTANCE_TYPE" \
   --associate-public-ip-address \
   --key-name my-debug-key \
-  --iam-instance-profile Name=EC2-get-model-role \
+  --iam-instance-profile Name=JobRecommendation-serviceRole \
   --user-data file://workflow_VM/user_data.sh \
   --instance-initiated-shutdown-behavior terminate \
   --security-group-ids 	sg-059648096d13c1a36 \

@@ -14,11 +14,11 @@ def launch_inference_instance(VM_provisioning_script_path: str, instance_type: s
             , check=True
             , timeout=60
         )
+        print("STDOUT:", result.stdout)
+        print("STDERR:", result.stderr)
         public_ip = result.stdout.strip().split("\n")[0]
         instance_id = result.stdout.strip().split("\n")[1]
         print(f"✅ Public IP: {public_ip}")
-        print("STDOUT:", result.stdout)
-        print("STDERR:", result.stderr)
     
     except subprocess.CalledProcessError as e:
         print("❌ EC2 provisioning script failed!")
