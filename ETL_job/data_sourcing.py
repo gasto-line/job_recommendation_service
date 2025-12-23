@@ -1,10 +1,6 @@
 from GPT_process import call_openai
-from dotenv import load_dotenv
 from datetime import datetime, timezone
 import os, requests, pandas as pd, json
-
-
-load_dotenv()
 
 def load_adzuna( number_of_jobs: int, page: int, keywords: dict):
 

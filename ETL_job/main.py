@@ -9,11 +9,10 @@ user_id= "8d931b75-8808-4fb8-bde9-27230c187c24"
 TOP_N = 10  # Can be changed dynamically
 
 #%%
-from DB_jobs import profile_extraction, get_engine
+from DB_jobs import profile_extraction
 
 # Add a filter on jobs that are already in the reference database
-engine = get_engine()
-user_profile = profile_extraction(engine, user_id)
+user_profile = profile_extraction(user_id)
 
 #%%
 from ideal_jobs_embedding_generator import generate_ideal_jobs
@@ -61,10 +60,9 @@ raw_df["job_hash"] = raw_df.apply(lambda row: generate_job_hash(row["title"], ro
 raw_df = raw_df.drop_duplicates(subset='job_hash')
 
 #%%
-from DB_jobs import extract_jobs_hash, get_engine
+from DB_jobs import extract_jobs_hash
 # Add a filter on jobs that are already in the reference database
-engine = get_engine()
-exclude_set=set(extract_jobs_hash(engine,user_id).job_hash)
+exclude_set=set(extract_jobs_hash(user_id).job_hash)
 # mask rows whose 'job_hash' is NOT in that set
 filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
@@ -112,10 +110,9 @@ AI_scored_df = compute_gpt_match_score(AI_scored_df,user_profile)
 #%%
 ####################################################
 # INSERT INTO THE DATABASE
-from DB_jobs import insert_ai_review, get_engine
+from DB_jobs import insert_ai_review
 
-engine = get_engine()
-insert_ai_review(AI_scored_df,engine,user_id)
+insert_ai_review(AI_scored_df,user_id)
 
 #%%
 # Generate the top list for each of the implementations

@@ -1,118 +1,87 @@
+#%%
 import pandas as pd
 from sqlalchemy import create_engine, text
 from sqlalchemy import Date, Boolean
 from sqlalchemy.dialects.postgresql import JSON
+from supabase import create_client
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
-# Import the jobs database password from env variables
-DB_PSW = os.getenv("DB_PSW")
-if not DB_PSW:
-    raise ValueError("Database password (DB_PSW) is not set in environment variables.")
+#%%
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
-username = "irutkdcynqycaveefmpe"
-port = 5432
-host = "aws-0-eu-west-3.pooler.supabase.com"
-database = "postgres"
+#%%
+try: 
+    supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+except Exception as e:
+    print(f"Error creating Supabase client: {e}")   
 
-def get_engine():
-    connection_string = f"postgresql://{database}.{username}:{DB_PSW}@{host}:{port}/{database}"
-    return create_engine(connection_string, pool_pre_ping=True)
-
-def profile_extraction(engine, user_id):
+def profile_extraction(user_id):
     try:
-        with engine.connect() as conn:
-            query = text("""
-                SELECT *
-                FROM user_profile
-                WHERE user_id = :user_id
-            """)
-            result = conn.execute(query, {"user_id": user_id}).mappings().one()
-            return dict(result) if result else None
+        response = supabase.table("user_profile").select("*").eq("user_id", user_id).execute()
+        result = response.data[0] if response.data else None
+        return result
     except Exception as e:
         print(f"Error extracting user profile: {e}")
         return None
     
 
-def extract_jobs_hash(engine,user_id):
-    """
-    Extracts job hashes from the database.
-    
-    Returns:
-        pd.DataFrame: A DataFrame containing job hashes.
-    """
+def extract_jobs_hash(user_id):
     try:
-        with engine.connect() as conn:
-            query = text("SELECT job_hash FROM ai_review WHERE user_id = :user_id")
-            result = pd.read_sql(query, conn, params = {"user_id": user_id})
-            return result
+        response = supabase.table("ai_review").select("job_hash").eq("user_id", user_id).execute()
+        result = pd.DataFrame(response.data) if response.data else None
+        return result
     except Exception as e:
         print(f"Error extracting job hashes: {e}")
         return pd.DataFrame(columns=["job_hash"])
     
 
-def insert_ai_review(jobs_df: pd.DataFrame,engine, user_id) -> list[bool, Exception]:
-    records = jobs_df.to_dict(orient="records")
-    records = [{**record, "user_id": user_id} for record in records]
+def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
+    jobs_df = jobs_df.copy()
+    jobs_df.loc[:, "user_id"] = user_id
 
-    optional_fields = ["ai_score",
-                        "fasttext_score",
-                          "llm_comment",
-                            "llm_version",
-                              "fasttext_version",
-                                "company",
-                                  "description",
-                                    "location",
-                                      "area_json"]
-    
-    # fill the missing keys with empty values to allow the insert statement
-    for record in records:
-        for field in optional_fields:
-            if field not in record:
-                record[field] = None
+    # Prepare records for insertion
+    selected_job_info_columns = ["job_hash",
+                                 "title",
+                                 "company",
+                                 "description",
+                                 "location",
+                                 "area_json",
+                                 "posted_date",
+                                 "retrieved_date",
+                                 "raw_payload",
+                                 "redirect_url"]
+    selected_job_info_columns= jobs_df.columns.intersection(selected_job_info_columns).tolist()
+    job_info_df=jobs_df[selected_job_info_columns]
 
+    selected_ai_review_columns = ["job_hash",
+                                  "user_id",
+                                  "ai_score",
+                                  "fasttext_score",
+                                  "llm_comment",
+                                  "llm_version",
+                                  "fasttext_version"]
+    selected_ai_review_columns= jobs_df.columns.intersection(selected_ai_review_columns).tolist()
+    ai_reviewed_df=jobs_df[selected_ai_review_columns]
+
+    job_info_records = job_info_df.to_dict(orient="records")
+    ai_review_records= ai_reviewed_df.to_dict(orient="records")
+
+    # Insert into Supabase
     try:
-        with engine.begin() as conn:
-
-            conn.execute(text("""
-                            INSERT INTO job_info (
-                                job_hash, title, company, description, location, area_json, posted_date, retrieved_date, raw_payload, url
-                            )
-                            VALUES (
-                                :job_hash, :title, :company, :description, :location, :area_json, :posted_date, :retrieved_date, :raw_payload, :redirect_url
-                            )
-                            ON CONFLICT (job_hash) DO NOTHING
-                            """),
-                            records)
-            
-            conn.execute(text("""
-                            INSERT INTO ai_review (
-                                job_hash, user_id, llm_score, fasttext_score, llm_comment, llm_version, fasttext_version 
-                            )
-                            VALUES (
-                                :job_hash, :user_id, :llm_score, :fasttext_score, :llm_comment, :llm_version, :fasttext_version
-                            )
-                            """),
-                            records)
-        return [True,None]
+        response1 = supabase.table("job_info").upsert(job_info_records).execute()
+        response2 = supabase.table("ai_review").insert(ai_review_records).execute()
+        return [True,[response1,response2]]
     except Exception as e:
         return [False,e]
     
 
-def insert_embeddings(ideal_embeddings: dict,engine, user_id) -> list[bool, Exception]:
+def insert_embeddings(ideal_embeddings: dict, user_id) -> list[bool, Exception]:
     record = {"user_id": user_id, "fasttext_ref_embed": ideal_embeddings}
     try:
-        with engine.begin() as conn:
-
-            conn.execute(text("""
-                            INSERT INTO user_profile (
-                                user_id, fasttext_ref_embed
-                            )
-                            VALUES (
-                                :user_id, :fasttext_ref_embed
-                            )
-                            ON CONFLICT (user_id) DO NOTHING
-                            """),
-                            record)
-        return [True,None]
+        response = supabase.table("user_profile").insert(record).execute()
+        return [True,response]
     except Exception as e:
         return [False,e]
