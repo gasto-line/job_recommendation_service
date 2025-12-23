@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from ideal_jobs_test import generate_ideal_jobs
+from ideal_job_embedding_generator import generate_ideal_jobs
 from inference_VM.launch_VM import launch_inference_instance
 from fasttext_process import call_api
 from DB_jobs import get_engine, insert_embeddings
