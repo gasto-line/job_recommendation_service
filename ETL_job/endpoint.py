@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from ideal_job_embedding_generator import generate_ideal_jobs
 from launch_VM import launch_inference_instance
 from fasttext_process import call_api
@@ -13,7 +13,7 @@ def health():
     return {"status": "ok"}
 
 @app.post("/ideal_jobs_embeddings")
-def generate_ideal_job_embeddings(user_profile):
+def generate_ideal_job_embeddings(user_profile: dict = Body(...)):
 
     try:
         # Generate ideal job texts
