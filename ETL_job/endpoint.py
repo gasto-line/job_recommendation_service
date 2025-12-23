@@ -1,5 +1,3 @@
-from dotenv import load_dotenv
-load_dotenv()
 from fastapi import FastAPI, HTTPException
 from ideal_job_embedding_generator import generate_ideal_jobs
 from launch_VM import launch_inference_instance
