@@ -1,80 +1,31 @@
 #%%
-def f():
-    a="gekk"
-    b="grok"
-    return(a,b)
 #%%
 import requests
+from requests.exceptions import RequestException
 
-def debug_release(owner, repo):
-    url = f"https://api.github.com/repos/{owner}/{repo}/releases"
-    r = requests.get(url)
-    #print("\n".join(r.json().keys()))
-    print(json.dumps(r.json(),indent=4))
-    '''for e in r.json():
-        print(e)'''
+def call_api(public_ip, input, input_type: str):
+    api_url = f"http://{public_ip}:8080/{input_type}"
+    try:
+        response = requests.post(api_url, json={"input": input})
+        response.raise_for_status()  # Raise an error for bad status codes
+        print("API call successful")
+        return response.json()
+    except RequestException as e:
+        raise RuntimeError(f"API call failed: {e}")
     
+user_profile= {'user_id': '8d931b75-8808-4fb8-bde9-27230c187c24',
+ 'job_titles': ['Cloud engineer', 'Data engineer', 'ML engineer'],
+ 'ideal_job': 'Build infrastructure for data science and AI services',
+ 'technical_skills': [{'name': 'Python', 'Weight (%)': 50},
+  {'name': 'Cloud', 'Weight (%)': 30},
+  {'name': 'SQL', 'Weight (%)': 20}],
+ 'general_skills': [{'Category': 'Cognitive & Technical', 'Weight (%)': 40},
+  {'Category': 'Execution & Operational', 'Weight (%)': 20},
+  {'Category': 'Social & Communication', 'Weight (%)': 20},
+  {'Category': 'Business & Contextual', 'Weight (%)': 20}],
+ 'experience': 1,
+ 'education': 2,
+ 'sectors': ['ICT & Digital']}
 
-debug_release("gasto-line","job_recommendation_service")
-# %%
-def get_release_asset_update_date(owner, repo, asset_name):
-    url = f"https://api.github.com/repos/{owner}/{repo}/releases"
-    try:
-        r = requests.get(url)
-        r.raise_for_status()
-        releases = r.json()
-        for release in releases:
-            assets = release.get("assets")
-            for asset in assets:
-                if asset.get("name") == asset_name:
-                    return (asset.get("updated_at"))
-        return ("(release not found)")
-    except Exception:
-        return ("(Error)")
-
-get_release_asset_update_date("gasto-line","job_recommendation_service","top_jobs.pkl")
 #%%
-r = requests.get(url)
-r.raise_for_status()
-releases = r.json()
-for release in releases:
-    print(release)
-    '''assets = release.get["assets"]
-    for asset in assets:
-        if asset.get("name") == asset_name:
-            print(asset.get("updated_at"))'''
-# %%
-for release in releases:
-    assets = release.get("assets")
-    print(assets)
-    for asset in assets:
-        asset_name=asset.get("name")
-        print(asset_name)
-        if asset_name == "top_jobs.pkl":
-            print(asset.get("updated_at"))
-# %%
-import requests
-
-def get_release_asset_update_date(owner, repo, asset_name):
-    url = f"https://api.github.com/repos/{owner}/{repo}/releases"
-    try:
-        r = requests.get(url)
-        r.raise_for_status()
-        releases = r.json()
-        for release in releases:
-            assets = release.get("assets")
-            for asset in assets:
-                if asset.get("name") == asset_name:
-                    return (asset.get("updated_at"))
-        return ("(release not found)")
-    except Exception:
-        return ("(Error)")
-
-get_release_asset_update_date("gasto-line","job_recommendation_service","top_jobs.pkl")
-# %%
-import os
-
-url='https://github.com/gasto-line/job_recommendation_service/releases/download/top-jobs-latest/top_jobs.pkl'
-
-print(os.path.basename(url))
-# %%
+call_api(public_ip, user_profile, "sentence")
