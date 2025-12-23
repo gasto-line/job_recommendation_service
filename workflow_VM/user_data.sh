@@ -68,7 +68,7 @@ After=network.target
 User=ec2-user
 WorkingDirectory=/home/ec2-user/job_recommendation_service/ETL_job
 EnvironmentFile=/etc/job-reco.env
-ExecStart=/home/ec2-user/job_recommendation_service/ETL_job/venv/bin/uvicorn app:app --host 0.0.0.0 --port 8080
+ExecStart=/home/ec2-user/job_recommendation_service/ETL_job/venv/bin/uvicorn endpoint:app --host 0.0.0.0 --port 8080
 Restart=always
 
 [Install]

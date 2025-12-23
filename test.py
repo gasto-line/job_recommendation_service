@@ -28,4 +28,7 @@ user_profile= {'user_id': '8d931b75-8808-4fb8-bde9-27230c187c24',
  'sectors': ['ICT & Digital']}
 
 #%%
+curl -X GET "http://13.39.80.12:8080/health"
+#%%
+from ETL_job.fasttext_process import call_api
 call_api(public_ip, user_profile, "sentence")

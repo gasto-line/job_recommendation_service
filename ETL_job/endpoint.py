@@ -8,8 +8,12 @@ import boto3
 
 app = FastAPI()
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 @app.post("/ideal_jobs_embeddings")
-def generate_ideal_job_embeddings(input, user_profile):
+def generate_ideal_job_embeddings(user_profile):
 
     try:
         # Generate ideal job texts
