@@ -1,13 +1,14 @@
+from dotenv import load_dotenv
+load_dotenv()
 from fastapi import FastAPI, HTTPException
 from ideal_job_embedding_generator import generate_ideal_jobs
-from inference_VM.launch_VM import launch_inference_instance
+from launch_VM import launch_inference_instance
 from fasttext_process import call_api
-from DB_jobs import get_engine, insert_embeddings
+from DB_jobs import insert_embeddings
 import numpy as np
 import boto3
 
 app = FastAPI()
-
 
 @app.post("/ideal_jobs_embeddings")
 def generate_ideal_job_embeddings(input, user_profile):
@@ -18,7 +19,7 @@ def generate_ideal_job_embeddings(input, user_profile):
 
         # Launch inference VM
         public_ip, instance_id = launch_inference_instance(
-            "inference_VM/fasttext_VM.sh",
+            "workflow_VM/VM_config.sh",
             instance_type="t3.large")
 
         # Call inference API
@@ -29,8 +30,7 @@ def generate_ideal_job_embeddings(input, user_profile):
                 ideal_jobs_embeddings[lang]=np.mean(field_grouped_embeddings[lang][1], axis=0)
                 
         # Insert in DB
-        engine = get_engine()
-        insert_embeddings(ideal_jobs_embeddings, engine, user_profile["user_id"])
+        insert_embeddings(ideal_jobs_embeddings, user_profile["user_id"])
 
         # Terminate inference VM
         ec2 = boto3.client("ec2", region_name="eu-west-3")

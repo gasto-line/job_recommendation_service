@@ -8,3 +8,4 @@ python-dotenv
 openai
 psycopg2-binary
 uvicorn
+supabase
