@@ -1,7 +1,6 @@
 
 # %%
 from openai import OpenAI
-import yaml
 import os
 import pandas as pd
 from time import sleep
@@ -9,10 +8,6 @@ from time import sleep
 # Load client with API key (assumes set in environment)
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-#%%
-# Load user profile once
-with open("config/user_profile.yaml", "r") as f:
-    USER_PROFILE = yaml.safe_load(f)
 
 PROMPT_TEMPLATE = """
 You are a job-matching assistant. Based on the user's profile below, evaluate how well this job matches their expectations.
@@ -96,3 +91,5 @@ def compute_gpt_match_score(df, user_profile, model="gpt-3.5-turbo", delay=2):
     scores_df = pd.DataFrame(scores)
     return df.merge(scores_df, on="job_hash")
 
+
+# %%
