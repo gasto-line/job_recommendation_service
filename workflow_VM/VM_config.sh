@@ -1,6 +1,6 @@
 #!/bin/bash
-
-INSTANCE_TYPE="$1"
+USER_DATA_PATH="$1"
+INSTANCE_TYPE="$2"
 
 
 INSTANCE_ID=$(aws ec2 run-instances \
@@ -10,7 +10,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --associate-public-ip-address \
   --key-name my-debug-key \
   --iam-instance-profile Name=JobRecommendation-serviceRole \
-  --user-data file://workflow_VM/user_data.sh \
+  --user-data "$USER_DATA_PATH" \
   --instance-initiated-shutdown-behavior terminate \
   --security-group-ids 	sg-059648096d13c1a36 \
   --region eu-west-3 \
