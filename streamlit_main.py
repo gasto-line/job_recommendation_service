@@ -349,7 +349,10 @@ def profile_page():
         "Master": 2,
         "PhD": 3
         }
-        education_code = education_map.get[education]
+        if education == "-- Select your education level --":
+            education_code = None
+        else:
+            education_code = education_map[education]
 
         # Work experience
         st.subheader("Equivalent years of relevant work experience")
@@ -366,7 +369,10 @@ def profile_page():
         "6-10 years": 3,
         "10+ years": 4
         }
-        experience_code = experience_map.get[experience]
+        if experience == "-- Select your experience level --":
+            experience_code = None
+        else:
+            experience_code = experience_map[experience]
 
     # Do not allow profile saving if it was already done in the past 2 hours
     if "last_submission_time" not in st.session_state:
