@@ -10,7 +10,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --associate-public-ip-address \
   --key-name my-debug-key \
   --iam-instance-profile Name=JobRecommendation-serviceRole \
-  --user-data "$USER_DATA_PATH" \
+  --user-data file://"$USER_DATA_PATH" \
   --instance-initiated-shutdown-behavior terminate \
   --security-group-ids 	sg-059648096d13c1a36 \
   --region eu-west-3 \
