@@ -4,6 +4,8 @@ import random, requests
 from requests.exceptions import RequestException
 import matplotlib.pyplot as plt
 from supabase import create_client, Client
+from datetime import datetime, timedelta
+
 
 # ---------------------------------------------------------
 # Supabase client setup
@@ -151,6 +153,9 @@ def profile_page():
             st.session_state.job_titles.append("")
             st.rerun()
 
+        if "Title 1" or "Title 2" in st.session_state.job_titles:
+            st.error("Please replace placeholder job titles with your actual target job titles.")
+            job_titles= None
         job_titles = st.session_state.job_titles
 
         # Ideal job description
@@ -334,7 +339,8 @@ def profile_page():
         st.subheader("Equivalent relevant education level")
         education = st.selectbox(
             "Highest relevant education",
-            ["None","Bachelor", "Master", "PhD"],
+            ["-- Select your education level --","None","Bachelor", "Master", "PhD"],
+            index = 0,
             label_visibility="collapsed"
         )
         education_map = {
@@ -349,7 +355,8 @@ def profile_page():
         st.subheader("Equivalent years of relevant work experience")
         experience = st.selectbox(
             "Select your range",
-            ["0-6 months","1-2 years", "3-5 years", "6-10 years", "10+ years"],
+            ["-- Select your experience level --","0-6 months","1-2 years", "3-5 years", "6-10 years", "10+ years"],
+            index=0,
             label_visibility="collapsed"
         )
         experience_map = {
@@ -361,11 +368,66 @@ def profile_page():
         }
         experience_code = experience_map[experience]
 
-    if st.button("Save profile"):
+    # Do not allow profile saving if it was already done in the past 2 hours
+    if "last_submission_time" not in st.session_state:
+        st.session_state.last_submission_time = None
+    COOLDOWN = timedelta(hours=2)
+    now = datetime.now()
+
+    # Create a condition to submit: cooldown + required fields filled
+    can_submit = True
+    if st.session_state.last_submission_time is None:
+        pass
+    else:
+        elapsed = now - st.session_state.last_submission_time
+        if elapsed < COOLDOWN:
+            remaining = COOLDOWN - elapsed
+            can_submit = False
+            st.info(f"You can submit again in {remaining.seconds // 60} minutes.")
+        else:
+            pass
+    if tech_total != 100 or skill_total != 100:
+        st.error("Please correct the skill weights — totals must be 100%.")
+        can_submit = False
+    elif not job_titles or not ideal_job or not sectors or not education.code or not experience.code:
+        st.error("Please fill in all required fields.")
+        can_submit = False
+    else:
+        pass
+
+    submit = st.button("Save profile")
+    st.caption("👉 You can update your profile every 2 hours. The update takes 15min to propage for fasttext implemetation")
+
+    if submit:
+        if can_submit:
+            try:
+                user_profile={
+                    "user_id": st.session_state["user"].id,
+                    "job_titles": job_titles,
+                    "ideal_job": ideal_job,
+                    "technical_skills": tech_df.to_dict("records"),
+                    "general_skills": skill_df.to_dict("records"),
+                    "education": education_code,
+                    "sectors": sectors,
+                    "experience": experience_code
+                    }
+                response=supabase.table("user_profile").upsert(user_profile).execute()
+                st.success("Profile saved successfully!")
+
+                call_api(public_ip="35.180.97.226", input=user_profile, input_type="ideal_jobs_embeddings")
+                
+            except Exception as e:
+                st.error(f"Error saving profile: {e}")
+        else: 
+            st.error("Not allowed to submit")
+
+
+
+"""    if st.button("Save profile"):
         if tech_total != 100 or skill_total != 100:
             st.error("Please correct the skill weights — totals must be 100%.")
 
-        elif not job_titles or not ideal_job or not sectors or not education or not experience:
+        elif not job_titles or not ideal_job or not sectors or not education.code or not experience.code:
             st.error("Please fill in all required fields.")
         
         else:
@@ -387,7 +449,7 @@ def profile_page():
                 
             except Exception as e:
                 st.error(f"Error saving profile: {e}")
-
+"""
 
 # ---------------------------------------------------------
 # MAIN NAVIGATION
