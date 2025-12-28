@@ -43,6 +43,36 @@ profile=profile_extraction("8d931b75-8808-4fb8-bde9-27230c187c24")
 # %%
 ideal=profile["fasttext_ref_embed"]
 for field,value in ideal.items():
-    print(value)
-    
-    # %%
+    for lang,embed in value.items():
+        print(len(embed))
+
+
+#Notes
+
+"""    if st.button("Save profile"):
+        if tech_total != 100 or skill_total != 100:
+            st.error("Please correct the skill weights — totals must be 100%.")
+
+        elif not job_titles or not ideal_job or not sectors or not education.code or not experience.code:
+            st.error("Please fill in all required fields.")
+        
+        else:
+            try:
+                user_profile={
+                    "user_id": st.session_state["user"].id,
+                    "job_titles": job_titles,
+                    "ideal_job": ideal_job,
+                    "technical_skills": tech_df.to_dict("records"),
+                    "general_skills": skill_df.to_dict("records"),
+                    "education": education_code,
+                    "sectors": sectors,
+                    "experience": experience_code
+                    }
+                response=supabase.table("user_profile").upsert(user_profile).execute()
+                st.success("Profile saved successfully!")
+
+                call_api(public_ip="35.180.97.226", input=user_profile, input_type="ideal_jobs_embeddings")
+                
+            except Exception as e:
+                st.error(f"Error saving profile: {e}")
+"""
