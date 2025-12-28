@@ -47,7 +47,7 @@ sudo -i -u ec2-user bash << END
 cd /home/ec2-user
 echo "Cloning inference server..."
 git clone -b dev --single-branch https://github.com/gasto-line/job_recommendation_service.git job_recommendation_service
-chmod +x worflow_VM/VM_config.sh
+chmod +x inference_VM/VM_config.sh
 cd job_recommendation_service/ETL_job
 python3 -m venv venv
 source venv/bin/activate
