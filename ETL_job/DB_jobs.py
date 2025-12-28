@@ -81,7 +81,7 @@ def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
 def insert_embeddings(ideal_embeddings: dict, user_id) -> list[bool, Exception]:
     record = {"user_id": user_id, "fasttext_ref_embed": ideal_embeddings}
     try:
-        response = supabase.table("user_profile").insert(record).execute()
+        response = supabase.table("user_profile").upsert(record).execute()
         return [True,response]
     except Exception as e:
         return [False,e]
