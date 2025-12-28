@@ -28,7 +28,11 @@ user_profile= {'user_id': '8d931b75-8808-4fb8-bde9-27230c187c24',
  'sectors': ['ICT & Digital']}
 
 #%%
-curl -X GET "http://13.39.80.12:8080/health"
+curl -X GET "http://35.180.97.144:8080/health"
 #%%
 from ETL_job.fasttext_process import call_api
 call_api(public_ip, user_profile, "sentence")
+# %%
+curl -X POST "http://35.180.97.144:8080/ideal_jobs_embeddings" \
+     -H "Content-Type: application/json" \
+     -d '{"user_id":"8d931b75-8808-4fb8-bde9-27230c187c24","job_titles":["Cloud engineer", "Data engineer", "ML engineer"],"ideal_job":"Build infrastructure for data science and AI services","technical_skills":[{"name":"Python", "Weight (%)":50},{"name":"Cloud", "Weight (%)":30},{"name":"SQL", "Weight (%)":20}],"general_skills":[{"Category":"Cognitive & Technical", "Weight (%)":40},{"Category":"Execution & Operational", "Weight (%)":20},{"Category":"Social & Communication", "Weight (%)":20},{"Category":"Business & Contextual", "Weight (%)":20}],"experience":1,"education":2,"sectors":["ICT & Digital"]}'

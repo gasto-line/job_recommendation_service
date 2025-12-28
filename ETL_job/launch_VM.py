@@ -42,4 +42,4 @@ def launch_inference_instance(VM_provisioning_script_path: str, user_data_path: 
     return (public_ip,instance_id)
 
 if __name__ == "__main__":
-    launch_inference_instance("workflow_VM/VM_config.sh","workflow_VM/user_data", "t3.micro") 
+    launch_inference_instance("workflow_VM/VM_config.sh","workflow_VM/user_data.sh", "t3.micro") 
