@@ -51,7 +51,7 @@ def generate_ideal_job_embeddings(user_profile: dict = Body(...)):
             for lang, values in field_grouped_embeddings.items():
                 ideal_jobs_embeddings[field][lang] = np.mean(
                     values[1], axis=0
-                )
+                ).tolist()  # convert to list for JSON serialization
 
         print("[4/4] Inserting embeddings into DB")
         success, error = insert_embeddings(
