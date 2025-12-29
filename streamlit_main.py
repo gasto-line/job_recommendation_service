@@ -402,7 +402,7 @@ def profile_page():
         pass
 
     submit = st.button("Save profile")
-    st.caption("👉 You can update your profile every 2 hours. The update takes 15min to propage for fasttext implemetation")
+    st.caption("👉 You can update your profile every 2 hours...")
 
     if submit:
         if can_submit:
@@ -418,7 +418,7 @@ def profile_page():
                     "experience": experience_code
                     }
                 response=supabase.table("user_profile").upsert(user_profile).execute()
-                st.success("Profile saved successfully!")
+                st.success("Profile saved successfully! Please note that profile updates takes 15 minutes to propagate for fasttext.")
 
                 call_api(public_ip="35.180.97.226", input=user_profile, input_type="ideal_jobs_embeddings")
                 

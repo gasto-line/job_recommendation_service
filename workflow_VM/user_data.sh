@@ -48,6 +48,7 @@ cd /home/ec2-user
 echo "Cloning inference server..."
 git clone -b dev --single-branch https://github.com/gasto-line/job_recommendation_service.git job_recommendation_service
 chmod +x inference_VM/VM_config.sh
+chmomd +x workflow_VM/update_DNS.sh
 cd job_recommendation_service/ETL_job
 python3 -m venv venv
 source venv/bin/activate
@@ -57,12 +58,27 @@ pip install -r requirements.txt
 
 END
 
+# Create systemd services
+cat << 'EOF' > /etc/systemd/system/update_DNS.service
+[Unit]
+Description=Update Route53 DNS
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/ec2-user/job_recommendation_service/workflow_VM/update_DNS.sh
+[Install]
+WantedBy=multi-user.target
+EOF
+
 
 # Create systemd service
 cat << 'EOF' > /etc/systemd/system/boot-api.service
 [Unit]
 Description=Boot Workflow API Service
-After=network.target
+After=network-online.target update-dns.service
+Wants=network-online.target update-dns.service
 
 [Service]
 User=ec2-user
