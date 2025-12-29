@@ -46,8 +46,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-def call_api(public_ip, input, input_type: str):
-    api_url = f"http://{public_ip}:8080/{input_type}"
+def call_api(api_host, input, input_type: str):
+    api_url = f"http://{api_host}:8080/{input_type}"
     try:
         response = requests.post(api_url, json=input)
         response.raise_for_status()  # Raise an error for bad status codes
@@ -420,7 +420,7 @@ def profile_page():
                 response=supabase.table("user_profile").upsert(user_profile).execute()
                 st.success("Profile saved successfully! Please note that profile updates takes 15 minutes to propagate for fasttext.")
 
-                call_api(public_ip="35.180.97.226", input=user_profile, input_type="ideal_jobs_embeddings")
+                call_api(public_ip="api.silkworm.cloud", input=user_profile, input_type="ideal_jobs_embeddings")
                 
             except Exception as e:
                 st.error(f"Error saving profile: {e}")
