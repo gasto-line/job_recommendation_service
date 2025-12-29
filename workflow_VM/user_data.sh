@@ -94,5 +94,8 @@ EOF
 
 
 systemctl daemon-reload
+
+systemctl start update-DNS
+systemctl enable update-DNS
 systemctl start boot-api
 systemctl enable boot-api
