@@ -421,7 +421,7 @@ def profile_page():
                 st.success("Profile saved successfully!")
 
                 call_api(api_host="api.silkworm.cloud", input=user_profile, input_type="ideal_jobs_embeddings")
-                st.sucess("Production of the ideal embedding reference for fasttext model was triggered successfully! It will take up to 15 minutes to be available.")
+                st.success("Production of the ideal embedding reference for fasttext model was triggered successfully! It will take up to 15 minutes to be available.")
                 st.session_state.last_submission_time = datetime.now()
                 
             except Exception as e:
