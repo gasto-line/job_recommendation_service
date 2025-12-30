@@ -395,7 +395,7 @@ def profile_page():
     if tech_total != 100 or skill_total != 100:
         st.error("Please correct the skill weights — totals must be 100%.")
         can_submit = False
-    elif not job_titles or not ideal_job or not sectors or not education_code or not experience_code:
+    elif not job_titles or not ideal_job or not sectors or not education_code==None or not experience_code==None:
         st.error("Please fill in all required fields.")
         can_submit = False
     else:
@@ -418,9 +418,11 @@ def profile_page():
                     "experience": experience_code
                     }
                 response=supabase.table("user_profile").upsert(user_profile).execute()
-                st.success("Profile saved successfully! Please note that profile updates takes 15 minutes to propagate for fasttext.")
+                st.success("Profile saved successfully!")
 
-                call_api(public_ip="api.silkworm.cloud", input=user_profile, input_type="ideal_jobs_embeddings")
+                call_api(api_host="api.silkworm.cloud", input=user_profile, input_type="ideal_jobs_embeddings")
+                st.sucess("Ideal embedding reference for fasttext mmodel triggered successfully! It will take up to 15 minutes to be available.")
+                st.session_state.last_submission_time = datetime.now()
                 
             except Exception as e:
                 st.error(f"Error saving profile: {e}")

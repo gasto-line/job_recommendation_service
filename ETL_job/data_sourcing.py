@@ -102,3 +102,10 @@ def generate_adzuna_keywords(profile):
     response=call_openai(prompt, model="gpt-4")
     return (json.loads(response))
     
+def get_raw_df(profile, number_of_jobs_per_page=50, pages=2):
+    keywords=generate_adzuna_keywords(profile)
+    raw_dfs=[]
+    for page in range(1,pages+1):
+        raw_df=load_adzuna(number_of_jobs_per_page, page, keywords)
+        raw_dfs.append(raw_df)
+    return pd.concat(raw_dfs).reset_index(drop=True)
