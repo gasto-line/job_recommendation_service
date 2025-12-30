@@ -395,7 +395,7 @@ def profile_page():
     if tech_total != 100 or skill_total != 100:
         st.error("Please correct the skill weights — totals must be 100%.")
         can_submit = False
-    elif not job_titles or not ideal_job or not sectors or not education_code==None or not experience_code==None:
+    elif job_titles==None or ideal_job==None or sectors==None or education_code==None or experience_code==None:
         st.error("Please fill in all required fields.")
         can_submit = False
     else:
