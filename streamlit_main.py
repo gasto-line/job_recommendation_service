@@ -46,10 +46,15 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-def call_api(api_host, input, input_type: str):
+def call_api(api_host, input, input_type: str, method):
     api_url = f"http://{api_host}:8080/{input_type}"
     try:
-        response = requests.post(api_url, json=input)
+        if method == "GET":
+            response = requests.get(api_url, json=input)
+        elif method == "POST":
+            response = requests.post(api_url, json=input)
+        else:
+            raise ValueError("Unsupported HTTP method")
         response.raise_for_status()  # Raise an error for bad status codes
         print("API call successful")
         return response.json()
@@ -420,9 +425,12 @@ def profile_page():
                 response=supabase.table("user_profile").upsert(user_profile).execute()
                 st.success("Profile saved successfully!")
 
-                call_api(api_host="api.silkworm.cloud", input=user_profile, input_type="ideal_jobs_embeddings")
-                st.success("Production of the ideal embedding reference for fasttext model was triggered successfully! It will take up to 15 minutes to be available.")
-                st.session_state.last_submission_time = datetime.now()
+                if call_api(api_host="api.silkworm.cloud", input=None, input_type="health", method="GET") == {"status": "ok"}:
+                    st.success("The API is healthy. Proceeding to submit profile for embedding generation. It will take 10-15 minutes")
+                    st.session_state.last_submission_time = datetime.now()
+                    call_api(api_host="api.silkworm.cloud", input=user_profile, input_type="ideal_jobs_embeddings", method="POST")
+                else:
+                    st.error("The API is currently unreachable. Please try again later.")
                 
             except Exception as e:
                 st.error(f"Error saving profile: {e}")
