@@ -76,3 +76,53 @@ for field,value in ideal.items():
             except Exception as e:
                 st.error(f"Error saving profile: {e}")
 """
+
+#%%
+def call_api(api_host, input, input_type: str, method):
+    api_url = f"http://{api_host}:8080/{input_type}"
+    try:
+        if method == "GET":
+            response = requests.get(api_url, json=input)
+        elif method == "POST":
+            response = requests.post(api_url, json=input)
+        else:
+            raise ValueError("Unsupported HTTP method")
+        response.raise_for_status()  # Raise an error for bad status codes
+        print("API call successful")
+        return response.json()
+    except RequestException as e:
+        raise RuntimeError(f"API call failed: {e}")
+
+#%%
+import requests
+from requests.exceptions import RequestException
+api_host="api.silkworm.cloud"
+input_type="ideal_jobs_embeddings"
+api_url = f"http://{api_host}:8080/{input_type}"
+
+call_api(api_host=api_host, input=profile, input_type=input_type, method="POST")
+
+#%%
+import requests
+from requests.exceptions import RequestException
+payload = {
+    "user_id": "8d931b75-8808-4fb8-bde9-27230c187c24",
+    "implementation": "FastText"
+}
+api_host="api.silkworm.cloud"
+input_type="ai_scoring"
+api_url = f"http://{api_host}:8080/{input_type}"
+
+call_api(api_host=api_host, input=payload, input_type=input_type, method="POST")
+#%%
+import requests
+from requests.exceptions import RequestException
+api_host="api.silkworm.cloud"
+input_type="health"
+api_url = f"http://{api_host}:8080/{input_type}"
+
+call_api(api_host, None, input_type, "GET")
+# %%
+if call_api(api_host, None, input_type, "GET") == {"status": "ok"}:
+    print("API is healthy")
+# %%

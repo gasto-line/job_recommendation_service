@@ -37,10 +37,6 @@ def extract_jobs_hash(user_id, implementation: str) -> pd.DataFrame:
         else:
             raise ValueError(f"Invalid implementation: {implementation}. Must be 'FastText' or 'LLM'.")
         result = pd.DataFrame(response.data) if response.data else None
-
-        if implementation == "FastText":
-            # Drop 
-            pass
         return result
     except Exception as e:
         print(f"Error extracting job hashes: {e}")

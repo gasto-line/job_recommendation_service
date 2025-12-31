@@ -29,7 +29,7 @@ def health():
     return {"status": "ok"}
 
 @app.post("/ideal_jobs_embeddings")
-def ideal_jobs_embeddings(user_profile: dict = Body(...), background_tasks: BackgroundTasks = None):
+def ideal_jobs_embeddings(background_tasks: BackgroundTasks,user_profile: dict = Body(...)):
     background_tasks.add_task(
         generate_ideal_job_embeddings,
         user_profile
@@ -95,9 +95,7 @@ def generate_ideal_job_embeddings(user_profile: dict = Body(...)):
             except Exception as e:
                 print(f"Failed to terminate instance {instance_id}: {e}")
 
-class AIScoringRequest(BaseModel):
-    user_id: str
-    implementation: Literal["FastText", "LLM"]
+
 
 def run_fasttext_scoring(AI_scored_df, user_profile):
     instance_id = None  # so we can always clean up
@@ -162,7 +160,11 @@ def run_AI_scoring_workflow(user_id: str, implementation: str):
         raw_df = raw_df.drop_duplicates(subset='job_hash')
 
         # Add a filter on jobs that are already in the reference database
-        exclude_set=set(extract_jobs_hash(user_id, implementation).job_hash)
+        extract=extract_jobs_hash(user_id, implementation) 
+        if extract:
+            exclude_set=set(extract_jobs_hash(user_id, implementation).job_hash)
+        else:
+            exclude_set=set()
         # mask rows whose 'job_hash' is NOT in that set
         filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
@@ -192,6 +194,10 @@ def run_AI_scoring_workflow(user_id: str, implementation: str):
     except Exception:
         traceback.print_exc()
         return  
+
+class AIScoringRequest(BaseModel):
+    user_id: str
+    implementation: Literal["FastText", "LLM"]
 
 @app.post("/ai_scoring")
 def ai_scoring(payload: AIScoringRequest, background_tasks: BackgroundTasks):

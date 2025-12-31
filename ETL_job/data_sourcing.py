@@ -109,3 +109,4 @@ def get_raw_df(profile, number_of_jobs_per_page=50, pages=2):
         raw_df=load_adzuna(number_of_jobs_per_page, page, keywords)
         raw_dfs.append(raw_df)
     return pd.concat(raw_dfs).reset_index(drop=True)
+
