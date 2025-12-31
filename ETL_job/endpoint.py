@@ -39,7 +39,6 @@ def ideal_jobs_embeddings(user_profile: dict = Body(...), background_tasks: Back
 def generate_ideal_job_embeddings(user_profile: dict = Body(...)):
 
     instance_id = None  # so we can always clean up
-
     try:
         print("[1/4] Generating ideal job texts")
         ideal_jobs = generate_ideal_jobs(user_profile)
@@ -81,20 +80,11 @@ def generate_ideal_job_embeddings(user_profile: dict = Body(...)):
 
     except KeyError as e:
         # Input structure error
-        raise HTTPException(
-            status_code=400,
-            detail=f"Missing required field in user_profile: {e}"
-        )
+        print(f"Input structure error: {e}")
 
-    except Exception as e:
-        # Unexpected failure
-        print("Unhandled error during embedding workflow:")
+    except Exception:
         traceback.print_exc()
-
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
+        return
 
     finally:
         if instance_id:
@@ -110,6 +100,7 @@ class AIScoringRequest(BaseModel):
     implementation: Literal["FastText", "LLM"]
 
 def run_fasttext_scoring(AI_scored_df, user_profile):
+    instance_id = None  # so we can always clean up
     try:   
         print("[1/3] Launching inference VM")
         public_ip, instance_id = launch_inference_instance(
@@ -125,9 +116,9 @@ def run_fasttext_scoring(AI_scored_df, user_profile):
                                                             ,batch_size=50
                                                             ,user_profile=user_profile)
         AI_scored_df["fasttext_version"]= "1.0.0"
-    except Exception as e:
-        print(e)
+    except Exception:
         traceback.print_exc()
+        return
     finally:
         print("[3/3] Terminate inference VM")
         if instance_id:
@@ -147,11 +138,9 @@ def run_llm_scoring(AI_scored_df, user_profile):
     try:
         print("Computing GPT match score")
         AI_scored_df = compute_gpt_match_score(AI_scored_df,user_profile)
-    except Exception as e:
-        print(e)
+    except Exception:
         traceback.print_exc()
-            status_code=500,
-            detail=str(e))
+        return
     return AI_scored_df
 
 
@@ -178,10 +167,9 @@ def run_AI_scoring_workflow(user_id: str, implementation: str):
         filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 
         AI_scored_df = filtered_df.copy()
-    except Exception as e:
-        # Unexpected failure
-        print(e)
+    except Exception:
         traceback.print_exc()
+        return
     
     SCORERS = {
     "FastText": run_fasttext_scoring,
@@ -201,16 +189,14 @@ def run_AI_scoring_workflow(user_id: str, implementation: str):
         return {"status": "success"}
     except KeyError as e:
         print(f"Input structure error: {e}")
-    except Exception as e:
-        # Unexpected failure
-        print(e)
+    except Exception:
         traceback.print_exc()
+        return  
 
 @app.post("/ai_scoring")
 def ai_scoring(payload: AIScoringRequest, background_tasks: BackgroundTasks):
     user_id = payload.user_id
     implementation = payload.implementation
-    background_tasks = payload.background_tasks
 
     background_tasks.add_task(
         run_AI_scoring_workflow,
