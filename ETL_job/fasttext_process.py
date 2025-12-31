@@ -74,11 +74,10 @@ from numpy import dot
 from numpy.linalg import norm
 
 # Returns field scores in the initial job list order regardless of language
-def get_field_wise_scoring(jobs_field_grouped_embeddings,field: str):
+def get_field_wise_scoring(jobs_field_grouped_embeddings,field: str, user_profile):
 
     # Retrieve the ideal job embedding for this field
-    with open("data/ideal_jobs_embedding_dict.json") as f:
-        ideal_jobs_field_grouped_embedding = json.load(f)[field]
+    ideal_jobs_field_grouped_embedding=user_profile["fasttext_ref_embed"][field]
 
     # Here we produce a similarity comparison between the the ideal jobs field and the respective job field
     # Since the french and english model have a different vector space 
@@ -103,7 +102,7 @@ def get_field_wise_scoring(jobs_field_grouped_embeddings,field: str):
     return(output)
         
 
-def get_fasttext_score(input_df,input_type, batch_size,public_ip):
+def get_fasttext_score(input_df,input_type, batch_size,public_ip, user_profile):
     selected_fields = input_df.columns.tolist()
     fasttext_score = []
     if len(input_df) > batch_size:
@@ -118,7 +117,7 @@ def get_fasttext_score(input_df,input_type, batch_size,public_ip):
             jobs_field_grouped_embeddings=get_field_embeddings(public_ip=public_ip
                                                                ,input=batch[field].tolist()
                                                                ,input_type=input_type)
-            jobs_field_scores = get_field_wise_scoring(jobs_field_grouped_embeddings,field)
+            jobs_field_scores = get_field_wise_scoring(jobs_field_grouped_embeddings,field,user_profile)
             field_score.append(jobs_field_scores)
 
         jobs_general_scores=np.mean(field_score,axis=0)

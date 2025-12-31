@@ -452,6 +452,10 @@ def main():
             job_ranking_page()
 
         st.sidebar.markdown("---")
+        st.session_state["implementation"] = st.multiselect(
+            "Select implementation for job recommendations",
+            implementations=["FastText", "LLM"]
+        )
         if st.sidebar.button("Refresh selection"):
             #API call to the VM
             pass
@@ -474,14 +478,14 @@ def main():
 # JOB RANKING
 # ---------------------------------------------------------
 def job_ranking_page():
-    implementation = st.radio("Choose implementation", ["FastText", "LLM"])
+    """implementation = st.radio("Choose implementation", ["FastText", "LLM"])"""
     st.title("Job Recommendations")
     jobs_df = pd.DataFrame()
 
-    if implementation == "FastText":
+    if st.session_state.implementation == "FastText":
         jobs_list= supabase.rpc("get_fasttext_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
         jobs_df = pd.DataFrame(jobs_list.data)
-    elif implementation == "LLM":
+    elif st.session_state.implementation == "LLM":
         jobs_list= supabase.rpc("get_llm_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
         jobs_df = pd.DataFrame(jobs_list.data)
     else:

@@ -28,10 +28,19 @@ def profile_extraction(user_id):
         return None
     
 
-def extract_jobs_hash(user_id):
+def extract_jobs_hash(user_id, implementation: str) -> pd.DataFrame:
     try:
-        response = supabase.table("ai_review").select("job_hash").eq("user_id", user_id).execute()
+        if implementation == "FastText":
+            response = supabase.table("ai_review").select("job_hash").eq("user_id", user_id).not_.is_("fasttext_score", "null").execute()
+        elif implementation == "LLM":
+            response = supabase.table("ai_review").select("job_hash").eq("user_id", user_id).not_.is_("llm_score", "null").execute()
+        else:
+            raise ValueError(f"Invalid implementation: {implementation}. Must be 'FastText' or 'LLM'.")
         result = pd.DataFrame(response.data) if response.data else None
+
+        if implementation == "FastText":
+            # Drop 
+            pass
         return result
     except Exception as e:
         print(f"Error extracting job hashes: {e}")
