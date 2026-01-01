@@ -453,9 +453,9 @@ def main():
             job_ranking_page()
 
         st.sidebar.markdown("---")
-        implementation = st.multiselect(
+        implementation = st.selectbox(
             "Select implementation for job recommendations",
-            implementations=["FastText", "LLM"]
+            ("FastText", "LLM")
         )
         st.session_state["implementation"] = implementation
         if st.sidebar.button("Refresh selection"):
