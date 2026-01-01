@@ -453,14 +453,13 @@ def main():
             job_ranking_page()
 
         st.sidebar.markdown("---")
-        implementation = st.selectbox(
+        st.session_state["implementation"] = st.sidebar.selectbox(
             "Select implementation for job recommendations",
             ("FastText", "LLM")
         )
-        st.session_state["implementation"] = implementation
         if st.sidebar.button("Refresh selection"):
             #API call to the VM
-            payload = { "user_id": st.session_state.user.id, "implementation": implementation}
+            payload = { "user_id": st.session_state.user.id, "implementation": st.session_state.implementation}
             call_api(api_host="api.silkworm.cloud", input=payload, input_type="ai_scoring", method="POST")
 
         st.sidebar.markdown("---")
