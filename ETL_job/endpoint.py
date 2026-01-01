@@ -155,8 +155,8 @@ def run_AI_scoring_workflow(user_id: str, implementation: str):
             raise ValueError(f"Missing columns in raw_df: {missing}")
         
         # Add a new column job_hash that uniquely identify jobs
-        raw_df["posted_date"] = pd.to_datetime(raw_df["posted_date"])
-        raw_df["job_hash"] = raw_df.apply(lambda row: generate_job_hash(row["title"], row["company"], row["posted_date"]), axis=1)
+        raw_df["posted_date_util"] = pd.to_datetime(raw_df["posted_date"])
+        raw_df["job_hash"] = raw_df.apply(lambda row: generate_job_hash(row["title"], row["company"], row["posted_date_util"]), axis=1)
         raw_df = raw_df.drop_duplicates(subset='job_hash')
 
         # Add a filter on jobs that are already in the reference database

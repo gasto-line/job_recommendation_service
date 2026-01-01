@@ -57,8 +57,8 @@ raw_df=pd.concat([raw_df_1,raw_df_2]).reset_index()"""
 # CLEANING AND FILTERING
 from utils import generate_job_hash
 # Add a new column job_hash that uniquely identify jobs
-raw_df["posted_date"] = pd.to_datetime(raw_df["posted_date"])
-raw_df["job_hash"] = raw_df.apply(lambda row: generate_job_hash(row["title"], row["company"], row["posted_date"]), axis=1)
+raw_df["posted_date_util"] = pd.to_datetime(raw_df["posted_date"])
+raw_df["job_hash"] = raw_df.apply(lambda row: generate_job_hash(row["title"], row["company"], row["posted_date_util"]), axis=1)
 raw_df = raw_df.drop_duplicates(subset='job_hash')
 
 #%%
