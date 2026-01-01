@@ -75,5 +75,7 @@ def load_adzuna( number_of_jobs: int, page: int):
         "raw_payload"
     ]
     df = df[columns]
+
+    df.rename(columns={"redirect_url":"url"},inplace=True)
     
     return(df)

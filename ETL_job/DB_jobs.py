@@ -57,7 +57,7 @@ def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
                                  "posted_date",
                                  "retrieved_date",
                                  "raw_payload",
-                                 "redirect_url"]
+                                 "url"]
     selected_job_info_columns= jobs_df.columns.intersection(selected_job_info_columns).tolist()
     job_info_df=jobs_df[selected_job_info_columns]
 
