@@ -77,7 +77,7 @@ def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
     # Insert into Supabase
     try:
         response1 = supabase.table("job_info").upsert(job_info_records).execute()
-        response2 = supabase.table("ai_review").insert(ai_review_records).execute()
+        response2 = supabase.table("ai_review").upsert(ai_review_records).execute()
         return [True,[response1,response2]]
     except Exception as e:
         return [False,e]

@@ -457,12 +457,10 @@ def main():
             implementations=["FastText", "LLM"]
         )
         st.session_state["implementation"] = implementation
-        payload = { "user_id": st.session_state.user.id, "implementation": implementation}
-        call_api(api_host="api.silkworm.cloud", input=payload, input_type="ai_scoring", method="POST")
-
         if st.sidebar.button("Refresh selection"):
             #API call to the VM
-            pass
+            payload = { "user_id": st.session_state.user.id, "implementation": implementation}
+            call_api(api_host="api.silkworm.cloud", input=payload, input_type="ai_scoring", method="POST")
 
         st.sidebar.markdown("---")
         if st.sidebar.button("Logout"):
