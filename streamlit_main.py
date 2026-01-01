@@ -444,6 +444,7 @@ def main():
 
     if st.session_state["user"]:
         page = st.sidebar.radio("Navigation", ["Profile", "Job Selection"])
+        st.session_state["implementation"] = None
 
         if page == "Profile":
             profile_page()
@@ -456,6 +457,7 @@ def main():
             "Select implementation for job recommendations",
             implementations=["FastText", "LLM"]
         )
+        st.session_state["implementation"] = implementation
         if st.sidebar.button("Refresh selection"):
             #API call to the VM
             payload = { "user_id": st.session_state.user.id, "implementation": implementation}
