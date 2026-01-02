@@ -412,7 +412,6 @@ def profile_page():
     if submit:
         if can_submit:
             try:
-                last_update = datetime.now(timezone.utc).isoformat()
                 user_profile={
                     "user_id": st.session_state["user"].id,
                     "job_titles": job_titles,
@@ -421,8 +420,7 @@ def profile_page():
                     "general_skills": skill_df.to_dict("records"),
                     "education": education_code,
                     "sectors": sectors,
-                    "experience": experience_code,
-                    "last_update": last_update
+                    "experience": experience_code 
                     }
                 response=supabase.table("user_profile").upsert(user_profile).execute()
                 st.success("Profile saved successfully!")
