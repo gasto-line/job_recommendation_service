@@ -458,7 +458,7 @@ def main():
             now = datetime.now()
             # Create a condition to submit: cooldown + required fields filled
             can_refresh = {"LLM": True,"fastText":True}
-            if st.session_state.last_submission_time[st.session_state.implementation] is None:
+            if st.session_state.last_refresh_time[st.session_state.implementation] is None:
                 pass
             else:
                 elapsed = now - st.session_state.last_refresh_time[st.session_state.implementation]
@@ -474,7 +474,7 @@ def main():
                 payload = { "user_id": st.session_state.user.id, "implementation": st.session_state.implementation}
                 if call_api(api_host="api.silkworm.cloud", input=None, input_type="health", method="GET") == {"status": "ok"}:
                     st.success("The API is healthy. Proceeding to submit profile for embedding generation. It will take 10-15 minutes for FastText and up to 5 minutes for LLM.")
-                    st.session_state.last_submission_time = datetime.now()
+                    st.session_state.last_refresh_time[st.session_state.implementation] = datetime.now()
                     call_api(api_host="api.silkworm.cloud", input=payload, input_type="ai_scoring", method="POST")
                 else:
                     st.error("The API is currently unreachable. Please try again later.")  
