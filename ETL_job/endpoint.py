@@ -161,10 +161,10 @@ def run_AI_scoring_workflow(user_id: str, implementation: str):
 
         # Add a filter on jobs that are already in the reference database
         extract=extract_jobs_hash(user_id, implementation) 
-        if extract:
-            exclude_set=set(extract_jobs_hash(user_id, implementation).job_hash)
-        else:
+        if extract is None:
             exclude_set=set()
+        else:
+            exclude_set=set(extract_jobs_hash(user_id, implementation).job_hash)
         # mask rows whose 'job_hash' is NOT in that set
         filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
 

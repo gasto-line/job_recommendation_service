@@ -533,6 +533,7 @@ def job_ranking_page():
 
         with st.expander(f"{job_title} at {company}"):
             st.write(f"[{job_url}]({job_url})")
+            st.write(f"**Posted_date**: {row.get('created_at', 'N/A')}")
             st.write(f"**Location**: {row.get('location', 'N/A')}")
             st.write(f"**Description**: {row.get('description', 'No description available.')[:500]}...")
 
