@@ -457,7 +457,7 @@ def main():
             COOLDOWN = timedelta(hours=0, minutes=5)
             now = datetime.now()
             # Create a condition to submit: cooldown + required fields filled
-            can_refresh = {"LLM": True,"fastText":True}
+            can_refresh = {"LLM": True,"FastText":True}
             if st.session_state.last_refresh_time[st.session_state.implementation] is None:
                 pass
             else:
