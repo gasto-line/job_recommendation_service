@@ -453,7 +453,7 @@ def main():
         if st.sidebar.button("Refresh selection"):
             # Do not allow refreshing if it was already done in the past 2 hours
             if "last_refresh_time" not in st.session_state:
-                st.session_state.last_refresh_time = {"LLM": None,"fastText":None}
+                st.session_state.last_refresh_time = {"LLM": None,"FastText":None}
             COOLDOWN = timedelta(hours=0, minutes=5)
             now = datetime.now()
             # Create a condition to submit: cooldown + required fields filled
