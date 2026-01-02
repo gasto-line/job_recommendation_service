@@ -382,7 +382,7 @@ def profile_page():
     # Do not allow profile saving if it was already done in the past 2 hours
     if "last_submission_time" not in st.session_state:
         st.session_state.last_submission_time = None
-    COOLDOWN = timedelta(hours=2)
+    COOLDOWN = timedelta(hours=0, minutes=5)
     now = datetime.now()
 
     # Create a condition to submit: cooldown + required fields filled
@@ -454,7 +454,7 @@ def main():
             # Do not allow refreshing if it was already done in the past 2 hours
             if "last_refresh_time" not in st.session_state:
                 st.session_state.last_refresh_time = {"LLM": None,"fastText":None}
-            COOLDOWN = timedelta(hours=2)
+            COOLDOWN = timedelta(hours=0, minutes=5)
             now = datetime.now()
             # Create a condition to submit: cooldown + required fields filled
             can_refresh = {"LLM": True,"fastText":True}
