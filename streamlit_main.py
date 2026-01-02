@@ -445,13 +445,6 @@ def main():
     if st.session_state["user"]:
         page = st.sidebar.radio("Navigation", ["Profile", "Job Selection"])
         st.session_state["implementation"] = None
-
-        if page == "Profile":
-            profile_page()
-
-        elif page == "Job Selection":
-            job_ranking_page()
-
         st.sidebar.markdown("---")
         st.session_state["implementation"] = st.sidebar.selectbox(
             "Select implementation for job recommendations",
@@ -461,6 +454,11 @@ def main():
             #API call to the VM
             payload = { "user_id": st.session_state.user.id, "implementation": st.session_state.implementation}
             call_api(api_host="api.silkworm.cloud", input=payload, input_type="ai_scoring", method="POST")
+        if page == "Profile":
+            profile_page()
+
+        elif page == "Job Selection":
+            job_ranking_page()
 
         st.sidebar.markdown("---")
         if st.sidebar.button("Logout"):
