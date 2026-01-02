@@ -4,7 +4,7 @@ import random, requests
 from requests.exceptions import RequestException
 import matplotlib.pyplot as plt
 from supabase import create_client, Client
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 # ---------------------------------------------------------
@@ -412,6 +412,7 @@ def profile_page():
     if submit:
         if can_submit:
             try:
+                last_update = datetime.now(timezone.utc).isoformat()
                 user_profile={
                     "user_id": st.session_state["user"].id,
                     "job_titles": job_titles,
@@ -420,7 +421,8 @@ def profile_page():
                     "general_skills": skill_df.to_dict("records"),
                     "education": education_code,
                     "sectors": sectors,
-                    "experience": experience_code
+                    "experience": experience_code,
+                    "last_update": last_update
                     }
                 response=supabase.table("user_profile").upsert(user_profile).execute()
                 st.success("Profile saved successfully!")
@@ -453,7 +455,12 @@ def main():
         if st.sidebar.button("Refresh selection"):
             #API call to the VM
             payload = { "user_id": st.session_state.user.id, "implementation": st.session_state.implementation}
-            call_api(api_host="api.silkworm.cloud", input=payload, input_type="ai_scoring", method="POST")
+            if call_api(api_host="api.silkworm.cloud", input=None, input_type="health", method="GET") == {"status": "ok"}:
+                st.success("The API is healthy. Proceeding to submit profile for embedding generation. It will take 10-15 minutes for FastText and up to 5 minutes for LLM.")
+                st.session_state.last_submission_time = datetime.now()
+                call_api(api_host="api.silkworm.cloud", input=payload, input_type="ai_scoring", method="POST")
+            else:
+                st.error("The API is currently unreachable. Please try again later.")            
         if page == "Profile":
             profile_page()
 
@@ -483,10 +490,10 @@ def job_ranking_page():
     jobs_df = pd.DataFrame()
 
     if st.session_state.implementation == "FastText":
-        jobs_list= supabase.rpc("get_fasttext_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
+        jobs_list= supabase.rpc("get_fasttext_topjob",{"p_user_id": st.session_state["user"].id}).execute()
         jobs_df = pd.DataFrame(jobs_list.data)
     elif st.session_state.implementation == "LLM":
-        jobs_list= supabase.rpc("get_llm_top_jobs",{"p_user_id": st.session_state["user"].id}).execute()
+        jobs_list= supabase.rpc("get_llm_topjobs",{"p_user_id": st.session_state["user"].id}).execute()
         jobs_df = pd.DataFrame(jobs_list.data)
     else:
         st.error("Unknown implementation selected.")
