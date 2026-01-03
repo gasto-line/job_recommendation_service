@@ -147,6 +147,7 @@ def run_AI_scoring_workflow(user_id: str, implementation: str):
         print("1.0 Data sourcing and filtering")
         user_profile = profile_extraction(user_id)
         raw_df = get_raw_df(user_profile, number_of_jobs_per_page=50, pages=2)
+        raw_df.rename(columns= {"redirect_url":"url"}, inplace=True)
 
         # Check that required fields are present
         required_cols = {"title", "company", "posted_date", "description"}
