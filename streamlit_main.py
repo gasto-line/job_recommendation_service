@@ -569,8 +569,13 @@ def job_ranking_page():
         try:
             response=supabase.table("user_review").upsert(insert_records).execute()
             st.success("Profile saved successfully!")
+            # Initialize form once submitted
+            scores = {}
+            justifications = {}
+            applications = {}
         except Exception as e:
             st.error(f"Error saving profile: {e}")
+
 
 main()
 
