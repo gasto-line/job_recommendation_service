@@ -1,7 +1,7 @@
 
 # %%
 from openai import OpenAI
-import os
+import os, json
 import pandas as pd
 from time import sleep
 
@@ -24,7 +24,10 @@ Title: {job_title}
 Company: {company}
 Description: {description_text}
 
-Rate the match as a score between 0 and 10. Add a short justification of less than 200 characters.
+## OUTPUT: 
+Type: dictionnary with keys "score" and "justification"
+score: An integer from 0 to 10 indicating the match quality (10 = perfect match, 0 = no match)
+justification: A brief explanation for the score.
 """
 def build_prompt(row, user_profile):
     techs= [t["name"] for t in user_profile["technical_skills"]]
@@ -63,26 +66,22 @@ def call_openai(prompt, model="gpt-3.5-turbo"):
         print(f"OpenAI error: {e}")
         return None
 
-def extract_score(response_text):
-    try:
-        score=int(list(filter(str.isdigit, response_text))[0])
-        return(score)
-    except:
-        pass
-    return None
-
-
 def compute_gpt_match_score(df, user_profile, model="gpt-3.5-turbo", delay=2):
     scores = []
     for _, row in df.iterrows():
         prompt = build_prompt(row,user_profile)
         response = call_openai(prompt, model=model)
-        ai_score = extract_score(response) if response else None
+        response = json.loads(response)
+        if response:
+            ai_score = response["score"]
+            llm_comment = response["justification"]
+        else:
+            raise ValueError("No response from OpenAI")
         scores.append({
             "job_hash": row["job_hash"],
             "ai_score": ai_score,
             "model_version": model,
-            "llm_comment": response,
+            "llm_comment": llm_comment,
             "llm_version": "1.0.0",
             "model_implementation": "LLM_scoring"
         })

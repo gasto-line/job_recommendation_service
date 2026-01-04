@@ -67,6 +67,13 @@ def generate_ideal_job_embeddings(user_profile: dict = Body(...)):
                     values[1], axis=0
                 ).tolist()  # convert to list for JSON serialization
 
+        # Sanity checks
+        for field in ideal_jobs_embeddings:
+            assert "FR" in ideal_jobs_embeddings[field]
+            assert "EN" in ideal_jobs_embeddings[field]
+            assert ideal_jobs_embeddings[field]["FR"] is not None
+            assert ideal_jobs_embeddings[field]["EN"] is not None
+
         print("[4/4] Inserting embeddings into DB")
         success, error = insert_embeddings(
             ideal_jobs_embeddings,
@@ -98,6 +105,9 @@ def generate_ideal_job_embeddings(user_profile: dict = Body(...)):
 
 
 def run_fasttext_scoring(AI_scored_df, user_profile):
+    # Check that user_profile has the ideal job embeddings reference
+    assert user_profile["fasttext_ref_embed"] is not None
+
     instance_id = None  # so we can always clean up
     try:   
         print("[1/3] Launching inference VM")
@@ -146,6 +156,8 @@ def run_AI_scoring_workflow(user_id: str, implementation: str):
     try:
         print("1.0 Data sourcing and filtering")
         user_profile = profile_extraction(user_id)
+
+        # Extract raw job data
         raw_df = get_raw_df(user_profile, number_of_jobs_per_page=50, pages=2)
         raw_df.rename(columns= {"redirect_url":"url"}, inplace=True)
 

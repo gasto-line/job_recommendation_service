@@ -44,6 +44,8 @@ def extract_jobs_hash(user_id, implementation: str) -> pd.DataFrame:
     
 
 def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
+    if jobs_df is None or jobs_df.empty:
+        return [False, ValueError("jobs_df is None or empty")]
     jobs_df = jobs_df.copy()
     jobs_df.loc[:, "user_id"] = user_id
 
