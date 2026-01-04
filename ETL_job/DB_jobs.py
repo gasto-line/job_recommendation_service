@@ -65,7 +65,7 @@ def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
 
     selected_ai_review_columns = ["job_hash",
                                   "user_id",
-                                  "ai_score",
+                                  "llm_score",
                                   "fasttext_score",
                                   "llm_comment",
                                   "llm_version",

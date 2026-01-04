@@ -73,13 +73,13 @@ def compute_gpt_match_score(df, user_profile, model="gpt-3.5-turbo", delay=2):
         response = call_openai(prompt, model=model)
         response = json.loads(response)
         if response:
-            ai_score = response["score"]
+            llm_score = response["score"]
             llm_comment = response["justification"]
         else:
             raise ValueError("No response from OpenAI")
         scores.append({
             "job_hash": row["job_hash"],
-            "ai_score": ai_score,
+            "llm_score": llm_score,
             "model_version": model,
             "llm_comment": llm_comment,
             "llm_version": "1.0.0",
