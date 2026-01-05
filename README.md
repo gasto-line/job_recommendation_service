@@ -35,46 +35,7 @@ Conventional job-alert platforms rely on static search filters and sparse metada
 - **Email Notifications** – Daily email alerts when new recommendations are ready.
 
 ## System Architecture
-```text
-                         +----------------+
-                         | User Profile    |
-                         | (static info)   |
-                         +----------------+
-                                 │
-                         +----------------+
-                         | GitHub Actions  |
-                         | (Daily 6 AM)    |
-                         +----------------+
-                                 │
-                    Fetch 50 new job posts via Adzuna API
-                                 │
-                    +------------------+
-                    | Raw Job Listings  |
-                    | (title, desc, URL)|
-                    +------------------+
-                                 │
-                    Generate job hashes & deduplicate
-                                 │
-                    Filter out existing jobs (PostgreSQL)
-                                 │
-                    GPT Matching Engine (0-10 scores)
-                                 │
-                    +-------------------------------+
-                    | Top N Jobs with AI Scores     |
-                    +-------------------------------+
-                                 │
-                    Save to GitHub Release (top_jobs.pkl)
-                                 │
-                    Send Email Notification
-                                 │
-                    +-------------------+
-                    | Streamlit App:     |
-                    | - Load from GitHub |
-                    | - User scores jobs |
-                    | - Optional comment |
-                    +-------------------+
-                                 │
-                    Store feedback in PostgreSQL (Supabase)
+
 ```
 
 ## Getting Started
