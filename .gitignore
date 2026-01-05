@@ -6,5 +6,5 @@ ai_notes/*
 useful_commands
 *.deb
 *.pem
-test*
+*test*
 *.pkl
