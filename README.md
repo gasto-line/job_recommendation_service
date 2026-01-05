@@ -36,7 +36,7 @@ Conventional job-alert platforms rely on static search filters and sparse metada
 
 ## System Architecture
 
-
+![Project schema](https://github.com/user-attachments/assets/7d48bdd8-2cc9-432c-89db-251046de7977)
 
 ## Getting Started
 
