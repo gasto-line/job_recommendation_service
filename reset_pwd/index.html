@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reset Password</title>
+
+  <!-- Supabase client -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f7fa;
+      font-family: system-ui, sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h2>Reset your password</h2>
+    <input id="password" type="password" placeholder="New password" />
+    <button onclick="resetPassword()">Reset password</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    console.log("Script loaded");
+
+    const SUPABASE_URL = "https://irutkdcynqycaveefmpe.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydXRrZGN5bnF5Y2F2ZWVmbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MzAzNzMsImV4cCI6MjA2NjUwNjM3M30.e4Bj1lGG-jO7F6A_7FLu1UaAenXrFUHzu_zSUZzZlG0";
+
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    async function resetPassword() {
+      console.log("Reset button clicked");
+
+      const password = document.getElementById("password").value;
+      const status = document.getElementById("status");
+
+      const { error } = await supabaseClient.auth.updateUser({
+        password: password
+      });
+
+      if (error) {
+        console.error(error);
+        status.textContent = error.message;
+      } else {
+        status.textContent = "Password updated successfully!";
+      }
+    }
+  </script>
+</body>
+</html>
