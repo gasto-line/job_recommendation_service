@@ -63,8 +63,8 @@ Deliver high-quality, personalized job recommendations while showcasing a produc
 ---
 
 ## System Architecture
+![Project schema](https://github.com/user-attachments/assets/dbc2e545-f1e1-49db-b734-5e0151edbd47)
 
-![System Architecture Diagram](https://github.com/user-attachments/assets/f3ac9a9e-b865-48f2-bbe4-43e36caf34f2)
 
 **Main components:**
 - Streamlit frontend
