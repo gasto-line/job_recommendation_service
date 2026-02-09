@@ -1,8 +1,9 @@
 #!/bin/bash
+set -e
 
 # --- Update and install packages ---
 dnf update -y
-dnf install -y python3 python3-devel python3-pip awscli git 
+dnf install -y python3 python3-devel python3-pip awscli git docker
 
 # Fetch environment variables from SSM Parameter Store
 SUPABASE_URL=$(aws ssm get-parameter \
@@ -41,62 +42,38 @@ EOF
 
 chmod 600 /etc/job_reco.env
 
-# Clone repository and set up the application
-sudo -i -u ec2-user bash << END
+# Update DNS
+HOSTED_ZONE_ID="Z0473277P8MLN06IBV8F"
+RECORD_NAME="api.silkworm.cloud"
 
-cd /home/ec2-user
-echo "Cloning inference server..."
-git clone -b dev --single-branch https://github.com/gasto-line/job_recommendation_service.git job_recommendation_service
-cd job_recommendation_service/ETL_job
-python3 -m venv venv
-source venv/bin/activate
+TOKEN=$(curl -sX PUT "http://169.254.169.254/latest/api/token" \
+  -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 
-echo "Installing dependencies..."
-pip install -r requirements.txt
-END
+PUBLIC_IP=$(curl -s \
+  -H "X-aws-ec2-metadata-token: $TOKEN" \
+  http://169.254.169.254/latest/meta-data/public-ipv4)
 
-# Make scripts executable
-chmod +x /home/ec2-user/job_recommendation_service/inference_VM/VM_config.sh
-chmod +x /home/ec2-user/job_recommendation_service/workflow_VM/update-DNS.sh
-
-# Create systemd services
-cat << 'EOF' > /etc/systemd/system/update-DNS.service
-[Unit]
-Description=Update Route53 DNS
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/home/ec2-user/job_recommendation_service/workflow_VM/update-DNS.sh
-[Install]
-WantedBy=multi-user.target
+cat << EOF > /tmp/route53.json
+{
+  "Changes": [{
+    "Action": "UPSERT",
+    "ResourceRecordSet": {
+      "Name": "$RECORD_NAME",
+      "Type": "A",
+      "TTL": 60,
+      "ResourceRecords": [{ "Value": "$PUBLIC_IP" }]
+    }
+  }]
+}
 EOF
 
+aws route53 change-resource-record-sets \
+  --hosted-zone-id "$HOSTED_ZONE_ID" \
+  --change-batch file:///tmp/route53.json
 
-# Create systemd service
-cat << 'EOF' > /etc/systemd/system/boot-api.service
-[Unit]
-Description=Boot Workflow API Service
-After=network-online.target update-dns.service
-Wants=network-online.target update-dns.service
-
-[Service]
-User=ec2-user
-WorkingDirectory=/home/ec2-user/job_recommendation_service/ETL_job
-EnvironmentFile=/etc/job_reco.env
-ExecStart=/home/ec2-user/job_recommendation_service/ETL_job/venv/bin/uvicorn endpoint:app --host 0.0.0.0 --port 8080
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-
-
-systemctl daemon-reload
-
-systemctl start update-DNS
-systemctl enable update-DNS
-systemctl start boot-api
-systemctl enable boot-api
+# Activate docker
+systemctl start docker
+systemctl enable docker
+# Pull the image from docker hub and run the container
+docker pull gastoline/job_api:latest
+docker run -d -p 8080:8080 --name job_api --env-file /etc/job_reco.env gastoline/job_api:latest

@@ -1,14 +1,14 @@
 
 # %%
+from config import settings
 from openai import OpenAI
 import os, json
 import pandas as pd
 from time import sleep
 
-# Load client with API key (assumes set in environment)
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-
+# Load client with API key (configured through pydantic settings)
+client = OpenAI(api_key=settings.OPENAI_API_KEY)
+#%%
 PROMPT_TEMPLATE = """
 You are a job-matching assistant. Based on the user's profile below, evaluate how well this job matches their expectations.
 
@@ -66,29 +66,4 @@ def call_openai(prompt, model="gpt-3.5-turbo"):
         print(f"OpenAI error: {e}")
         return None
 
-def compute_gpt_match_score(df, user_profile, model="gpt-3.5-turbo", delay=2):
-    scores = []
-    for _, row in df.iterrows():
-        prompt = build_prompt(row,user_profile)
-        response = call_openai(prompt, model=model)
-        response = json.loads(response)
-        if response:
-            llm_score = response["score"]
-            llm_comment = response["justification"]
-        else:
-            raise ValueError("No response from OpenAI")
-        scores.append({
-            "job_hash": row["job_hash"],
-            "llm_score": llm_score,
-            "model_version": model,
-            "llm_comment": llm_comment,
-            "llm_version": "1.0.0",
-            "model_implementation": "LLM_scoring"
-        })
-        sleep(delay)  # Respect rate limits
 
-    scores_df = pd.DataFrame(scores)
-    return df.merge(scores_df, on="job_hash")
-
-
-# %%

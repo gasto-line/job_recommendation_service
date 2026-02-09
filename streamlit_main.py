@@ -46,8 +46,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-def call_api(api_host, input, input_type: str, method):
-    api_url = f"http://{api_host}:8080/{input_type}"
+def call_api(api_host, input, task: str, method):
+    api_url = f"http://{api_host}:8080/{task}"
     try:
         if method == "GET":
             response = requests.get(api_url, json=input)
@@ -425,10 +425,10 @@ def profile_page():
                 response=supabase.table("user_profile").upsert(user_profile).execute()
                 st.success("Profile saved successfully!")
 
-                if call_api(api_host="api.silkworm.cloud", input=None, input_type="health", method="GET") == {"status": "ok"}:
+                if call_api(api_host="api.silkworm.cloud", input=None, task="health", method="GET") == {"status": "ok"}:
                     st.success("The API is healthy. Proceeding to submit profile for embedding generation. It will take 10-15 minutes")
                     st.session_state.last_submission_time = datetime.now()
-                    call_api(api_host="api.silkworm.cloud", input=user_profile, input_type="ideal_jobs_embeddings", method="POST")
+                    call_api(api_host="api.silkworm.cloud", input=user_profile, task="ideal_jobs_embeddings", method="POST")
                 else:
                     st.error("The API is currently unreachable. Please try again later.")
                 
@@ -472,10 +472,10 @@ def main():
             if can_refresh[st.session_state.implementation]:
                 #API call to the VM
                 payload = { "user_id": st.session_state.user.id, "implementation": st.session_state.implementation}
-                if call_api(api_host="api.silkworm.cloud", input=None, input_type="health", method="GET") == {"status": "ok"}:
+                if call_api(api_host="api.silkworm.cloud", input=None, task="health", method="GET") == {"status": "ok"}:
                     st.success("The API is healthy. Proceeding to submit profile for embedding generation. It will take 10-15 minutes for FastText and up to 5 minutes for LLM.")
                     st.session_state.last_refresh_time[st.session_state.implementation] = datetime.now()
-                    call_api(api_host="api.silkworm.cloud", input=payload, input_type="ai_scoring", method="POST")
+                    call_api(api_host="api.silkworm.cloud", input=payload, task="ai_scoring", method="POST")
                 else:
                     st.error("The API is currently unreachable. Please try again later.")  
             else: 

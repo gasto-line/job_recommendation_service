@@ -25,5 +25,4 @@ PUBLIC_IP=$(aws ec2 describe-instances \
   --query 'Reservations[0].Instances[0].PublicIpAddress' \
   --output text)
 
-echo "$PUBLIC_IP"
-echo "$INSTANCE_ID"
+echo "$PUBLIC_IP $INSTANCE_ID"

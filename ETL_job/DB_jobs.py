@@ -1,8 +1,5 @@
 #%%
 import pandas as pd
-from sqlalchemy import create_engine, text
-from sqlalchemy import Date, Boolean
-from sqlalchemy.dialects.postgresql import JSON
 from supabase import create_client
 import os
 from dotenv import load_dotenv
@@ -85,10 +82,7 @@ def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
         return [False,e]
     
 
-def insert_embeddings(ideal_embeddings: dict, user_id) -> list[bool, Exception]:
-    record = {"user_id": user_id, "fasttext_ref_embed": ideal_embeddings}
-    try:
-        response = supabase.table("user_profile").upsert(record).execute()
-        return [True,response]
-    except Exception as e:
-        return [False,e]
+def insert_embedding(ideal_embedding: dict, user_id):
+    record = {"user_id": user_id, "miniLM_embed": ideal_embedding}
+    response = supabase.table("user_profile").upsert(record).execute()
+    return(response)
