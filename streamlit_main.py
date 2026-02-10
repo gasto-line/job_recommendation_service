@@ -48,18 +48,15 @@ st.markdown(
 
 def call_api(api_host, input, task: str, method):
     api_url = f"http://{api_host}:8080/{task}"
-    try:
-        if method == "GET":
-            response = requests.get(api_url, json=input)
-        elif method == "POST":
-            response = requests.post(api_url, json=input)
-        else:
-            raise ValueError("Unsupported HTTP method")
-        response.raise_for_status()  # Raise an error for bad status codes
-        print("API call successful")
-        return response.json()
-    except RequestException as e:
-        raise RuntimeError(f"API call failed: {e}")
+    if method == "GET":
+        response = requests.get(api_url, json=input)
+    elif method == "POST":
+        response = requests.post(api_url, json=input)
+    else:
+        raise ValueError("Unsupported HTTP method")
+    response.raise_for_status()  # Raise an error for bad status codes
+    print("API call successful")
+    return response.json()
 
 # ---------------------------------------------------------
 # Helper: store session in Streamlit
@@ -92,7 +89,7 @@ def signup_page():
             })
             st.success("Account created! Please log in.")
         except Exception as e:
-            st.error(f"Signup error: {e}")
+            st.exception(e)
 
 # ---------------------------------------------------------
 # Login page
@@ -116,18 +113,21 @@ def login_page():
             st.rerun()
 
         except Exception as e:
-            st.error(f"Invalid credentials or error: {e}")
+            st.exception(e)
 
     # Password reset
     if st.button("Forgot your password?"):
         if not email:
             st.error("Please enter your email first.")
         else:
-            supabase.auth.reset_password_for_email(
-                email,
-                options={"redirect_to": "https://gasto-line.github.io/job_recommendation_service/reset_pwd/"}
-            )
-            st.success("Password reset link sent! Check your email.")
+            try:
+                supabase.auth.reset_password_for_email(
+                    email,
+                    options={"redirect_to": "https://gasto-line.github.io/job_recommendation_service/reset_pwd/"}
+                )
+                st.success("Password reset link sent! Check your email.")
+            except Exception as e:
+                st.exception(e)
 
 # ---------------------------------------------------------
 # PROFILE PAGE
@@ -387,16 +387,7 @@ def profile_page():
 
     # Create a condition to submit: cooldown + required fields filled
     can_submit = True
-    if st.session_state.last_submission_time is None:
-        pass
-    else:
-        elapsed = now - st.session_state.last_submission_time
-        if elapsed < COOLDOWN:
-            remaining = COOLDOWN - elapsed
-            can_submit = False
-            st.info(f"You can submit again in {remaining.seconds // 60} minutes.")
-        else:
-            pass
+
     if tech_total != 100 or skill_total != 100:
         st.error("Please correct the skill weights — totals must be 100%.")
         can_submit = False
@@ -407,12 +398,10 @@ def profile_page():
         pass
 
     submit = st.button("Save profile")
-    st.caption("👉 You can update your profile every 2 hours...")
 
     if submit:
         if can_submit:
-            try:
-                user_profile={
+            user_profile={
                     "user_id": st.session_state["user"].id,
                     "job_titles": job_titles,
                     "ideal_job": ideal_job,
@@ -422,18 +411,14 @@ def profile_page():
                     "sectors": sectors,
                     "experience": experience_code 
                     }
-                response=supabase.table("user_profile").upsert(user_profile).execute()
-                st.success("Profile saved successfully!")
+            response=supabase.table("user_profile").upsert(user_profile).execute()
+            if response.error:
+                raise RuntimeError(f"Supabase upsert failed: {response.error}")
+            st.success("Profile saved successfully!")
 
-                if call_api(api_host="api.silkworm.cloud", input=None, task="health", method="GET") == {"status": "ok"}:
-                    st.success("The API is healthy. Proceeding to submit profile for embedding generation. It will take 10-15 minutes")
-                    st.session_state.last_submission_time = datetime.now()
-                    call_api(api_host="api.silkworm.cloud", input=user_profile, task="ideal_jobs_embeddings", method="POST")
-                else:
-                    st.error("The API is currently unreachable. Please try again later.")
+            st.success("Proceeding to submit profile for embedding generation.")
+            call_api(api_host="api.silkworm.cloud", input=user_profile, task="ideal_jobs_embeddings", method="POST")
                 
-            except Exception as e:
-                st.error(f"Error saving profile: {e}")
         else: 
             st.error("Not allowed to submit: either some fields are missing or you are in cooldown period.")
 
@@ -448,38 +433,16 @@ def main():
         st.sidebar.markdown("---")
         st.session_state["implementation"] = st.sidebar.selectbox(
             "Select implementation for job recommendations",
-            ("FastText", "LLM")
+            ("miniLM")
         )
         if st.sidebar.button("Refresh selection"):
-            # Do not allow refreshing if it was already done in the past 2 hours
-            if "last_refresh_time" not in st.session_state:
-                st.session_state.last_refresh_time = {"LLM": None,"FastText":None}
-            COOLDOWN = timedelta(hours=0, minutes=5)
-            now = datetime.now()
-            # Create a condition to submit: cooldown + required fields filled
-            can_refresh = {"LLM": True,"FastText":True}
-            if st.session_state.last_refresh_time[st.session_state.implementation] is None:
-                pass
-            else:
-                elapsed = now - st.session_state.last_refresh_time[st.session_state.implementation]
-                if elapsed < COOLDOWN:
-                    remaining = COOLDOWN - elapsed
-                    can_refresh[st.session_state.implementation] = False
-                    st.info(f"You can refresh again {st.session_state.implementation} in {remaining.seconds // 60} minutes.")
-                else:
-                    pass
 
-            if can_refresh[st.session_state.implementation]:
-                #API call to the VM
-                payload = { "user_id": st.session_state.user.id, "implementation": st.session_state.implementation}
-                if call_api(api_host="api.silkworm.cloud", input=None, task="health", method="GET") == {"status": "ok"}:
-                    st.success("The API is healthy. Proceeding to submit profile for embedding generation. It will take 10-15 minutes for FastText and up to 5 minutes for LLM.")
-                    st.session_state.last_refresh_time[st.session_state.implementation] = datetime.now()
-                    call_api(api_host="api.silkworm.cloud", input=payload, task="ai_scoring", method="POST")
-                else:
-                    st.error("The API is currently unreachable. Please try again later.")  
-            else: 
-                st.error("Please wait your cooldown period.")
+            #API call to the VM
+            payload = { "user_id": st.session_state.user.id, "implementation": st.session_state.implementation}
+            call_api(api_host="api.silkworm.cloud", input=payload, task="ai_scoring", method="POST")
+
+        else: 
+            st.error("Please wait your cooldown period.")
 
         if page == "Profile":
             profile_page()
@@ -505,7 +468,7 @@ def main():
 # JOB RANKING
 # ---------------------------------------------------------
 def job_ranking_page():
-    """implementation = st.radio("Choose implementation", ["FastText", "LLM"])"""
+    """implementation = st.radio("Choose implementation", ["miniLM"])"""
     st.title("Job Recommendations")
     jobs_df = pd.DataFrame()
 
