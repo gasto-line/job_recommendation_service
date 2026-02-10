@@ -145,7 +145,7 @@ def profile_page():
         st.subheader("Job Titles You're Considering")
         if "job_titles" not in st.session_state:
             st.session_state.job_titles = ["Title 1", "Title 2"]
-        for i, title in enumerate(st.session_state.job_titles):
+        for i, title in enumerate(st.session_state.job_titles.copy()):
             cols = st.columns([0.8, 0.2])
             st.session_state.job_titles[i] = cols[0].text_input(
                 f"Job Title {i+1}", title, key=f"jt_{i}", label_visibility="collapsed"
@@ -158,10 +158,11 @@ def profile_page():
             st.session_state.job_titles.append("")
             st.rerun()
 
-        if "Title 1" or "Title 2" in st.session_state.job_titles:
+        job_titles = st.session_state.job_titles
+        if any(title in ("Title 1", "Title 2") for title in st.session_state.job_titles):
             st.error("Please replace placeholder job titles with your actual target job titles.")
             job_titles= None
-        job_titles = st.session_state.job_titles
+        
 
         # Ideal job description
         st.subheader("Describe Your Ideal Job")
