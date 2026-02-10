@@ -379,11 +379,6 @@ def profile_page():
         else:
             experience_code = experience_map[experience]
 
-    # Do not allow profile saving if it was already done in the past 2 hours
-    if "last_submission_time" not in st.session_state:
-        st.session_state.last_submission_time = None
-    COOLDOWN = timedelta(hours=0, minutes=5)
-    now = datetime.now()
 
     # Create a condition to submit: cooldown + required fields filled
     can_submit = True
@@ -420,7 +415,7 @@ def profile_page():
             call_api(api_host="api.silkworm.cloud", input=user_profile, task="ideal_jobs_embeddings", method="POST")
                 
         else: 
-            st.error("Not allowed to submit: either some fields are missing or you are in cooldown period.")
+            st.error("Please complete your profile with valid inputs before submitting.")
 
 # ---------------------------------------------------------
 # MAIN NAVIGATION
@@ -436,13 +431,9 @@ def main():
             ("miniLM")
         )
         if st.sidebar.button("Refresh selection"):
-
-            #API call to the VM
+            # Call the workflow API to refresh the job selection based on the latest profile and reviews
             payload = { "user_id": st.session_state.user.id, "implementation": st.session_state.implementation}
             call_api(api_host="api.silkworm.cloud", input=payload, task="ai_scoring", method="POST")
-
-        else: 
-            st.error("Please wait your cooldown period.")
 
         if page == "Profile":
             profile_page()
