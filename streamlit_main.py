@@ -465,7 +465,7 @@ def job_ranking_page():
     top_N= 10
 
     if st.session_state.implementation == "miniLM":
-        jobs_list= supabase.rpc("get_minilm_top_jobs",{"p_user_id": st.session_state["user"].id,"top_N": top_N}).execute()
+        jobs_list= supabase.rpc("get_minilm_top_jobs",{"p_user_id": st.session_state["user"].id,"top_n": top_N}).execute()
         jobs_df = pd.DataFrame(jobs_list.data)
     else:
         st.error("Unknown implementation selected.")
