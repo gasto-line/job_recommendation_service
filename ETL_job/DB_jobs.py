@@ -2,47 +2,31 @@
 import pandas as pd
 from supabase import create_client
 import os
-from dotenv import load_dotenv
-load_dotenv()
+from config import settings
 
 #%%
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+SUPABASE_URL = settings.SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY = settings.SUPABASE_SERVICE_ROLE_KEY
 
 #%%
-try: 
-    supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
-except Exception as e:
-    print(f"Error creating Supabase client: {e}")   
+supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
-def profile_extraction(user_id):
-    try:
-        response = supabase.table("user_profile").select("*").eq("user_id", user_id).execute()
-        result = response.data[0] if response.data else None
-        return result
-    except Exception as e:
-        print(f"Error extracting user profile: {e}")
-        return None
+def profile_extraction(user_id) -> dict:
+    response = supabase.table("user_profile").select("*").eq("user_id", user_id).execute()
+    extract = response.data[0]
+    return extract
+    
+def extract_jobs_hash(user_id) -> pd.DataFrame:
+    response = supabase.table("ai_review").select("job_hash").eq("user_id", user_id).not_.is_("minilm_score", "null").execute()
+    extract=pd.DataFrame(response.data)
+    # We create the job_has column if empty to avoid attribute error
+    if extract.empty:
+        extract=pd.DataFrame(columns=["job_hash"])
+    return (extract.job_hash)
     
 
-def extract_jobs_hash(user_id, implementation: str) -> pd.DataFrame:
-    try:
-        if implementation == "FastText":
-            response = supabase.table("ai_review").select("job_hash").eq("user_id", user_id).not_.is_("fasttext_score", "null").execute()
-        elif implementation == "LLM":
-            response = supabase.table("ai_review").select("job_hash").eq("user_id", user_id).not_.is_("llm_score", "null").execute()
-        else:
-            raise ValueError(f"Invalid implementation: {implementation}. Must be 'FastText' or 'LLM'.")
-        result = pd.DataFrame(response.data) if response.data else None
-        return result
-    except Exception as e:
-        print(f"Error extracting job hashes: {e}")
-        return pd.DataFrame(columns=["job_hash"])
-    
+def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> None:
 
-def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
-    if jobs_df is None or jobs_df.empty:
-        return [False, ValueError("jobs_df is None or empty")]
     jobs_df = jobs_df.copy()
     jobs_df.loc[:, "user_id"] = user_id
 
@@ -62,6 +46,7 @@ def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
 
     selected_ai_review_columns = ["job_hash",
                                   "user_id",
+                                  "minilm_score",
                                   "llm_score",
                                   "fasttext_score",
                                   "llm_comment",
@@ -74,15 +59,20 @@ def insert_ai_review(jobs_df: pd.DataFrame, user_id) -> list[bool, Exception]:
     ai_review_records= ai_reviewed_df.to_dict(orient="records")
 
     # Insert into Supabase
-    try:
-        response1 = supabase.table("job_info").upsert(job_info_records).execute()
-        response2 = supabase.table("ai_review").upsert(ai_review_records, on_conflict ="user_id,job_hash" ).execute()
-        return [True,[response1,response2]]
-    except Exception as e:
-        return [False,e]
+    response1 = supabase.table("job_info").upsert(job_info_records).execute()
+    response2 = supabase.table("ai_review").upsert(ai_review_records, on_conflict ="user_id,job_hash" ).execute()
     
+    # Get logs
+    print(f"Inserted {len(response1.data)} records into job_info table and {len(response2.data)} into ai_review table.")
 
 def insert_embedding(ideal_embedding: dict, user_id):
-    record = {"user_id": user_id, "miniLM_embed": ideal_embedding}
+    record = {"user_id": user_id, "minilm_embed": ideal_embedding}
     response = supabase.table("user_profile").upsert(record).execute()
-    return(response)
+    assert(len(response.data) == 1)
+    print(f"Inserted/Updated embedding for user_id: {user_id} in user_profile table.")
+
+if __name__ == "__main__":
+    """res=profile_extraction("8d931b75-8808-4fb8-bde9-27230c187c24")
+    ress=[t["name"] for t in res["technical_skills"].loc[0]]
+    print(ress)"""
+    

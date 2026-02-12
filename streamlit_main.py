@@ -460,15 +460,12 @@ def main():
 # JOB RANKING
 # ---------------------------------------------------------
 def job_ranking_page():
-    """implementation = st.radio("Choose implementation", ["miniLM"])"""
     st.title("Job Recommendations")
     jobs_df = pd.DataFrame()
+    top_N= 10
 
-    if st.session_state.implementation == "FastText":
-        jobs_list= supabase.rpc("get_fasttext_topjob",{"p_user_id": st.session_state["user"].id}).execute()
-        jobs_df = pd.DataFrame(jobs_list.data)
-    elif st.session_state.implementation == "LLM":
-        jobs_list= supabase.rpc("get_llm_topjobs",{"p_user_id": st.session_state["user"].id}).execute()
+    if st.session_state.implementation == "miniLM":
+        jobs_list= supabase.rpc("get_minilm_top_jobs",{"p_user_id": st.session_state["user"].id,"top_N": top_N}).execute()
         jobs_df = pd.DataFrame(jobs_list.data)
     else:
         st.error("Unknown implementation selected.")

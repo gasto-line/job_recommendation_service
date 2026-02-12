@@ -1,8 +1,16 @@
 from GPT_process import call_openai
 from datetime import datetime, timezone
-import os, requests, pandas as pd, json
+from DB_jobs import extract_jobs_hash
+from utils import generate_job_hash
+import os, requests, json
+import pandas as pd
+from config import settings
 
 def load_adzuna( number_of_jobs: int, page: int, keywords: dict):
+
+    # Adzuna credentials
+    APP_ID = settings.ADZUNA_API_ID
+    APP_KEY = settings.ADZUNA_API_KEY
 
     # Base API URL
     base_url = "https://api.adzuna.com/v1/api/jobs/fr/search"
@@ -12,8 +20,8 @@ def load_adzuna( number_of_jobs: int, page: int, keywords: dict):
     params = keywords
 
     # Add authentication parameters
-    params["app_id"] = os.getenv("ADZUNA_API_ID")
-    params["app_key"] = os.getenv("ADZUNA_API_KEY")
+    params["app_id"] = APP_ID
+    params["app_key"] = APP_KEY
     params["results_per_page"] = number_of_jobs
 
     # Perform GET request
@@ -25,8 +33,8 @@ def load_adzuna( number_of_jobs: int, page: int, keywords: dict):
 
     #Simplify names coming from subparts of the dictionary
     df.rename(columns={"company.display_name":"company","location.display_name":"location"},inplace=True)
-    #to avoid problems with SQL commands later
-    df.fillna("unknown",inplace=True)
+    # replace missing values for company that isn't critical
+    df.company=df.company.fillna("unknown")
 
     #Make title and company fields more resilient
     df.company=df.company.str.upper()
@@ -54,12 +62,9 @@ def load_adzuna( number_of_jobs: int, page: int, keywords: dict):
         "raw_payload"
     ]
     df = df[columns]
+    df.rename(columns={"redirect_url":"url"}, inplace=True)
 
     return df
-
-# Your Adzuna credentials
-APP_ID = os.getenv("ADZUNA_API_ID")
-APP_KEY = os.getenv("ADZUNA_API_KEY")
 
 ADZUNA_PROMPT = """
 You are a candidate open for a new position in the {} sector(s).
@@ -110,3 +115,16 @@ def get_raw_df(profile, number_of_jobs_per_page=50, pages=2):
         raw_dfs.append(raw_df)
     return pd.concat(raw_dfs).reset_index(drop=True)
 
+
+def filter_new_df(raw_df, user_id):
+    # Add a new column job_hash that uniquely identify jobs
+    raw_df["posted_date_util"] = pd.to_datetime(raw_df["posted_date"])
+    raw_df["job_hash"] = raw_df.apply(lambda row: generate_job_hash(row["title"], row["company"], row["posted_date_util"]), axis=1)
+    raw_df = raw_df.drop_duplicates(subset='job_hash')
+
+    # Add a filter on jobs that are already in the reference database
+    extract=extract_jobs_hash(user_id)
+    exclude_set=set(extract)
+    # mask rows whose 'job_hash' is NOT in that set
+    filtered_df = raw_df.loc[~raw_df['job_hash'].isin(exclude_set)]
+    return filtered_df

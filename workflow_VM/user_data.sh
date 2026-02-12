@@ -76,4 +76,4 @@ systemctl start docker
 systemctl enable docker
 # Pull the image from docker hub and run the container
 docker pull gastoline/job_api:latest
-docker run -d -p 8080:8080 --name job_api --env-file /etc/job_reco.env gastoline/job_api:latest
+docker run -d -p 8080:8080 --name job_api --env-file /etc/job_reco.env gastoline/job_api:v1
