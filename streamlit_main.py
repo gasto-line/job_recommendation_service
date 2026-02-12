@@ -5,6 +5,7 @@ from requests.exceptions import RequestException
 import matplotlib.pyplot as plt
 from supabase import create_client, Client
 from datetime import datetime, timedelta, timezone
+import time
 
 
 # ---------------------------------------------------------
@@ -45,6 +46,18 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+def update_last_activity(supabase):
+    supabase.table("app_activity").update(
+        {"last_activity": datetime.now(timezone.utc).isoformat()}
+    ).eq("id", 1).execute()
+
+if "last_sent" not in st.session_state:
+    st.session_state.last_sent = 0
+
+if time.time() - st.session_state.last_sent > 60:
+    update_last_activity(supabase)
+    st.session_state.last_sent = time.time()
 
 def call_api(api_host, input, task: str, method):
     api_url = f"http://{api_host}:8080/{task}"
@@ -101,19 +114,14 @@ def login_page():
     password = st.text_input("Password", type="password")
 
     if st.button("Login"):
-        try:
-            response = supabase.auth.sign_in_with_password({
+        response = supabase.auth.sign_in_with_password({
                 "email": email,
                 "password": password
             })
-
-            st.session_state["user"] = response.user
-            st.session_state["supabase_session"] = response.session
-            st.success("You are now logged in!")
-            st.rerun()
-
-        except Exception as e:
-            st.exception(e)
+        st.session_state["user"] = response.user
+        st.session_state["supabase_session"] = response.session
+        st.success("You are now logged in!")
+        st.rerun()
 
     # Password reset
     if st.button("Forgot your password?"):
