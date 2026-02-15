@@ -47,18 +47,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-def update_last_activity(supabase):
-    supabase.table("app_activity").update(
-        {"last_activity": datetime.now(timezone.utc).isoformat()}
-    ).eq("id", 1).execute()
-
-if "last_sent" not in st.session_state:
-    st.session_state.last_sent = 0
-
-if time.time() - st.session_state.last_sent > 60:
-    update_last_activity(supabase)
-    st.session_state.last_sent = time.time()
-
 def call_api(api_host, input, task: str, method):
     api_url = f"http://{api_host}:8080/{task}"
     if method == "GET":
@@ -432,6 +420,18 @@ def profile_page():
 def main():
 
     if st.session_state["user"]:
+        
+        # Update last activity timestamp in Supabase to keep the instance alive while user is active
+        def update_last_activity(supabase):
+            supabase.table("app_activity").update(
+                {"last_activity": datetime.now(timezone.utc).isoformat()}
+            ).eq("id", 1).execute()
+        if "last_sent" not in st.session_state:
+            st.session_state.last_sent = 0
+        if time.time() - st.session_state.last_sent > 60:
+            update_last_activity(supabase)
+            st.session_state.last_sent = time.time()
+
         page = st.sidebar.radio("Navigation", ["Profile", "Job Selection"])
         st.session_state["implementation"] = None
         st.sidebar.markdown("---")
