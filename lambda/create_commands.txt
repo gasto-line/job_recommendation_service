@@ -1,0 +1,7 @@
+aws iam create-role \
+  --role-name lambda-ec2-supabase-role \
+  --assume-role-policy-document file://trust-policy.json
+
+aws iam attach-role-policy \
+  --role-name lambda-ec2-supabase-role \
+  --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole

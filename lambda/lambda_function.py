@@ -16,7 +16,7 @@ def get_parameter(name):
 
 def get_last_activity():
     url = get_parameter("/job_reco/supabase/url")
-    key = get_parameter("/job_reco/supabase/service_role_key")
+    key = get_parameter("/job_reco/supabase/service-role-key")
 
     supabase = create_client(url, key)
 
@@ -38,7 +38,6 @@ def find_instance():
             {"Name": "instance-state-name", "Values": ["pending", "running"]}
         ]
     )
-
     for reservation in response["Reservations"]:
         for instance in reservation["Instances"]:
             return instance["InstanceId"], instance["State"]["Name"]
@@ -48,7 +47,7 @@ def find_instance():
 
 def launch_instance():
     ec2.run_instances(
-        ImageId=os.environ["AMI_ID"],
+        ImageId="ami-0c814f1cf8f298648",
         InstanceType="t3.micro",
         MinCount=1,
         MaxCount=1,
@@ -63,10 +62,8 @@ def launch_instance():
         ]
     )
 
-
 def terminate_instance(instance_id):
     ec2.terminate_instances(InstanceIds=[instance_id])
-
 
 def lambda_handler(event, context):
 
@@ -78,10 +75,14 @@ def lambda_handler(event, context):
     instance_id, state = find_instance()
 
     if delta_minutes < THRESHOLD_MINUTES:
-        if not instance_id:
+        if instance_id:
+            pass
+        else:
             launch_instance()
     else:
         if instance_id:
             terminate_instance(instance_id)
+        else:
+            pass
 
     return {"status": "done"}
